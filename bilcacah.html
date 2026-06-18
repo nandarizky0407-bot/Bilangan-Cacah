@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mengenal Bilangan Cacah Hingga Ribuan - Kelas 3 SD</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Afacad+Flux:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* CSS RESET & GENERAL STYLES */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: #e2e8f0;
+            font-family: 'Afacad Flux', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        /* PERBAIKAN: UKURAN LEBIH RINGKAS & PAS DI LAYAR LAPTOP (16:9 RATIO) */
+        .slide-container {
+            width: 100%;
+            max-width: 1050px; /* Diperkecil dari 1280px agar pas di layar laptop */
+            height: auto;
+            aspect-ratio: 16 / 9; /* Menjaga proporsi presentasi tetap sempurna */
+            background-color: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            padding: 40px 50px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        /* DECORATIVE BACKGROUND ELEMENTS */
+        .slide-container::before {
+            content: ''; position: absolute; top: -80px; right: -80px;
+            width: 200px; height: 200px; background: rgba(220, 253, 139, 0.4);
+            border-radius: 50%; z-index: 0;
+        }
+        .slide-container::after {
+            content: ''; position: absolute; bottom: -60px; left: -60px;
+            width: 160px; height: 160px; background: rgba(188, 132, 238, 0.3);
+            border-radius: 50%; z-index: 0;
+        }
+        .slide-container > * { position: relative; z-index: 1; }
+
+        /* TYPOGRAPHY */
+        h1 { font-family: 'Comfortaa', cursive; font-size: 46px; color: #1e293b; line-height: 1.2; text-align: center; }
+        h2.slide-title { font-family: 'Comfortaa', cursive; font-size: 32px; color: #1e293b; margin-bottom: 20px; border-bottom: 5px solid #ff823a; padding-bottom: 8px; width: 100%; }
+        h3 { font-size: 22px; color: #4f46e5; margin-bottom: 10px; }
+        p { font-size: 19px; color: #334155; line-height: 1.4; }
+        ul { font-size: 19px; color: #334155; margin-left: 25px; line-height: 1.5; }
+
+        /* BILINGUAL TAGS */
+        .lang-tag { display: inline-block; padding: 2px 6px; border-radius: 6px; font-size: 13px; font-weight: bold; color: white; vertical-align: middle; margin-right: 6px; }
+        .tag-id { background: #ef4444; }
+        .tag-en { background: #3b82f6; }
+
+        /* LAYOUT HELPER */
+        .content-area { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; width: 100%; }
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%; align-items: center; }
+        .flex-center { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; height: 100%; }
+
+        /* INTERACTIVE ELEMENTS & COMPONENTS */
+        .interactive-box { background: #f8fafc; border: 3px dashed #bc84ee; border-radius: 18px; padding: 20px; margin-top: 10px; }
+        .btn { background: #ff823a; color: white; border: none; padding: 10px 24px; border-radius: 12px; font-size: 18px; cursor: pointer; font-weight: bold; transition: all 0.2s; margin: 5px; }
+        .btn:hover { background: #e66e2a; transform: scale(1.03); }
+        .btn-check { background: #4f46e5; }
+        .btn-check:hover { background: #3b33b3; }
+        
+        input[type="number"], input[type="text"] { border: 3px solid #cbd5e1; border-radius: 10px; padding: 6px 10px; font-size: 20px; width: 130px; margin: 5px; text-align: center; font-family: inherit; transition: background-color 0.3s, color 0.3s; }
+        input:focus { border-color: #ff823a; outline: none; }
+
+        /* PLACE VALUE TABLE */
+        table.pv-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        table.pv-table th { background-color: #bc84ee; color: white; padding: 12px; font-size: 19px; border: 2px solid #cbd5e1; }
+        table.pv-table td { background-color: white; padding: 15px; font-size: 24px; text-align: center; font-weight: bold; border: 2px solid #cbd5e1; color: #1e293b; }
+
+        /* CARDS GRID */
+        .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%; }
+        .grid-4 { grid-template-columns: repeat(2, 1fr); }
+        .menu-card { background: #fdf2f2; border: 3px solid #ff823a; border-radius: 16px; padding: 18px; text-align: center; font-size: 19px; font-weight: bold; cursor: pointer; transition: transform 0.2s, background 0.2s; }
+        .menu-card:hover { transform: scale(1.04); background: #fee2e2; }
+
+        /* ILLUSTRATIONS STUB */
+        .img-placeholder { width: 100%; height: 200px; background: #f1f5f9; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid #cbd5e1; color: #64748b; }
+        .img-placeholder i { font-size: 50px; margin-bottom: 8px; color: #94a3b8; }
+
+        /* FEEDBACK STATES */
+        .feedback-msg { font-size: 19px; font-weight: bold; margin-top: 8px; min-height: 28px; }
+        .correct-text { color: #10b981; }
+        .wrong-text { color: #ef4444; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+<div class="slide-container" style="background-color: #dcfd8bff;">
+    <div class="flex-center">
+        <h1>Exploring Whole Numbers<br>Up to Thousands</h1>
+        <h2 style="font-size: 32px; margin-top: 12px; color: #475569; border:none;">Mengenal Bilangan Cacah Hingga Ribuan</h2>
+        <p style="font-size: 24px; margin-top: 30px; font-weight: bold; color: #4f46e5;">Grade 3 Elementary School / Kelas 3 SD</p>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">Let's Think! / Mari Berpikir!</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <p style="margin-bottom: 12px;"><span class="lang-tag tag-en">EN</span> Timmy is looking at a high score on his favorite educational video game. The screen shows a grand number from his weekly exploration chest reward. He wants to read it out loud to his teacher.</p>
+                <p><span class="lang-tag tag-id">ID</span> Timmy melihat skor tinggi pada game edukasi favoritnya. Layar menunjukkan sebuah bilangan besar dari hadiah peti penjelajahan mingguannya. Ia ingin membacanya dengan lantang di depan gurunya.</p>
+                
+                <div class="interactive-box" style="background: #fff; text-align: center; border-color: #ff823a;">
+                    <h3 style="font-size: 32px; color: #ff823a; margin: 0;">How to read 3502?</h3>
+                    <p style="font-style: italic; font-size: 18px; color: #64748b; margin-top: 5px;">Bagaimana cara membaca 3502?</p>
+                </div>
+            </div>
+            <div class="img-placeholder">
+                <i class="fa-solid fa-gamepad"></i>
+                <p style="font-size: 16px;">[Illustration: Timmy looking at a Game Score 3502]</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" style="background-color: #fdd5bdff;">
+    <h2 class="slide-title" style="border-bottom-color:#4f46e5;">Learning Objectives / Tujuan Pembelajaran</h2>
+    <div class="content-area">
+        <div class="card-grid">
+            <div class="menu-card">1. Recognize Thousands<br><span style="font-size:14px; font-weight:normal;">Mengenali bilangan ribuan</span></div>
+            <div class="menu-card">2. Place Value<br><span style="font-size:14px; font-weight:normal;">Menentukan nilai tempat</span></div>
+            <div class="menu-card">3. Number Names<br><span style="font-size:14px; font-weight:normal;">Menentukan nama bilangan</span></div>
+            <div class="menu-card">4. Number Symbols<br><span style="font-size:14px; font-weight:normal;">Menentukan lambang bilangan</span></div>
+            <div class="menu-card">5. Decompose Numbers<br><span style="font-size:14px; font-weight:normal;">Mendekomposisikan bilangan</span></div>
+            <div class="menu-card">6. Compare & Order<br><span style="font-size:14px; font-weight:normal;">Membandingkan & mengurutkan</span></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">What is a Whole Number? / Apakah Bilangan Cacah?</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="interactive-box" style="border-color: #3b82f6;">
+                <h3><span class="lang-tag tag-en">EN</span> Whole Numbers</h3>
+                <p>Whole numbers are a set of non-negative integers. It always starts from <b>0, 1, 2, 3, 4, 5, ...</b> and continues up to thousands and beyond without any fractions or decimals!</p>
+            </div>
+            <div class="interactive-box" style="border-color: #ef4444;">
+                <h3><span class="lang-tag tag-id">ID</span> Bilangan Cacah</h3>
+                <p>Bilangan cacah adalah himpunan bilangan bulat yang tidak negatif. Bilangan cacah selalu dimulai dari angka <b>0, 1, 2, 3, 4, 5, ...</b> lalu berlanjut hingga ribuan dan seterusnya tanpa pecahan atau desimal!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">Place Value Columns / Kolom Nilai Tempat</h2>
+    <div class="content-area">
+        <p style="text-align: center; margin-bottom: 10px;">Let's look at the position of each digit in the number <b>7432</b>:</p>
+        <table class="pv-table">
+            <thead>
+                <tr>
+                    <th style="background:#ff823a;">Thousands (Ribuan)</th>
+                    <th style="background:#4f46e5;">Hundreds (Ratusan)</th>
+                    <th style="background:#bc84ee;">Tens (Puluhan)</th>
+                    <th style="background:#10b981;">Ones (Satuan)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>7</td>
+                    <td>4</td>
+                    <td>3</td>
+                    <td>2</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="two-column" style="margin-top: 20px; font-size: 16px;">
+            <div><span class="lang-tag tag-en">EN</span> 7 thousands (7000), 4 hundreds (400), 3 tens (30), and 2 ones (2).</div>
+            <div><span class="lang-tag tag-id">ID</span> 7 ribuan (7000), 4 ratusan (400), 3 puluhan (30), dan 2 satuan (2).</div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">Activity 1: Place Value Match / Pasangkan Nilai Tempat</h2>
+    <div class="content-area">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3>Question / Soal <span id="s6-idx">1</span> of 10</h3>
+            <h1 id="s6-num-display" style="color:#4f46e5; font-size: 42px;">2481</h1>
+        </div>
+        
+        <div class="interactive-box" style="text-align: center; background: #fff;">
+            <p style="margin-bottom: 8px; font-weight: bold;">Put each digit into the correct place value column / Letakkan angka pada kolom yang tepat:</p>
+            <div>
+                Ribuan (Th): <input type="number" id="s6-in-th" min="0" max="9">
+                Ratusan (H): <input type="number" id="s6-in-h" min="0" max="9">
+                Puluhan (T): <input type="number" id="s6-in-t" min="0" max="9">
+                Satuan (O): <input type="number" id="s6-in-o" min="0" max="9">
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 10px;">
+            <button class="btn btn-check" onclick="checkSlide6()">Check Answer / Cek</button>
+            <button class="btn hidden" id="s6-btn-next" onclick="nextSlide6()">Next Question / Soal Berikutnya <i class="fa-solid fa-arrow-right"></i></button>
+            <div id="s6-feedback" class="feedback-msg"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">Number Names / Nama Bilangan</h2>
+    <div class="content-area">
+        <p>How do we read numbers based on their place value? / <i>Bagaimana kita membaca bilangan berdasarkan nilai tempatnya?</i></p>
+        
+        <div class="interactive-box" style="background:#fff;">
+            <h3>Example 1: <span style="color:#ff823a;">2543</span></h3>
+            <p>2 RIBUan + 5 RATUSan + 4 PULUHan + 3 SATUan</p>
+            <p><b><span class="lang-tag tag-en">EN</span> Two thousand five hundred forty-three</b></p>
+            <p><b><span class="lang-tag tag-id">ID</span> Dua ribu lima ratus empat puluh tiga</b></p>
+        </div>
+
+        <div class="interactive-box" style="background:#fffef0; border-color: #ef4444;">
+            <h3><i class="fa-solid fa-triangle-exclamation" style="color:#ef4444;"></i> The Zero Rule / Aturan Angka Nol (0)</h3>
+            <p><span class="lang-tag tag-en">EN</span> If a place value position has a <b>0</b>, that section is NOT read aloud.</p>
+            <p><span class="lang-tag tag-id">ID</span> Jika posisi nilai tempat bernilai <b>0</b>, maka bagian tersebut TIDAK dibaca.</p>
+            <p style="margin-top: 8px; font-weight: bold; color: #10b981;">👉 4082 &rarr; Four thousand eighty-two / Empat ribu delapan puluh dua <span style="color:#ef4444; font-weight:normal;">(No hundreds / Tanpa ratusan)</span></p>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" style="background-color: #bc84ee22;">
+    <h2 class="slide-title">Pick a Flashcard to Read! / Pilih Kartu dan Baca!</h2>
+    <div class="content-area">
+        <p style="text-align: center; margin-bottom: 15px;">Click on any flashcard below to see how to read it / <i>Klik pada kartu untuk melihat cara membacanya:</i></p>
+        <div class="card-grid grid-4">
+            <div class="menu-card" onclick="alert('EN: Three thousand four hundred twelve \nID: Tiga ribu empat ratus dua belas')">
+                <i class="fa-solid fa-cloud" style="color: #3b82f6; font-size:32px; margin-bottom:8px;"></i><br>3412
+            </div>
+            <div class="menu-card" onclick="alert('EN: Seven thousand eighty-five \nID: Tujuh ribu delapan puluh lima')">
+                <i class="fa-solid fa-star" style="color: #eab308; font-size:32px; margin-bottom:8px;"></i><br>7085
+            </div>
+            <div class="menu-card" onclick="alert('EN: Five thousand nine hundred \nID: Lima ribu sembilan ratus')">
+                <i class="fa-solid fa-heart" style="color: #ef4444; font-size:32px; margin-bottom:8px;"></i><br>5900
+            </div>
+            <div class="menu-card" onclick="alert('EN: One thousand six hundred two \nID: Seribu enam ratus dua')">
+                <i class="fa-solid fa-apple-whole" style="color: #10b981; font-size:32px; margin-bottom:8px;"></i><br>1602
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">Activity 2: Write the Number Symbol / Tentukan Lambang Bilangan</h2>
+    <div class="content-area">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3>Question / Soal <span id="s9-idx">1</span> of 5</h3>
+        </div>
+
+        <div class="interactive-box" style="background: #fff; padding: 20px; text-align: center;">
+            <p id="s9-name-en" style="font-weight: bold; color: #3b82f6; font-size: 22px;">"Two thousand three hundred forty-five"</p>
+            <p id="s9-name-id" style="font-style: italic; color: #64748b; font-size: 19px; margin-bottom: 15px;">"Dua ribu tiga ratus empat puluh lima"</p>
+            
+            <span style="font-size:20px;">Your Answer / Jawaban:</span> 
+            <input type="text" id="s9-answer-input" placeholder="e.g. 2345" style="width: 180px;">
+        </div>
+
+        <div style="text-align: center; margin-top: 10px;">
+            <button class="btn btn-check" onclick="checkSlide9()">Check Answer / Cek</button>
+            <button class="btn hidden" id="s9-btn-next" onclick="nextSlide9()">Next Question / Soal Berikutnya <i class="fa-solid fa-arrow-right"></i></button>
+            <div id="s9-feedback" class="feedback-msg"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">Decomposing Numbers / Mendekomposisi Bilangan</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <p><span class="lang-tag tag-en">EN</span> <b>Decomposition</b> means breaking a larger number apart into the value of each of its single digits summed together.</p>
+                <p style="margin-top: 12px;"><span class="lang-tag tag-id">ID</span> <b>Dekomposisi</b> berarti memecah/menguraikan suatu bilangan besar menjadi jumlahan nilai dari setiap digit angka penyusunnya.</p>
+            </div>
+            <div class="interactive-box" style="text-align: center; background: #fff; border-color:#ff823a;">
+                <h2 style="color:#ff823a; font-size: 40px; border:none; margin:0;">2523</h2>
+                <div style="margin: 10px 0; font-size: 22px; color: #64748b;"><i class="fa-solid fa-turn-down"></i> split into / dipecah menjadi</div>
+                <h3 style="font-size: 26px; color: #1e293b; margin:0;">2000 + 500 + 20 + 3</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">Activity 3: Complete the Decomposition / Hasil Dekomposisi</h2>
+    <div class="content-area">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3>Question / Soal <span id="s11-idx">1</span> of 5</h3>
+            <h1 id="s11-num-display" style="color:#ff823a; font-size: 42px;">5439</h1>
+        </div>
+
+        <div class="interactive-box" style="text-align: center; background: white; font-size: 20px;">
+            <input type="number" id="s11-th" style="width:120px;" placeholder="Ribuan"> + 
+            <input type="number" id="s11-h" style="width:100px;" placeholder="Ratusan"> + 
+            <input type="number" id="s11-t" style="width:90px;" placeholder="Puluhan"> + 
+            <input type="number" id="s11-o" style="width:90px;" placeholder="Satuan">
+        </div>
+
+        <div style="text-align: center; margin-top: 10px;">
+            <button class="btn btn-check" onclick="checkSlide11()">Check Answer / Cek</button>
+            <button class="btn hidden" id="s11-btn-next" onclick="nextSlide11()">Next Question / Soal Berikutnya <i class="fa-solid fa-arrow-right"></i></button>
+            <div id="s11-feedback" class="feedback-msg"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">Comparing Numbers / Membandingkan Bilangan</h2>
+    <div class="content-area">
+        <p style="margin-bottom: 15px; text-align: center;">Let's learn the mathematical comparison signs / <i>Mari pelajari simbol perbandingan:</i></p>
+        <div class="card-grid">
+            <div class="interactive-box" style="text-align:center; background:#ecfdf5; border-color:#10b981; margin:0;">
+                <h1 style="color:#10b981; font-size: 48px;">&gt;</h1>
+                <h3>Greater Than</h3>
+                <p>Lebih Besar Dari</p>
+            </div>
+            <div class="interactive-box" style="text-align:center; background:#fef2f2; border-color:#ef4444; margin:0;">
+                <h1 style="color:#ef4444; font-size: 48px;">&lt;</h1>
+                <h3>Less Than</h3>
+                <p>Lebih Kecil Dari</p>
+            </div>
+            <div class="interactive-box" style="text-align:center; background:#eff6ff; border-color:#3b82f6; margin:0;">
+                <h1 style="color:#3b82f6; font-size: 48px;">=</h1>
+                <h3>Equal To</h3>
+                <p>Sama Dengan</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">Comparison Practice 1: Apples / Buah Apel</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="img-placeholder" style="background:#fee2e2; height:160px;">
+                <i class="fa-solid fa-apple-whole" style="color:#ef4444;"></i>
+                <p style="font-weight:bold; font-size:20px; color:#ef4444;">5 Red Apples / Apel Merah</p>
+            </div>
+            <div class="img-placeholder" style="background:#f0fdf4; height:160px;">
+                <i class="fa-solid fa-apple-whole" style="color:#22c55e;"></i>
+                <p style="font-weight:bold; font-size:20px; color:#22c55e;">7 Green Apples / Apel Hijau</p>
+            </div>
+        </div>
+        <div class="flex-center" style="margin-top: 15px;">
+            <div class="interactive-box" style="background:#fff; width: 360px; text-align:center; margin:0;">
+                <span style="font-size:26px; font-weight:bold; margin-right:12px;">5</span>
+                <input type="text" id="s13-ans" style="width: 80px; font-size:24px;" placeholder=">, <, =" onchange="checkInlineStaticComp('s13-ans', '<')">
+                <span style="font-size:26px; font-weight:bold; margin-left:12px;">7</span>
+                <br><button class="btn btn-check" style="margin-top:10px; padding: 6px 18px; font-size:16px;" onclick="checkInlineStaticComp('s13-ans', '<')">Check</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">Comparison Practice 2: Weight / Berat Hewan</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="img-placeholder" style="height:160px;">
+                <i class="fa-solid fa-elephant" style="font-size:50px;"></i>
+                <p style="font-weight:bold; font-size:20px;">Elephant / Gajah</p>
+                <p style="font-size:22px; color:#ff823a; font-weight:bold;">1000 kg</p>
+            </div>
+            <div class="img-placeholder" style="height:160px;">
+                <i class="fa-solid fa-cow" style="font-size:50px;"></i>
+                <p style="font-weight:bold; font-size:20px;">Goat / Kambing</p>
+                <p style="font-size:22px; color:#ff823a; font-weight:bold;">45 kg</p>
+            </div>
+        </div>
+        <div class="flex-center" style="margin-top: 15px;">
+            <div class="interactive-box" style="background:#fff; width: 380px; text-align:center; margin:0;">
+                <span style="font-size:24px; font-weight:bold;">1000 kg</span>
+                <input type="text" id="s14-ans" style="width: 80px; font-size:24px;" placeholder=">, <, =" onchange="checkInlineStaticComp('s14-ans', '>')">
+                <span style="font-size:24px; font-weight:bold;">45 kg</span>
+                <br><button class="btn btn-check" style="margin-top:10px; padding: 6px 18px; font-size:16px;" onclick="checkInlineStaticComp('s14-ans', '>')">Check</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">Comparison Practice 3: Vehicles / Berat Kendaraan</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="img-placeholder" style="height:160px;">
+                <i class="fa-solid fa-motorcycle" style="font-size:50px;"></i>
+                <p style="font-weight:bold; font-size:20px;">Motorcycle / Motor</p>
+                <p style="font-size:22px; color:#4f46e5; font-weight:bold;">150 kg</p>
+            </div>
+            <div class="img-placeholder" style="height:160px;">
+                <i class="fa-solid fa-car" style="font-size:50px;"></i>
+                <p style="font-weight:bold; font-size:20px;">Car / Mobil</p>
+                <p style="font-size:22px; color:#4f46e5; font-weight:bold;">1200 kg</p>
+            </div>
+        </div>
+        <div class="flex-center" style="margin-top: 15px;">
+            <div class="interactive-box" style="background:#fff; width: 380px; text-align:center; margin:0;">
+                <span style="font-size:24px; font-weight:bold;">150 kg</span>
+                <input type="text" id="s15-ans" style="width: 80px; font-size:24px;" placeholder=">, <, =" onchange="checkInlineStaticComp('s15-ans', '<')">
+                <span style="font-size:24px; font-weight:bold;">1200 kg</span>
+                <br><button class="btn btn-check" style="margin-top:10px; padding: 6px 18px; font-size:16px;" onclick="checkInlineStaticComp('s15-ans', '<')">Check</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">Comparison Practice 4: Rice Bags / Karung Beras</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="img-placeholder" style="background: #fef8f0; height:160px;">
+                <div style="display:flex; gap:10px;">
+                    <i class="fa-solid fa-wheat-awn" style="font-size:35px; color:#d97706;"></i>
+                    <i class="fa-solid fa-wheat-awn" style="font-size:35px; color:#d97706;"></i>
+                </div>
+                <p style="font-weight:bold; font-size:18px; margin-top:5px;">2 Bags of 5 kg / 2 Karung @5kg</p>
+                <p style="font-size:22px; color:#d97706; font-weight:bold;">Total: 10 kg</p>
+            </div>
+            <div class="img-placeholder" style="background: #fef8f0; height:160px;">
+                <i class="fa-solid fa-wheat-awn" style="font-size:45px; color:#d97706;"></i>
+                <p style="font-weight:bold; font-size:18px; margin-top:5px;">1 Bag of 10 kg / 1 Karung @10kg</p>
+                <p style="font-size:22px; color:#d97706; font-weight:bold;">Total: 10 kg</p>
+            </div>
+        </div>
+        <div class="flex-center" style="margin-top: 15px;">
+            <div class="interactive-box" style="background:#fff; width: 380px; text-align:center; margin:0;">
+                <span style="font-size:24px; font-weight:bold;">10 kg</span>
+                <input type="text" id="s16-ans" style="width: 80px; font-size:24px;" placeholder=">, <, =" onchange="checkInlineStaticComp('s16-ans', '=')">
+                <span style="font-size:24px; font-weight:bold;">10 kg</span>
+                <br><button class="btn btn-check" style="margin-top:10px; padding: 6px 18px; font-size:16px;" onclick="checkInlineStaticComp('s16-ans', '=')">Check</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">Activity 4: Compare 2 Numbers / Bandingkan 2 Bilangan</h2>
+    <div class="content-area">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3>Question / Soal <span id="s17-idx">1</span> of 10</h3>
+        </div>
+
+        <div class="interactive-box" style="text-align: center; background: white; padding: 30px;">
+            <span id="s17-n1" style="font-size:38px; font-weight:bold; margin-right:25px; color:#1e293b;">3520</span>
+            <input type="text" id="s17-input" style="width: 110px; font-size:30px; border-color:#ff823a;" placeholder=">, <, =">
+            <span id="s17-n2" style="font-size:38px; font-weight:bold; margin-left:25px; color:#1e293b;">3250</span>
+        </div>
+
+        <div style="text-align: center; margin-top: 15px;">
+            <button class="btn btn-check" onclick="checkSlide17()">Check Answer / Cek</button>
+            <button class="btn hidden" id="s17-btn-next" onclick="nextSlide17()">Next Question / Soal Berikutnya <i class="fa-solid fa-arrow-right"></i></button>
+            <div id="s17-feedback" class="feedback-msg"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">Activity 5: Compare the Operations / Bandingkan Hasil Operasi</h2>
+    <div class="content-area">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3>Question / Soal <span id="s18-idx">1</span> of 10</h3>
+        </div>
+
+        <div class="interactive-box" style="text-align: center; background: white; padding: 30px;">
+            <span id="s18-op" style="font-size:32px; font-weight:bold; margin-right:15px; color:#4f46e5;">1000 + 400</span>
+            <input type="text" id="s18-input" style="width: 110px; font-size:30px;" placeholder=">, <, =">
+            <span id="s18-val" style="font-size:32px; font-weight:bold; margin-left:15px; color:#1e293b;">1400</span>
+        </div>
+
+        <div style="text-align: center; margin-top: 15px;">
+            <button class="btn btn-check" onclick="checkSlide18()">Check Answer / Cek</button>
+            <button class="btn hidden" id="s18-btn-next" onclick="nextSlide18()">Next Question / Soal Berikutnya <i class="fa-solid fa-arrow-right"></i></button>
+            <div id="s18-feedback" class="feedback-msg"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">Ordering Numbers / Mengurutkan Bilangan</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="interactive-box" style="background:#fff;">
+                <h3>How to Order / Cara Mengurutkan:</h3>
+                <ol style="font-size:18px; margin-left:20px; line-height:1.5;">
+                    <li>Look at the <b>thousands</b> digit first. (<i>Lihat angka ribuan dulu.</i>)</li>
+                    <li>If identical, check the <b>hundreds</b>. (<i>Jika sama, cek ratusannya.</i>)</li>
+                    <li>If still identical, check the <b>tens</b>, then <b>ones</b>. (<i>Jika masih sama, cek puluhan lalu satuannya.</i>)</li>
+                </ol>
+            </div>
+            <div class="interactive-box" style="background:#f0fdf4; border-color:#22c55e;">
+                <h3 style="color:#22c55e;"><i class="fa-solid fa-arrow-up-1-9"></i> Example / Contoh:</h3>
+                <p>Unordered: <b>3200, 1500, 3800</b></p>
+                <p style="margin-top:8px;"><b>Smallest to Largest (Terkecil ke Terbesar):</b><br>&rarr; 1500, 3200, 3800</p>
+                <p style="margin-top:8px;"><b>Largest to Smallest (Terbesar ke Terkecil):</b><br>&rarr; 3800, 3200, 1500</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">Activity 6: Rank the Numbers / Berikan Nomor Urut (1-4)</h2>
+    <div class="content-area">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <p>Order these numbers from <b>SMALLEST (1) to LARGEST (4)</b> / <i>Urutkan dari Terkecil (1) ke Terbesar (4):</i></p>
+            <button class="btn" style="padding: 6px 16px; font-size:15px;" onclick="generateSlide20()">Ganti Soal / Change Numbers</button>
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:15px; margin-top:20px; text-align:center;">
+            <div class="interactive-box" style="background:#fff; padding:15px;">
+                <h2 id="s20-n1" style="font-size:28px; color:#4f46e5; border:none; margin-bottom:8px;">1200</h2>
+                Urutan: <input type="number" id="s20-r1" min="1" max="4" style="width:65px;">
+            </div>
+            <div class="interactive-box" style="background:#fff; padding:15px;">
+                <h2 id="s20-n2" style="font-size:28px; color:#4f46e5; border:none; margin-bottom:8px;">4500</h2>
+                Urutan: <input type="number" id="s20-r2" min="1" max="4" style="width:65px;">
+            </div>
+            <div class="interactive-box" style="background:#fff; padding:15px;">
+                <h2 id="s20-n3" style="font-size:28px; color:#4f46e5; border:none; margin-bottom:8px;">2300</h2>
+                Urutan: <input type="number" id="s20-r3" min="1" max="4" style="width:65px;">
+            </div>
+            <div class="interactive-box" style="background:#fff; padding:15px;">
+                <h2 id="s20-n4" style="font-size:28px; color:#4f46e5; border:none; margin-bottom:8px;">3100</h2>
+                Urutan: <input type="number" id="s20-r4" min="1" max="4" style="width:65px;">
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top:20px;">
+            <button class="btn btn-check" onclick="checkSlide20()">Check Answer / Cek</button>
+            <div id="s20-feedback" class="feedback-msg"></div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">Word Problem 1: Swimming Race / Perlombaan Renang</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <p><span class="lang-tag tag-en">EN</span> 3 kids finished a swimming race. Their times in seconds are: <b>Andi (1205s)</b>, <b>Budi (1190s)</b>, and <b>Cici (1210s)</b>. Who is the 1st winner?</p>
+                <p style="margin-top:10px;"><span class="lang-tag tag-id">ID</span> 3 anak mengikuti lomba renang. Catatan waktu mereka: <b>Andi (1205 detik)</b>, <b>Budi (1190 detik)</b>, dan <b>Cici (1210 detik)</b>. Siapa Juara 1?</p>
+                
+                <div style="margin-top:15px;">
+                    Jawaban / Answer: <input type="text" id="s21-ans" style="width:180px;" placeholder="Nama pemenang" onchange="checkInlineStory('s21-ans', 'budi')">
+                    <button class="btn btn-check" style="padding: 6px 18px; font-size:16px;" onclick="checkInlineStory('s21-ans', 'budi')">Check</button>
+                    <button class="btn" style="background: #64748b; padding: 6px 18px; font-size:16px;" onclick="toggleDiscussion('s21-disc')">Discussion</button>
+                </div>
+            </div>
+            <div class="img-placeholder" style="height: 160px;">
+                <i class="fa-solid fa-person-swimming" style="color:#3b82f6;"></i>
+                <p>[Illustration: Kids swimming competition]</p>
+            </div>
+        </div>
+        <div id="s21-disc" class="interactive-box hidden" style="background:#f0fdf4; border-color:#22c55e; margin-top:10px; padding:12px;">
+            <p style="font-size:16px;"><b>Pembahasan:</b> Kita mengurutkan dari waktu terkecil (tercepat): 1190 < 1205 < 1210. Maka juaranya adalah <b>Budi</b>.</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">Word Problem 2: High Scores / Mengurutkan Nilai Terbesar</h2>
+    <div class="content-area">
+        <p><span class="lang-tag tag-en">EN</span> Three players scored points in a quiz game. <b>Siti: 4050 points</b>, <b>Edo: 4500 points</b>, and <b>Dayu: 4005 points</b>. Order the names from the <b>LARGEST to SMALLEST</b> score!</p>
+        <p style="margin-top: 8px;"><span class="lang-tag tag-id">ID</span> Tiga pemain mendapatkan nilai dalam game kuis. <b>Siti: 4050 poin</b>, <b>Edo: 4500 poin</b>, dan <b>Dayu: 4005 poin</b>. Urutkan nama pemain dari yang nilainya <b>TERBESAR hingga TERKECIL</b>!</p>
+
+        <div class="interactive-box" style="background:#fff; text-align:center; padding:15px; margin-top:15px;">
+            <span>Urutan Nama / Ordered Names:</span>
+            <input type="text" id="s22-ans" style="width:320px;" placeholder="e.g. Edo, Siti, Dayu" onchange="checkInlineStory('s22-ans', 'edo,siti,dayu')">
+            <button class="btn btn-check" style="padding: 6px 18px; font-size:16px;" onclick="checkInlineStory('s22-ans', 'edo,siti,dayu')">Check</button>
+            <button class="btn" style="background: #64748b; padding: 6px 18px; font-size:16px;" onclick="toggleDiscussion('s22-disc')">Discussion</button>
+        </div>
+
+        <div id="s22-disc" class="interactive-box hidden" style="background:#f0fdf4; border-color:#22c55e; margin-top:10px; padding:12px;">
+            <p style="font-size:16px;"><b>Pembahasan:</b> Urutan skor dari terbesar ke terkecil adalah 4500 &gt; 4050 &gt; 4005. Jadi: <b>Edo, Siti, Dayu</b>.</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" style="background-color: #ff823aff;">
+    <div class="flex-center" style="color: white;">
+        <h1 style="color:white; font-size:56px; text-shadow: 2px 2px rgba(0,0,0,0.2);">QUIZ TIME!</h1>
+        <p style="color:white; font-size:24px; margin-top:10px;">Let's test your skills on the ultimate challenge!</p>
+        <p style="color:#fef08a; font-size:20px; font-style:italic;">Mari uji kemampuanmu dalam tantangan seru ini!</p>
+        
+        <button class="btn" style="background: white; color: #ff823a; font-size: 24px; padding: 14px 38px; border-radius: 50px; margin-top: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.15);" onclick="window.open('https://wayground.com/admin/quiz/6a333d2ed75593ffecc8d043', '_blank')">
+            <i class="fa-solid fa-rocket"></i> Go to Quiz / Buka Kuis
+        </button>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">Reflection & Conclusion / Refleksi & Kesimpulan</h2>
+    <div class="content-area">
+        <div class="interactive-box" style="background: #f0fdf4; border-color: #22c55e; padding:20px; margin:0;">
+            <h3>Solving Timmy's Question / Menjawab Pertanyaan Timmy:</h3>
+            <p style="font-size:22px;">Number / Bilangan: <b style="color:#ff823a; font-size:28px;">3502</b></p>
+            <ul style="margin-top:8px;">
+                <li><b>3</b> Thousands (Ribuan) + <b>5</b> Hundreds (Ratusan) + <b>0</b> Tens (Puluhan) + <b>2</b> Ones (Satuan)</li>
+                <li><span class="lang-tag tag-en">EN</span> Read as: <b>"Three thousand five hundred two"</b></li>
+                <li><span class="lang-tag tag-id">ID</span> Dibaca sebagai: <b>"Tiga ribu lima ratus dua"</b></li>
+            </ul>
+        </div>
+        <p style="margin-top:15px; font-weight:bold; text-align:center; color:#4f46e5;">Congratulations! You can now master whole numbers up to thousands! 🎉</p>
+    </div>
+</div>
+
+<div class="slide-container" style="background-color: #dcfd8bff;">
+    <div class="flex-center">
+        <h1 style="font-size: 64px; color:#1e293b;">THANK YOU!</h1>
+        <h2 style="border:none; color:#4f46e5; text-align:center; font-size:36px; margin:0;">Terima Kasih</h2>
+        <div style="font-size: 60px; margin: 20px 0;">🌟 🚀 🎈</div>
+        <p style="font-size: 20px; font-weight: bold; color: #475569;">Keep practicing and have fun with math! / Sampai jumpa di keseruan matematika berikutnya!</p>
+    </div>
+</div>
+
+
+<script>
+    // Helper function to color input fields based on correctness
+    function applyColorFeedback(elementId, isCorrect) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            if (isCorrect) {
+                element.style.backgroundColor = "#dcfd8b"; // Hijau jika benar
+                element.style.color = "#1e293b";
+                element.style.borderColor = "#10b981";
+            } else {
+                element.style.backgroundColor = "#ffc2e2"; // Merah/Pink jika salah
+                element.style.color = "#1e293b";
+                element.style.borderColor = "#ef4444";
+            }
+        }
+    }
+
+    // Reset fields color back to default white/slate
+    function resetFieldColor(elementId) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.style.backgroundColor = "#ffffff";
+            element.style.color = "#000000";
+            element.style.borderColor = "#cbd5e1";
+        }
+    }
+
+    // --- SLIDE 6 LOGIC (PLACE VALUE) ---
+    let s6Idx = 0;
+    const s6Data = [
+        {num: 2481, th: 2, h: 4, t: 8, o: 1}, {num: 5093, th: 5, h: 0, t: 9, o: 3},
+        {num: 1760, th: 1, h: 7, t: 6, o: 0}, {num: 8314, th: 8, h: 3, t: 1, o: 4},
+        {num: 4007, th: 4, h: 0, t: 0, o: 7}, {num: 9256, th: 9, h: 2, t: 5, o: 6},
+        {num: 3629, th: 3, h: 6, t: 2, o: 9}, {num: 6102, th: 6, h: 1, t: 0, o: 2},
+        {num: 7845, th: 7, h: 8, t: 4, o: 5}, {num: 5555, th: 5, h: 5, t: 5, o: 5}
+    ];
+    function checkSlide6() {
+        const userTh = document.getElementById('s6-in-th').value;
+        const userH = document.getElementById('s6-in-h').value;
+        const userT = document.getElementById('s6-in-t').value;
+        const userO = document.getElementById('s6-in-o').value;
+        const cur = s6Data[s6Idx];
+        const fb = document.getElementById('s6-feedback');
+        
+        applyColorFeedback('s6-in-th', userTh == cur.th);
+        applyColorFeedback('s6-in-h', userH == cur.h);
+        applyColorFeedback('s6-in-t', userT == cur.t);
+        applyColorFeedback('s6-in-o', userO == cur.o);
+
+        if (userTh == cur.th && userH == cur.h && userT == cur.t && userO == cur.o) {
+            fb.innerHTML = "<span class='correct-text'>🎉 Great Job! Benar Sekali!</span>";
+            document.getElementById('s6-btn-next').classList.remove('hidden');
+        } else {
+            fb.innerHTML = "<span class='wrong-text'>❌ Periksa kembali kolom berwarna merah!</span>";
+        }
+    }
+    function nextSlide6() {
+        s6Idx = (s6Idx + 1) % s6Data.length;
+        document.getElementById('s6-idx').innerText = s6Idx + 1;
+        document.getElementById('s6-num-display').innerText = s6Data[s6Idx].num;
+        ['s6-in-th', 's6-in-h', 's6-in-t', 's6-in-o'].forEach(id => {
+            document.getElementById(id).value = '';
+            resetFieldColor(id);
+        });
+        document.getElementById('s6-feedback').innerHTML = '';
+        document.getElementById('s6-btn-next').classList.add('hidden');
+    }
+
+    // --- SLIDE 9 LOGIC (NUMBER SYMBOL) ---
+    let s9Idx = 0;
+    const s9Data = [
+        {en: "Two thousand three hundred forty-five", id: "Dua ribu tiga ratus empat puluh lima", ans: "2345"},
+        {en: "Four thousand eighty-one", id: "Empat ribu delapan puluh satu", ans: "4081"},
+        {en: "Seven thousand six hundred", id: "Tujuh ribu enam ratus", ans: "7600"},
+        {en: "One thousand two hundred three", id: "Seribu dua ratus tiga", ans: "1203"},
+        {en: "Five thousand fifty", id: "Lima ribu lima puluh", ans: "5050"}
+    ];
+    function checkSlide9() {
+        const userVal = document.getElementById('s9-answer-input').value.trim();
+        const fb = document.getElementById('s9-feedback');
+        const isCorrect = (userVal === s9Data[s9Idx].ans);
+        
+        applyColorFeedback('s9-answer-input', isCorrect);
+        if (isCorrect) {
+            fb.innerHTML = "<span class='correct-text'>🎉 Perfect! Jawabanmu benar!</span>";
+            document.getElementById('s9-btn-next').classList.remove('hidden');
+        } else {
+            fb.innerHTML = "<span class='wrong-text'>❌ Salah, coba periksa kembali lambang bilanganmu!</span>";
+        }
+    }
+    function nextSlide9() {
+        s9Idx = (s9Idx + 1) % s9Data.length;
+        document.getElementById('s9-idx').innerText = s9Idx + 1;
+        document.getElementById('s9-name-en').innerText = `"${s9Data[s9Idx].en}"`;
+        document.getElementById('s9-name-id').innerText = `"${s9Data[s9Idx].id}"`;
+        document.getElementById('s9-answer-input').value = '';
+        resetFieldColor('s9-answer-input');
+        document.getElementById('s9-feedback').innerHTML = '';
+        document.getElementById('s9-btn-next').classList.add('hidden');
+    }
+
+    // --- SLIDE 11 LOGIC (DECOMPOSITION) ---
+    let s11Idx = 0;
+    const s11Data = [
+        {num: 5439, th: 5000, h: 400, t: 30, o: 9}, {num: 1208, th: 1000, h: 200, t: 0, o: 8},
+        {num: 7650, th: 7000, h: 600, t: 50, o: 0}, {num: 3042, th: 3000, h: 0, t: 40, o: 2}, {num: 1002, th: 1000, h: 0, t: 0, o: 2}
+    ];
+    function checkSlide11() {
+        const th = document.getElementById('s11-th').value || 0;
+        const h = document.getElementById('s11-h').value || 0;
+        const t = document.getElementById('s11-t').value || 0;
+        const o = document.getElementById('s11-o').value || 0;
+        const cur = s11Data[s11Idx];
+        const fb = document.getElementById('s11-feedback');
+        
+        applyColorFeedback('s11-th', th == cur.th);
+        applyColorFeedback('s11-h', h == cur.h);
+        applyColorFeedback('s11-t', t == cur.t);
+        applyColorFeedback('s11-o', o == cur.o);
+
+        if(th == cur.th && h == cur.h && t == cur.t && o == cur.o) {
+            fb.innerHTML = "<span class='correct-text'>🎉 Brilliant! Dekomposisi berhasil!</span>";
+            document.getElementById('s11-btn-next').classList.remove('hidden');
+        } else {
+            fb.innerHTML = "<span class='wrong-text'>❌ Tulis nilai penuhnya ya (contoh: 5000, bukan 5)!</span>";
+        }
+    }
+    function nextSlide11() {
+        s11Idx = (s11Idx + 1) % s11Data.length;
+        document.getElementById('s11-idx').innerText = s11Idx + 1;
+        document.getElementById('s11-num-display').innerText = s11Data[s11Idx].num;
+        ['s11-th', 's11-h', 's11-t', 's11-o'].forEach(id => {
+            document.getElementById(id).value = '';
+            resetFieldColor(id);
+        });
+        document.getElementById('s11-feedback').innerHTML = '';
+        document.getElementById('s11-btn-next').classList.add('hidden');
+    }
+
+    // --- STATIC INLINE COMPARISON (SLIDES 13, 14, 15, 16) ---
+    function checkInlineStaticComp(id, correctSign) {
+        const val = document.getElementById(id).value.trim();
+        applyColorFeedback(id, val === correctSign);
+    }
+
+    // --- SLIDE 17 LOGIC (COMPARE 2 NUMBERS) ---
+    let s17Idx = 0;
+    const s17Data = [
+        {n1: 3520, n2: 3250, a: ">"}, {n1: 1405, n2: 1450, a: "<"}, {n1: 6700, n2: 6700, a: "="},
+        {n1: 8912, n2: 8921, a: "<"}, {n1: 5430, n2: 5403, a: ">"}, {n1: 1002, n2: 1020, a: "<"}, 
+        {n1: 1909, n2: 1099, a: ">"}, {n1: 3000, n2: 2333, a: ">"}, {n1: 5929, n2: 5992, a: "<"},
+        {n1: 4350, n2: 4530, a: "<"}
+    ];
+    function checkSlide17() {
+        const val = document.getElementById('s17-input').value.trim();
+        const fb = document.getElementById('s17-feedback');
+        const isCorrect = (val === s17Data[s17Idx].a);
+        
+        applyColorFeedback('s17-input', isCorrect);
+        if(isCorrect) {
+            fb.innerHTML = "<span class='correct-text'>🎉 Superb! Perbandinganmu Tepat!</span>";
+            document.getElementById('s17-btn-next').classList.remove('hidden');
+        } else {
+            fb.innerHTML = "<span class='wrong-text'>❌ Perhatikan nilai tempat ratusan atau puluhannya!</span>";
+        }
+    }
+    function nextSlide17() {
+        s17Idx = (s17Idx + 1) % s17Data.length;
+        document.getElementById('s17-idx').innerText = s17Idx + 1;
+        document.getElementById('s17-n1').innerText = s17Data[s17Idx].n1;
+        document.getElementById('s17-n2').innerText = s17Data[s17Idx].n2;
+        document.getElementById('s17-input').value = '';
+        resetFieldColor('s17-input');
+        document.getElementById('s17-feedback').innerHTML = '';
+        document.getElementById('s17-btn-next').classList.add('hidden');
+    }
+
+    // --- SLIDE 18 LOGIC (COMPARE OPERATIONS) ---
+    let s18Idx = 0;
+    const s18Data = [
+        {op: "1000 + 400", val: 1400, a: "="}, {op: "3000 + 50", val: 3500, a: "<"},
+        {op: "7000 + 9", val: 7002, a: ">"}, {op: "7000 + 92", val: 7902, a: "<"}, 
+        {op: "5000 - 9", val: 4001, a: ">"}, {op: "7550 - 55", val: 7000, a: ">"}, 
+        {op: "1200 - 20", val: 1180, a: "="}, {op: "5500 + 55", val: 5055 + 500, a: "="}, 
+        {op: "3000 - 2500", val: 2000 + 500, a: "="}, {op: "9999 - 89", val: 10000 - 99, a: ">"}
+    ];
+    function checkSlide18() {
+        const val = document.getElementById('s18-input').value.trim();
+        const fb = document.getElementById('s18-feedback');
+        const isCorrect = (val === s18Data[s18Idx].a);
+        
+        applyColorFeedback('s18-input', isCorrect);
+        if(isCorrect) {
+            fb.innerHTML = "<span class='correct-text'>🎉 Berhasil menyelesaikan tantangan operasi!</span>";
+            document.getElementById('s18-btn-next').classList.remove('hidden');
+        } else {
+            fb.innerHTML = "<span class='wrong-text'>❌ Hitung hasil penjumlahannya dahulu ya!</span>";
+        }
+    }
+    function nextSlide18() {
+        s18Idx = (s18Idx + 1) % s18Data.length;
+        document.getElementById('s18-idx').innerText = s18Idx + 1;
+        document.getElementById('s18-op').innerText = s18Data[s18Idx].op;
+        document.getElementById('s18-val').innerText = s18Data[s18Idx].val;
+        document.getElementById('s18-input').value = '';
+        resetFieldColor('s18-input');
+        document.getElementById('s18-feedback').innerHTML = '';
+        document.getElementById('s18-btn-next').classList.add('hidden');
+    }
+
+    // --- SLIDE 20 LOGIC (RANK NUMBERS) ---
+    let s20Answers = [1, 4, 2, 3]; 
+    function generateSlide20() {
+        const templates = [
+            {n: [1200, 4500, 2300, 3100], a: [1, 4, 2, 3]},
+            {n: [7050, 2010, 9500, 5200], a: [3, 1, 4, 2]},
+            {n: [3400, 3100, 3900, 3050], a: [3, 2, 4, 1]}
+        ];
+        const r = templates[Math.floor(Math.random() * templates.length)];
+        document.getElementById('s20-n1').innerText = r.n[0];
+        document.getElementById('s20-n2').innerText = r.n[1];
+        document.getElementById('s20-n3').innerText = r.n[2];
+        document.getElementById('s20-n4').innerText = r.n[3];
+        s20Answers = r.a;
+        ['s20-r1', 's20-r2', 's20-r3', 's20-r4'].forEach(id => {
+            document.getElementById(id).value = '';
+            resetFieldColor(id);
+        });
+        document.getElementById('s20-feedback').innerHTML = '';
+    }
+    function checkSlide20() {
+        const r1 = document.getElementById('s20-r1').value;
+        const r2 = document.getElementById('s20-r2').value;
+        const r3 = document.getElementById('s20-r3').value;
+        const r4 = document.getElementById('s20-r4').value;
+        const fb = document.getElementById('s20-feedback');
+        
+        applyColorFeedback('s20-r1', r1 == s20Answers[0]);
+        applyColorFeedback('s20-r2', r2 == s20Answers[1]);
+        applyColorFeedback('s20-r3', r3 == s20Answers[2]);
+        applyColorFeedback('s20-r4', r4 == s20Answers[3]);
+
+        if(r1 == s20Answers[0] && r2 == s20Answers[1] && r3 == s20Answers[2] && r4 == s20Answers[3]) {
+            fb.innerHTML = "<span class='correct-text'>🎉 Spectacular! Urutanmu sempurna!</span>";
+        } else {
+            fb.innerHTML = "<span class='wrong-text'>❌ Cek urutan kolom merah, 1 terkecil & 4 terbesar!</span>";
+        }
+    }
+
+    // --- STORY PROBLEMS INLINE CHECK (SLIDES 21 & 22) ---
+    function checkInlineStory(id, exactCorrectKey) {
+        const val = document.getElementById(id).value.trim().toLowerCase().replace(/\s+/g, '');
+        applyColorFeedback(id, val === exactCorrectKey);
+    }
+    function toggleDiscussion(id) {
+        document.getElementById(id).classList.toggle('hidden');
+    }
+</script>
+
+</body>
+</html>
