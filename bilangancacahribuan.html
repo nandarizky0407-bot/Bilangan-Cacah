@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petualangan Bilangan Ribuan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #a78bfa 0%, #38bdf8 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 15px;
+            color: #334155;
+            overflow: hidden;
+        }
+        h1, h2, h3, .font-kids { font-family: 'Baloo 2', cursive; }
+        
+        .slide { display: none; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .slide.active { display: flex; }
+        
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .btn-kid { transition: all 0.1s; box-shadow: 0 5px 0px rgba(0,0,0,0.2); }
+        .btn-kid:hover { transform: translateY(2px); box-shadow: 0 3px 0px rgba(0,0,0,0.2); }
+        .btn-kid:active { transform: translateY(5px); box-shadow: none; }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #e0e7ff; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #818cf8; border-radius: 4px; }
+
+        .tab-btn { transition: all 0.2s; }
+        .tab-btn.active { background-color: #6366f1; color: white; border-color: #4f46e5; box-shadow: inset 0 3px 6px rgba(0,0,0,0.2); }
+
+        .input-correct { border-color: #22c55e !important; background-color: #dcfce7 !important; color: #166534 !important; }
+        .input-wrong { border-color: #ef4444 !important; background-color: #fee2e2 !important; color: #991b1b !important; }
+
+        /* Flashcard Styles */
+        .flashcard-container { perspective: 1000px; width: 100%; max-width: 400px; height: 250px; cursor: pointer; }
+        .flashcard { width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; position: relative; }
+        .flashcard.is-flipped { transform: rotateY(180deg); }
+        .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; border: 4px solid; }
+        .card-front { background-color: #f0fdf4; border-color: #4ade80; color: #166534; }
+        .card-back { background-color: #fffbeb; border-color: #fbbf24; color: #92400e; transform: rotateY(180deg); }
+
+        /* Grid Kartu Cerita */
+        .story-card { transition: all 0.2s; }
+        .story-card.opened { background-color: #cbd5e1; color: #64748b; border-color: #94a3b8; pointer-events: none; box-shadow: none; transform: none; }
+    </style>
+</head>
+<body>
+
+    <div class="w-full max-w-6xl h-[92vh] min-h-[600px] bg-white rounded-[30px] shadow-2xl flex flex-col overflow-hidden border-[6px] border-white relative">
+        
+        <!-- HEADER -->
+        <div class="bg-indigo-500 px-6 py-4 flex justify-between items-center z-10 shrink-0 border-b-[4px] border-indigo-700 text-white">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-cubes-stacked text-3xl bg-white/20 p-2 rounded-2xl shadow-sm"></i>
+                <h1 class="font-kids text-2xl tracking-wide hidden sm:block font-bold">Bilangan Ribuan</h1>
+            </div>
+            
+            <div id="student-badge" class="hidden items-center gap-4 bg-white/20 px-5 py-2 rounded-full font-bold text-sm shadow-sm border border-white/30">
+                <div class="text-sky-200"><i class="fa-solid fa-face-smile"></i> <span id="s1-name-display">S1</span></div>
+                <div class="text-rose-200"><i class="fa-solid fa-face-laugh-wink"></i> <span id="s2-name-display">S2</span></div>
+            </div>
+
+            <div class="flex gap-3">
+                <button onclick="navSlide(-1)" class="w-10 h-10 rounded-xl bg-indigo-400 hover:bg-indigo-300 text-white shadow-sm border-b-4 border-indigo-600 btn-kid flex items-center justify-center" id="btn-prev" disabled><i class="fa-solid fa-chevron-left"></i></button>
+                <span id="slide-indicator" class="flex items-center font-bold text-indigo-100">1/10</span>
+                <button onclick="navSlide(1)" class="w-10 h-10 rounded-xl bg-amber-400 hover:bg-amber-300 text-amber-900 shadow-sm border-b-4 border-amber-600 btn-kid flex items-center justify-center" id="btn-next" disabled><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <!-- CONTENT AREA -->
+        <div class="flex-grow overflow-y-auto custom-scrollbar relative bg-slate-50">
+            
+            <!-- SLIDE 1: COVER -->
+            <div id="slide-1" class="slide active flex-col justify-center items-center h-full p-8 text-center bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-indigo-50">
+                <h1 class="font-kids text-5xl md:text-7xl font-extrabold text-indigo-800 mb-2 drop-shadow-sm">Mengenal Bilangan <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-500">RIBUAN (1.000 - 10.000)</span></h1>
+                <p class="text-indigo-500 text-xl font-bold mb-10">Petualangan Angka Seru!</p>
+                
+                <div class="bg-white p-8 rounded-3xl shadow-xl border-[4px] border-indigo-200 w-full max-w-lg z-10 space-y-6">
+                    <h2 class="font-kids text-2xl font-bold text-indigo-600">Siapa Namamu?</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <input type="text" id="input-s1" placeholder="Siswa 1 (Biru)" class="w-full bg-sky-50 border-2 border-sky-300 rounded-xl px-4 py-3 outline-none focus:border-sky-500 font-bold text-center text-sky-700">
+                        </div>
+                        <div>
+                            <input type="text" id="input-s2" placeholder="Siswa 2 (Merah)" class="w-full bg-rose-50 border-2 border-rose-300 rounded-xl px-4 py-3 outline-none focus:border-rose-500 font-bold text-center text-rose-700">
+                        </div>
+                    </div>
+                    <button onclick="startApp()" class="w-full bg-amber-400 text-amber-900 hover:bg-amber-300 font-kids text-2xl font-bold py-3 rounded-2xl border-b-4 border-amber-500 btn-kid mt-4">Mulai Petualangan! <i class="fa-solid fa-rocket ml-2"></i></button>
+                </div>
+            </div>
+
+            <!-- SLIDE 2: TUJUAN -->
+            <div id="slide-2" class="slide flex-col justify-center items-center h-full p-8 text-center">
+                <h2 class="font-kids text-4xl font-bold text-indigo-600 mb-8"><i class="fa-solid fa-bullseye"></i> Tujuan Pembelajaran</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl">
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border-4 border-sky-200 flex flex-col items-center">
+                        <div class="w-16 h-16 bg-sky-100 text-sky-500 rounded-full flex items-center justify-center text-3xl mb-4 font-bold">1</div>
+                        <h3 class="font-bold text-lg text-slate-700">Nilai Tempat</h3>
+                        <p class="text-slate-500 text-sm mt-2">Mengetahui posisi angka ribuan, ratusan, puluhan, satuan.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border-4 border-emerald-200 flex flex-col items-center">
+                        <div class="w-16 h-16 bg-emerald-100 text-emerald-500 rounded-full flex items-center justify-center text-3xl mb-4 font-bold">2</div>
+                        <h3 class="font-bold text-lg text-slate-700">Membaca Angka</h3>
+                        <p class="text-slate-500 text-sm mt-2">Membaca nama dan menulis lambang bilangan hingga 10.000.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border-4 border-amber-200 flex flex-col items-center">
+                        <div class="w-16 h-16 bg-amber-100 text-amber-500 rounded-full flex items-center justify-center text-3xl mb-4 font-bold">3</div>
+                        <h3 class="font-bold text-lg text-slate-700">Membandingkan</h3>
+                        <p class="text-slate-500 text-sm mt-2">Menentukan bilangan mana yang lebih besar, kecil, atau sama.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border-4 border-rose-200 flex flex-col items-center">
+                        <div class="w-16 h-16 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center text-3xl mb-4 font-bold">4</div>
+                        <h3 class="font-bold text-lg text-slate-700">Mengurutkan</h3>
+                        <p class="text-slate-500 text-sm mt-2">Menyusun barisan bilangan ribuan dengan urutan yang benar.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 3: PERTANYAAN PEMANTIK -->
+            <div id="slide-3" class="slide flex-col justify-center items-center h-full p-8 text-center bg-sky-50">
+                <h2 class="font-kids text-4xl font-bold text-sky-600 mb-8"><i class="fa-solid fa-lightbulb"></i> Dimana kita melihat Ribuan?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full">
+                    <div class="bg-white p-6 rounded-3xl shadow-md border-4 border-amber-200">
+                        <i class="fa-solid fa-money-bill-wave text-5xl text-emerald-500 mb-4"></i>
+                        <h3 class="font-bold text-xl text-slate-700 mb-2">Uang Jajan</h3>
+                        <p class="text-slate-600">"Harga es krim ini Rp <span class="font-bold text-emerald-600">5.000</span>!"</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-3xl shadow-md border-4 border-amber-200">
+                        <i class="fa-solid fa-calendar-days text-5xl text-blue-500 mb-4"></i>
+                        <h3 class="font-bold text-xl text-slate-700 mb-2">Tahun</h3>
+                        <p class="text-slate-600">"Sekarang adalah tahun <span class="font-bold text-blue-600">2026</span>."</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-3xl shadow-md border-4 border-amber-200">
+                        <i class="fa-solid fa-mountain-sun text-5xl text-amber-500 mb-4"></i>
+                        <h3 class="font-bold text-xl text-slate-700 mb-2">Tinggi Gunung</h3>
+                        <p class="text-slate-600">"Tinggi Gunung Semeru adalah <span class="font-bold text-amber-600">3.676</span> meter!"</p>
+                    </div>
+                </div>
+                <div class="mt-8 bg-sky-600 text-white p-6 rounded-3xl max-w-2xl shadow-lg border-b-4 border-sky-800">
+                    <p class="text-xl font-bold">Bilangan ribuan sangat berguna setiap hari. Mari pelajari cara kerjanya!</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 4: NILAI TEMPAT -->
+            <div id="slide-4" class="slide flex-col h-full p-6 md:p-8">
+                <h2 class="font-kids text-4xl font-bold text-indigo-600 mb-4"><i class="fa-solid fa-layer-group"></i> Nilai Tempat</h2>
+                
+                <div class="flex gap-2 mb-6">
+                    <button onclick="switchTab('s4', 'materi')" id="btn-s4-materi" class="tab-btn active px-6 py-2 bg-white border-2 border-slate-200 text-slate-600 font-bold rounded-xl btn-kid">Materi</button>
+                    <button onclick="switchTab('s4', 'latihan')" id="btn-s4-latihan" class="tab-btn px-6 py-2 bg-white border-2 border-slate-200 text-slate-600 font-bold rounded-xl btn-kid">Latihan Soal</button>
+                </div>
+
+                <!-- Materi S4 -->
+                <div id="content-s4-materi" class="flex-grow bg-white p-6 md:p-10 rounded-3xl shadow-sm border-4 border-indigo-100 flex flex-col items-center justify-center text-center">
+                    <h3 class="text-2xl font-bold text-slate-700 mb-6">Setiap angka punya "Kamar" masing-masing!</h3>
+                    <div class="text-7xl font-black font-mono tracking-[0.2em] text-slate-800 mb-8 bg-slate-100 py-6 px-10 rounded-3xl border-4 border-slate-200">
+                        <span class="text-rose-500">4</span><span class="text-emerald-500">5</span><span class="text-amber-500">3</span><span class="text-sky-500">2</span>
+                    </div>
+                    <div class="grid grid-cols-4 gap-4 w-full max-w-3xl">
+                        <div class="bg-rose-50 border-4 border-rose-200 p-4 rounded-2xl">
+                            <span class="block text-rose-500 font-black text-3xl mb-2">4</span>
+                            <span class="font-bold text-slate-600 uppercase">Ribuan</span>
+                        </div>
+                        <div class="bg-emerald-50 border-4 border-emerald-200 p-4 rounded-2xl">
+                            <span class="block text-emerald-500 font-black text-3xl mb-2">5</span>
+                            <span class="font-bold text-slate-600 uppercase">Ratusan</span>
+                        </div>
+                        <div class="bg-amber-50 border-4 border-amber-200 p-4 rounded-2xl">
+                            <span class="block text-amber-500 font-black text-3xl mb-2">3</span>
+                            <span class="font-bold text-slate-600 uppercase">Puluhan</span>
+                        </div>
+                        <div class="bg-sky-50 border-4 border-sky-200 p-4 rounded-2xl">
+                            <span class="block text-sky-500 font-black text-3xl mb-2">2</span>
+                            <span class="font-bold text-slate-600 uppercase">Satuan</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Latihan S4 -->
+                <div id="content-s4-latihan" class="hidden flex-grow bg-white p-6 rounded-3xl shadow-sm border-4 border-indigo-100 flex flex-col items-center text-center">
+                    <div class="text-sm font-bold text-indigo-500 bg-indigo-50 px-4 py-1 rounded-full mb-4">Soal <span id="s4-idx">1</span> / 20</div>
+                    <p class="text-xl font-bold text-slate-600 mb-4">Pecah bilangan ini sesuai kamar nilai tempatnya!</p>
+                    
+                    <div class="text-6xl font-black font-mono tracking-widest text-indigo-600 mb-8 bg-indigo-50 py-4 px-10 rounded-2xl border-4 border-indigo-200" id="s4-num">1234</div>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-3xl mb-8">
+                        <div>
+                            <label class="block font-bold text-rose-500 mb-2">Ribuan</label>
+                            <input type="number" id="s4-in-r" class="w-full border-4 border-slate-200 rounded-xl p-3 text-center text-2xl font-bold outline-none focus:border-rose-400">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-emerald-500 mb-2">Ratusan</label>
+                            <input type="number" id="s4-in-h" class="w-full border-4 border-slate-200 rounded-xl p-3 text-center text-2xl font-bold outline-none focus:border-emerald-400">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-amber-500 mb-2">Puluhan</label>
+                            <input type="number" id="s4-in-t" class="w-full border-4 border-slate-200 rounded-xl p-3 text-center text-2xl font-bold outline-none focus:border-amber-400">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-sky-500 mb-2">Satuan</label>
+                            <input type="number" id="s4-in-o" class="w-full border-4 border-slate-200 rounded-xl p-3 text-center text-2xl font-bold outline-none focus:border-sky-400">
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <button onclick="checkS4()" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold text-xl px-8 py-3 rounded-2xl btn-kid border-b-4 border-indigo-700">Cek Jawaban <i class="fa-solid fa-check ml-2"></i></button>
+                        <button onclick="nextS4()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xl px-8 py-3 rounded-2xl btn-kid border-b-4 border-slate-400">Ganti Soal <i class="fa-solid fa-forward ml-2"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 5: NAMA & LAMBANG -->
+            <div id="slide-5" class="slide flex-col h-full p-6 md:p-8">
+                <h2 class="font-kids text-4xl font-bold text-emerald-600 mb-4"><i class="fa-solid fa-spell-check"></i> Nama & Lambang Bilangan</h2>
+                
+                <div class="flex gap-2 mb-6">
+                    <button onclick="switchTab('s5', 'materi')" id="btn-s5-materi" class="tab-btn active px-6 py-2 bg-white border-2 border-slate-200 text-slate-600 font-bold rounded-xl btn-kid">Materi</button>
+                    <button onclick="switchTab('s5', 'latihan')" id="btn-s5-latihan" class="tab-btn px-6 py-2 bg-white border-2 border-slate-200 text-slate-600 font-bold rounded-xl btn-kid">Latihan Soal</button>
+                </div>
+
+                <!-- Materi S5 -->
+                <div id="content-s5-materi" class="flex-grow bg-white p-8 rounded-3xl shadow-sm border-4 border-emerald-100 flex flex-col items-center justify-center">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
+                        <div class="bg-emerald-50 p-6 rounded-2xl border-4 border-emerald-200">
+                            <h3 class="font-bold text-emerald-700 text-xl mb-4 border-b-2 border-emerald-200 pb-2">Lambang ke Nama</h3>
+                            <div class="text-4xl font-black text-slate-800 tracking-widest mb-4">3.450</div>
+                            <p class="text-lg font-bold text-slate-600"><i class="fa-solid fa-arrow-right text-emerald-400"></i> Tiga ribu empat ratus lima puluh</p>
+                            <p class="text-sm text-slate-500 mt-4 italic">*Jika angkanya 0, nilainya tidak dibaca.</p>
+                        </div>
+                        <div class="bg-sky-50 p-6 rounded-2xl border-4 border-sky-200">
+                            <h3 class="font-bold text-sky-700 text-xl mb-4 border-b-2 border-sky-200 pb-2">Nama ke Lambang</h3>
+                            <div class="text-2xl font-bold text-slate-800 mb-4">Dua ribu tujuh ratus satu</div>
+                            <p class="text-4xl font-black text-slate-600 tracking-widest"><i class="fa-solid fa-arrow-right text-sky-400"></i> 2.701</p>
+                            <p class="text-sm text-slate-500 mt-4 italic">*Puluhannya nol karena tidak disebut.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Latihan S5 -->
+                <div id="content-s5-latihan" class="hidden flex-grow flex flex-col h-full">
+                    <div class="flex justify-center gap-4 mb-4">
+                        <button onclick="switchSubS5('nama')" id="btn-s5-nama" class="bg-emerald-500 text-white font-bold px-4 py-2 rounded-lg shadow">Cari Nama Bilangan</button>
+                        <button onclick="switchSubS5('lambang')" id="btn-s5-lambang" class="bg-slate-200 text-slate-600 font-bold px-4 py-2 rounded-lg hover:bg-slate-300">Cari Lambang Bilangan</button>
+                    </div>
+
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border-4 border-emerald-200 flex flex-col items-center text-center flex-grow justify-center w-full max-w-3xl mx-auto">
+                        <div class="text-sm font-bold text-emerald-500 bg-emerald-50 px-4 py-1 rounded-full mb-4">Soal <span id="s5-idx">1</span> / 10</div>
+                        
+                        <p id="s5-q-title" class="text-xl font-bold text-slate-600 mb-4">Tuliskan NAMA bilangannya:</p>
+                        <div id="s5-q-val" class="text-5xl font-black text-emerald-600 mb-8 bg-emerald-50 py-4 px-10 rounded-2xl border-4 border-emerald-100">1.250</div>
+                        
+                        <input type="text" id="s5-ans" class="w-full max-w-xl border-4 border-slate-200 rounded-2xl p-4 text-center text-xl font-bold outline-none focus:border-emerald-400 mb-8" placeholder="Ketik di sini...">
+                        
+                        <div class="flex gap-4">
+                            <button onclick="checkS5()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xl px-8 py-3 rounded-2xl btn-kid border-b-4 border-emerald-700">Cek <i class="fa-solid fa-check"></i></button>
+                            <button onclick="nextS5()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xl px-8 py-3 rounded-2xl btn-kid border-b-4 border-slate-400">Ganti Soal <i class="fa-solid fa-forward"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 6: NILAI & DEKOMPOSISI -->
+            <div id="slide-6" class="slide flex-col h-full p-6 md:p-8">
+                <h2 class="font-kids text-4xl font-bold text-rose-500 mb-4"><i class="fa-solid fa-puzzle-piece"></i> Nilai & Dekomposisi Bilangan</h2>
+                
+                <div class="flex gap-2 mb-6">
+                    <button onclick="switchTab('s6', 'materi')" id="btn-s6-materi" class="tab-btn active px-6 py-2 bg-white border-2 border-slate-200 text-slate-600 font-bold rounded-xl btn-kid">Materi</button>
+                    <button onclick="switchTab('s6', 'latihan')" id="btn-s6-latihan" class="tab-btn px-6 py-2 bg-white border-2 border-slate-200 text-slate-600 font-bold rounded-xl btn-kid">Latihan Soal</button>
+                </div>
+
+                <!-- Materi S6 -->
+                <div id="content-s6-materi" class="flex-grow bg-white p-8 rounded-3xl shadow-sm border-4 border-rose-100 flex flex-col items-center justify-center text-center">
+                    <h3 class="text-3xl font-black text-slate-800 mb-6 tracking-widest bg-slate-100 py-4 px-10 rounded-2xl">4.532</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl text-left">
+                        <div class="bg-rose-50 p-6 rounded-2xl border-4 border-rose-200">
+                            <h4 class="font-bold text-rose-700 text-xl mb-3"><i class="fa-solid fa-tag"></i> Nilai Bilangan</h4>
+                            <ul class="space-y-2 font-bold text-slate-600">
+                                <li>Angka 4 nilainya <span class="text-rose-600">4.000</span></li>
+                                <li>Angka 5 nilainya <span class="text-rose-600">500</span></li>
+                                <li>Angka 3 nilainya <span class="text-rose-600">30</span></li>
+                                <li>Angka 2 nilainya <span class="text-rose-600">2</span></li>
+                            </ul>
+                        </div>
+                        <div class="bg-amber-50 p-6 rounded-2xl border-4 border-amber-200">
+                            <h4 class="font-bold text-amber-700 text-xl mb-3"><i class="fa-solid fa-link"></i> Dekomposisi (Urai)</h4>
+                            <p class="font-bold text-slate-600 mb-2">Kita bisa menulisnya sebagai penjumlahan panjang:</p>
+                            <div class="text-2xl font-black text-amber-600 bg-white p-4 rounded-xl border-2 border-amber-100 text-center">
+                                4.000 + 500 + 30 + 2
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Latihan S6 -->
+                <div id="content-s6-latihan" class="hidden flex-grow flex flex-col h-full">
+                    <div class="flex justify-center gap-4 mb-4">
+                        <button onclick="switchSubS6('nilai')" id="btn-s6-nilai" class="bg-rose-500 text-white font-bold px-4 py-2 rounded-lg shadow">Nilai Bilangan (Flashcard)</button>
+                        <button onclick="switchSubS6('dekomposisi')" id="btn-s6-dekom" class="bg-slate-200 text-slate-600 font-bold px-4 py-2 rounded-lg hover:bg-slate-300">Dekomposisi</button>
+                    </div>
+
+                    <!-- Sub: Flashcard -->
+                    <div id="s6-sub-nilai" class="bg-white p-8 rounded-3xl shadow-sm border-4 border-rose-200 flex flex-col items-center justify-center flex-grow w-full max-w-3xl mx-auto">
+                        <p class="text-lg font-bold text-slate-600 mb-4">Tebak nilai angka yang digarisbawahi, lalu klik kartu untuk melihat jawaban!</p>
+                        
+                        <div class="flashcard-container mb-8" onclick="this.querySelector('.flashcard').classList.toggle('is-flipped')">
+                            <div class="flashcard" id="flashcard-el">
+                                <div class="card-face card-front">
+                                    <div class="text-5xl font-black tracking-widest" id="fc-front"><u>4</u>.500</div>
+                                    <p class="text-sm font-bold mt-4 opacity-70">Klik untuk putar <i class="fa-solid fa-rotate"></i></p>
+                                </div>
+                                <div class="card-face card-back">
+                                    <p class="text-lg font-bold mb-2">Nilainya adalah:</p>
+                                    <div class="text-5xl font-black" id="fc-back">4.000</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="nextFlashcard()" class="bg-rose-500 hover:bg-rose-600 text-white font-bold text-xl px-8 py-3 rounded-2xl btn-kid border-b-4 border-rose-700">Kartu Selanjutnya <i class="fa-solid fa-forward"></i></button>
+                    </div>
+
+                    <!-- Sub: Dekomposisi -->
+                    <div id="s6-sub-dekom" class="hidden bg-white p-8 rounded-3xl shadow-sm border-4 border-rose-200 flex flex-col items-center justify-center flex-grow w-full max-w-4xl mx-auto">
+                        <div class="text-sm font-bold text-rose-500 bg-rose-50 px-4 py-1 rounded-full mb-4">Soal <span id="s6-idx">1</span> / 10</div>
+                        <p class="text-xl font-bold text-slate-600 mb-6">Uraikan bilangan ini!</p>
+                        
+                        <div class="text-5xl font-black tracking-widest text-slate-800 mb-8" id="s6-d-num">4.532</div>
+                        
+                        <div class="flex flex-wrap items-center justify-center gap-2 md:gap-4 mb-8 text-3xl font-black text-slate-400">
+                            <input type="number" id="s6-d-r" class="w-24 border-4 border-slate-200 rounded-xl p-3 text-center text-xl font-bold outline-none focus:border-rose-400 text-slate-700">
+                            <span>+</span>
+                            <input type="number" id="s6-d-h" class="w-24 border-4 border-slate-200 rounded-xl p-3 text-center text-xl font-bold outline-none focus:border-emerald-400 text-slate-700">
+                            <span>+</span>
+                            <input type="number" id="s6-d-t" class="w-24 border-4 border-slate-200 rounded-xl p-3 text-center text-xl font-bold outline-none focus:border-amber-400 text-slate-700">
+                            <span>+</span>
+                            <input type="number" id="s6-d-o" class="w-24 border-4 border-slate-200 rounded-xl p-3 text-center text-xl font-bold outline-none focus:border-sky-400 text-slate-700">
+                        </div>
+
+                        <div class="flex gap-4">
+                            <button onclick="checkS6Dekom()" class="bg-rose-500 hover:bg-rose-600 text-white font-bold text-xl px-8 py-3 rounded-2xl btn-kid border-b-4 border-rose-700">Cek <i class="fa-solid fa-check"></i></button>
+                            <button onclick="nextS6Dekom()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xl px-8 py-3 rounded-2xl btn-kid border-b-4 border-slate-400">Ganti Soal <i class="fa-solid fa-forward"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 7: MEMBANDINGKAN -->
+            <div id="slide-7" class="slide flex-col h-full p-6 md:p-8">
+                <h2 class="font-kids text-4xl font-bold text-amber-500 mb-4"><i class="fa-solid fa-scale-balanced"></i> Membandingkan Bilangan</h2>
+                
+                <div class="flex gap-2 mb-6">
+                    <button onclick="switchTab('s7', 'materi')" id="btn-s7-materi" class="tab-btn active px-6 py-2 bg-white border-2 border-slate-200 text-slate-600 font-bold rounded-xl btn-kid">Materi</button>
+                    <button onclick="switchTab('s7', 'latihan')" id="btn-s7-latihan" class="tab-btn px-6 py-2 bg-white border-2 border-slate-200 text-slate-600 font-bold rounded-xl btn-kid">Latihan Soal</button>
+                </div>
+
+                <!-- Materi S7 -->
+                <div id="content-s7-materi" class="flex-grow bg-white p-8 rounded-3xl shadow-sm border-4 border-amber-100 flex flex-col items-center justify-center text-center">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl">
+                        <div class="bg-rose-50 p-6 rounded-2xl border-4 border-rose-200 flex flex-col items-center">
+                            <div class="text-7xl font-black text-rose-500 mb-4">&gt;</div>
+                            <h3 class="font-bold text-xl text-slate-700">Lebih Besar</h3>
+                            <p class="text-slate-500 mt-2">Caplok yang lebih besar! <br>Contoh: 5.000 <b>&gt;</b> 3.000</p>
+                        </div>
+                        <div class="bg-sky-50 p-6 rounded-2xl border-4 border-sky-200 flex flex-col items-center">
+                            <div class="text-7xl font-black text-sky-500 mb-4">&lt;</div>
+                            <h3 class="font-bold text-xl text-slate-700">Lebih Kecil</h3>
+                            <p class="text-slate-500 mt-2">Ujung lancip ke yang kecil. <br>Contoh: 1.200 <b>&lt;</b> 4.500</p>
+                        </div>
+                        <div class="bg-emerald-50 p-6 rounded-2xl border-4 border-emerald-200 flex flex-col items-center">
+                            <div class="text-7xl font-black text-emerald-500 mb-4">=</div>
+                            <h3 class="font-bold text-xl text-slate-700">Sama Dengan</h3>
+                            <p class="text-slate-500 mt-2">Nilainya kembar! <br>Contoh: 2.500 <b>=</b> 2.500</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Latihan S7 -->
+                <div id="content-s7-latihan" class="hidden flex-grow bg-white p-8 rounded-3xl shadow-sm border-4 border-amber-200 flex flex-col items-center justify-center text-center">
+                    <div class="text-sm font-bold text-amber-500 bg-amber-50 px-4 py-1 rounded-full mb-4">Soal <span id="s7-idx">1</span> / 10</div>
+                    <p class="text-xl font-bold text-slate-600 mb-8">Berikan tanda &gt; , &lt; , atau =</p>
+                    
+                    <div class="flex items-center justify-center gap-6 md:gap-10 mb-10 w-full max-w-2xl">
+                        <div class="text-4xl md:text-5xl font-black text-slate-700" id="s7-n1">1.200</div>
+                        <input type="text" id="s7-ans" class="w-20 md:w-24 bg-slate-50 border-4 border-slate-200 rounded-2xl p-4 text-center text-4xl font-black outline-none focus:border-amber-400 text-amber-500" placeholder="?">
+                        <div class="text-4xl md:text-5xl font-black text-slate-700" id="s7-n2">2.500</div>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button onclick="checkS7()" class="bg-amber-400 hover:bg-amber-500 text-amber-900 font-bold text-xl px-8 py-3 rounded-2xl btn-kid border-b-4 border-amber-600">Cek Jawaban <i class="fa-solid fa-check ml-2"></i></button>
+                        <button onclick="nextS7()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xl px-8 py-3 rounded-2xl btn-kid border-b-4 border-slate-400">Ganti Soal <i class="fa-solid fa-forward ml-2"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 8: MENGURUTKAN -->
+            <div id="slide-8" class="slide flex-col h-full p-6 md:p-8">
+                <h2 class="font-kids text-4xl font-bold text-sky-500 mb-4"><i class="fa-solid fa-arrow-down-1-9"></i> Mengurutkan Bilangan</h2>
+                
+                <div class="flex gap-2 mb-6">
+                    <button onclick="switchTab('s8', 'materi')" id="btn-s8-materi" class="tab-btn active px-6 py-2 bg-white border-2 border-slate-200 text-slate-600 font-bold rounded-xl btn-kid">Materi</button>
+                    <button onclick="switchTab('s8', 'latihan')" id="btn-s8-latihan" class="tab-btn px-6 py-2 bg-white border-2 border-slate-200 text-slate-600 font-bold rounded-xl btn-kid">Latihan Soal</button>
+                </div>
+
+                <!-- Materi S8 -->
+                <div id="content-s8-materi" class="flex-grow bg-white p-8 rounded-3xl shadow-sm border-4 border-sky-100 flex flex-col items-center justify-center">
+                    <div class="bg-sky-50 p-6 rounded-2xl border-4 border-sky-200 max-w-3xl w-full text-center">
+                        <h3 class="font-bold text-sky-700 text-2xl mb-4">Bagaimana cara mengurutkan?</h3>
+                        <p class="text-lg font-bold text-slate-600 mb-6">Bandingkan angkanya dari kiri ke kanan (Kamar terbesar dulu)!</p>
+                        
+                        <div class="flex flex-col items-center gap-2 mb-6 font-bold text-slate-700">
+                            <div class="flex gap-4 items-center">
+                                <span class="bg-white px-4 py-2 border-2 rounded text-xl"><span class="text-rose-500">4</span>.500</span>
+                                <span>vs</span>
+                                <span class="bg-white px-4 py-2 border-2 rounded text-xl"><span class="text-rose-500">3</span>.900</span>
+                                <span class="text-rose-500"><i class="fa-solid fa-arrow-left"></i> Lihat Ribuannya (4 lebih besar)</span>
+                            </div>
+                            <div class="flex gap-4 items-center mt-4">
+                                <span class="bg-white px-4 py-2 border-2 rounded text-xl">4.<span class="text-emerald-500">5</span>00</span>
+                                <span>vs</span>
+                                <span class="bg-white px-4 py-2 border-2 rounded text-xl">4.<span class="text-emerald-500">2</span>00</span>
+                                <span class="text-emerald-500"><i class="fa-solid fa-arrow-left"></i> Jika Ribuan sama, lihat Ratusannya!</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Latihan S8 -->
+                <div id="content-s8-latihan" class="hidden flex-grow bg-white p-6 rounded-3xl shadow-sm border-4 border-sky-200 flex flex-col items-center text-center">
+                    <div class="flex justify-center gap-4 mb-4 w-full">
+                        <button onclick="switchSubS8('asc')" id="btn-s8-asc" class="flex-1 bg-sky-500 text-white font-bold px-4 py-2 rounded-lg shadow">Terkecil ke Terbesar <i class="fa-solid fa-arrow-up-right-dots"></i></button>
+                        <button onclick="switchSubS8('desc')" id="btn-s8-desc" class="flex-1 bg-slate-200 text-slate-600 font-bold px-4 py-2 rounded-lg hover:bg-slate-300">Terbesar ke Terkecil <i class="fa-solid fa-arrow-down-right-dots"></i></button>
+                    </div>
+
+                    <div class="text-sm font-bold text-sky-500 bg-sky-50 px-4 py-1 rounded-full mb-4">Soal <span id="s8-idx">1</span> / 10</div>
+                    <p id="s8-instruction" class="text-xl font-bold text-slate-600 mb-8">Beri nomor urut 1 sampai 5 dari yang TERKECIL!</p>
+
+                    <div class="flex flex-wrap justify-center gap-4 w-full max-w-4xl mb-10" id="s8-number-container">
+                        <!-- Generated by JS -->
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button onclick="checkS8()" class="bg-sky-500 hover:bg-sky-600 text-white font-bold text-xl px-8 py-3 rounded-2xl btn-kid border-b-4 border-sky-700">Cek <i class="fa-solid fa-check"></i></button>
+                        <button onclick="nextS8()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xl px-8 py-3 rounded-2xl btn-kid border-b-4 border-slate-400">Ganti Soal <i class="fa-solid fa-forward"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 9: GAME KARTU SOAL CERITA -->
+            <div id="slide-9" class="slide flex-col h-full p-6 bg-slate-100 overflow-y-auto">
+                <h2 class="font-kids text-4xl font-bold text-indigo-600 mb-2 text-center">Petualangan Soal Cerita!</h2>
+                <p class="text-center font-bold text-slate-500 mb-6">Pilih kartu misteri untuk menjawab teka-teki ribuan.</p>
+                
+                <div class="flex flex-col lg:flex-row gap-6 w-full max-w-6xl mx-auto">
+                    <!-- Kartu Grid -->
+                    <div class="lg:w-1/2">
+                        <div class="grid grid-cols-4 md:grid-cols-5 gap-2" id="story-cards">
+                            <!-- Cards generated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Area Tebak -->
+                    <div class="lg:w-1/2">
+                        <div class="bg-white p-6 rounded-3xl shadow-sm border-4 border-indigo-200 flex flex-col h-full">
+                            <div class="text-sm font-bold text-indigo-500 mb-2 uppercase" id="story-title">Pilih Kartu Dulu</div>
+                            <p class="text-xl font-bold text-slate-700 mb-6 flex-grow" id="story-text">
+                                "?"
+                            </p>
+                            
+                            <input type="number" id="story-ans" placeholder="Ketik angka jawaban..." class="w-full bg-slate-50 border-4 border-slate-200 rounded-xl px-4 py-3 text-center text-xl font-bold outline-none focus:border-indigo-400 mb-4" disabled>
+                            
+                            <div class="flex gap-2 mb-2">
+                                <button onclick="checkStory()" id="story-btn-cek" class="flex-1 bg-indigo-500 text-white font-bold py-3 rounded-xl border-b-4 border-indigo-700 btn-kid" disabled>Cek Jawaban</button>
+                                <button onclick="toggleStoryDisc()" id="story-btn-disc" class="w-14 bg-amber-400 text-amber-900 font-bold rounded-xl border-b-4 border-amber-600 btn-kid" disabled><i class="fa-solid fa-lightbulb"></i></button>
+                            </div>
+                            
+                            <div id="story-fb" class="font-bold text-lg h-6 text-center"></div>
+                            <div id="story-disc-panel" class="hidden mt-4 p-4 bg-amber-50 border-2 border-amber-200 rounded-xl text-sm font-bold text-slate-700"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 10: KESIMPULAN & PENUTUP -->
+            <div id="slide-10" class="slide flex-col justify-center items-center h-full p-8 text-center bg-indigo-500 text-white rounded-[24px]">
+                <div class="text-7xl mb-6 text-amber-300"><i class="fa-solid fa-award"></i></div>
+                <h1 class="font-kids text-5xl font-extrabold mb-4">Luar Biasa!</h1>
+                <p class="text-xl font-medium mb-8 max-w-2xl">Kalian berdua telah menyelesaikan seluruh misi bilangan ribuan dengan hebat!</p>
+                
+                <div class="bg-white/10 p-6 rounded-3xl border-2 border-white/20 text-left max-w-xl shadow-lg w-full mb-8">
+                    <h3 class="font-kids text-2xl font-bold mb-3 text-amber-300">Ingat Selalu:</h3>
+                    <ul class="space-y-2 font-medium text-lg">
+                        <li><i class="fa-solid fa-check text-emerald-300 mr-2"></i> Nilai tempat: Ribuan, Ratusan, Puluhan, Satuan.</li>
+                        <li><i class="fa-solid fa-check text-emerald-300 mr-2"></i> Baca bilangan dari kiri ke kanan.</li>
+                        <li><i class="fa-solid fa-check text-emerald-300 mr-2"></i> Bandingkan angka paling kiri (ribuan) terlebih dahulu saat mengurutkan.</li>
+                    </ul>
+                </div>
+                
+                <h2 class="font-kids text-4xl font-bold mt-4 text-amber-300">Thank You For Today!</h2>
+                <p class="mt-2 text-indigo-200 font-bold">Terus berlatih ya, <span id="final-s1"></span> & <span id="final-s2"></span>!</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- AUDIO (USING SPEECH SYNTHESIS AS MOCKUP SOUND) -->
+    <script>
+        // --- SOUND SYSTEM ---
+        function playSound(isCorrect) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                let text = isCorrect ? "Benar sekali! Hebat!" : "Tetot! Coba lagi ya!";
+                let utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = "id-ID";
+                utterance.rate = 1.1;
+                utterance.pitch = isCorrect ? 1.2 : 0.8;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // --- GLOBAL STATE ---
+        let currentSlide = 1;
+        const totalSlides = 10;
+        let s1Name = "Siswa 1";
+        let s2Name = "Siswa 2";
+
+        function startApp() {
+            const s1 = document.getElementById('input-s1').value.trim();
+            const s2 = document.getElementById('input-s2').value.trim();
+            if(!s1 || !s2) { alert("Isi nama kalian berdua dulu ya!"); return; }
+            
+            s1Name = s1; s2Name = s2;
+            document.getElementById('s1-name-display').innerText = s1Name;
+            document.getElementById('s2-name-display').innerText = s2Name;
+            document.getElementById('final-s1').innerText = s1Name;
+            document.getElementById('final-s2').innerText = s2Name;
+            
+            document.getElementById('student-badge').classList.remove('hidden');
+            document.getElementById('student-badge').classList.add('flex');
+            
+            document.getElementById('btn-prev').disabled = false;
+            document.getElementById('btn-next').disabled = false;
+            
+            // Inisialisasi Data Latihan
+            loadS4();
+            loadS5();
+            loadS6Dekom();
+            loadS7();
+            loadS8();
+            initStoryCards();
+
+            navSlide(1);
+        }
+
+        function navSlide(step) {
+            let next = currentSlide + step;
+            if(next < 1 || next > totalSlides) return;
+            
+            document.querySelectorAll('.slide').forEach(el => el.classList.remove('active'));
+            document.getElementById('slide-' + next).classList.add('active');
+            currentSlide = next;
+
+            document.getElementById('slide-indicator').innerText = `${currentSlide}/${totalSlides}`;
+            document.getElementById('btn-prev').disabled = (currentSlide === 1);
+            document.getElementById('btn-next').disabled = (currentSlide === totalSlides);
+        }
+
+        function switchTab(slide, tab) {
+            document.getElementById(`btn-${slide}-materi`).classList.remove('active');
+            document.getElementById(`btn-${slide}-latihan`).classList.remove('active');
+            document.getElementById(`btn-${slide}-${tab}`).classList.add('active');
+
+            document.getElementById(`content-${slide}-materi`).classList.add('hidden');
+            document.getElementById(`content-${slide}-materi`).classList.remove('flex');
+            document.getElementById(`content-${slide}-latihan`).classList.add('hidden');
+            document.getElementById(`content-${slide}-latihan`).classList.remove('flex');
+
+            document.getElementById(`content-${slide}-${tab}`).classList.remove('hidden');
+            document.getElementById(`content-${slide}-${tab}`).classList.add('flex');
+        }
+
+        // --- DATA LATIHAN ---
+        // S4: Nilai Tempat (20 Soal)
+        const dataS4 = [
+            1234, 4567, 8901, 2045, 7600, 3004, 9999, 1020, 5432, 6789,
+            4321, 8080, 1500, 2345, 6007, 7050, 9876, 5555, 3102, 4040
+        ];
+        let s4Idx = 0;
+
+        function loadS4() {
+            document.getElementById('s4-idx').innerText = s4Idx + 1;
+            document.getElementById('s4-num').innerText = dataS4[s4Idx];
+            ['r','h','t','o'].forEach(id => {
+                let el = document.getElementById('s4-in-'+id);
+                el.value = "";
+                el.className = `w-full border-4 border-slate-200 rounded-xl p-3 text-center text-2xl font-bold outline-none focus:border-indigo-400`;
+            });
+        }
+
+        function checkS4() {
+            const numStr = dataS4[s4Idx].toString().padStart(4, '0');
+            const r = document.getElementById('s4-in-r');
+            const h = document.getElementById('s4-in-h');
+            const t = document.getElementById('s4-in-t');
+            const o = document.getElementById('s4-in-o');
+            
+            let isAllCorrect = true;
+            if(r.value == numStr[0]) { r.classList.add('input-correct'); } else { r.classList.add('input-wrong'); isAllCorrect = false; }
+            if(h.value == numStr[1]) { h.classList.add('input-correct'); } else { h.classList.add('input-wrong'); isAllCorrect = false; }
+            if(t.value == numStr[2]) { t.classList.add('input-correct'); } else { t.classList.add('input-wrong'); isAllCorrect = false; }
+            if(o.value == numStr[3]) { o.classList.add('input-correct'); } else { o.classList.add('input-wrong'); isAllCorrect = false; }
+
+            playSound(isAllCorrect);
+        }
+
+        function nextS4() {
+            s4Idx = (s4Idx + 1) % 20;
+            loadS4();
+        }
+
+        // S5: Nama dan Lambang (10 soal each)
+        let s5Mode = 'nama';
+        let s5Idx = 0;
+        const dataS5Nama = [
+            {n: "1.250", a: "seribu dua ratus lima puluh"}, {n: "3.004", a: "tiga ribu empat"},
+            {n: "4.500", a: "empat ribu lima ratus"}, {n: "2.015", a: "dua ribu lima belas"},
+            {n: "5.678", a: "lima ribu enam ratus tujuh puluh delapan"}, {n: "8.000", a: "delapan ribu"},
+            {n: "9.999", a: "sembilan ribu sembilan ratus sembilan puluh sembilan"}, {n: "7.020", a: "tujuh ribu dua puluh"},
+            {n: "6.300", a: "enam ribu tiga ratus"}, {n: "10.000", a: "sepuluh ribu"}
+        ];
+        const dataS5Lambang = [
+            {n: "Dua ribu tiga ratus lima", a: "2305"}, {n: "Empat ribu tujuh puluh", a: "4070"},
+            {n: "Satu ribu lima ratus", a: "1500"}, {n: "Delapan ribu delapan", a: "8008"},
+            {n: "Tiga ribu enam ratus dua puluh", a: "3620"}, {n: "Lima ribu lima ratus lima puluh lima", a: "5555"},
+            {n: "Sembilan ribu seratus", a: "9100"}, {n: "Tujuh ribu sembilan belas", a: "7019"},
+            {n: "Enam ribu dua", a: "6002"}, {n: "Sepuluh ribu", a: "10000"}
+        ];
+
+        function switchSubS5(mode) {
+            s5Mode = mode;
+            s5Idx = 0;
+            document.getElementById('btn-s5-nama').className = mode === 'nama' ? "bg-emerald-500 text-white font-bold px-4 py-2 rounded-lg shadow" : "bg-slate-200 text-slate-600 font-bold px-4 py-2 rounded-lg hover:bg-slate-300";
+            document.getElementById('btn-s5-lambang').className = mode === 'lambang' ? "bg-emerald-500 text-white font-bold px-4 py-2 rounded-lg shadow" : "bg-slate-200 text-slate-600 font-bold px-4 py-2 rounded-lg hover:bg-slate-300";
+            loadS5();
+        }
+
+        function loadS5() {
+            document.getElementById('s5-idx').innerText = s5Idx + 1;
+            const qTitle = document.getElementById('s5-q-title');
+            const qVal = document.getElementById('s5-q-val');
+            const inp = document.getElementById('s5-ans');
+            
+            inp.value = "";
+            inp.className = "w-full max-w-xl border-4 border-slate-200 rounded-2xl p-4 text-center text-xl font-bold outline-none focus:border-emerald-400 mb-8";
+            
+            if(s5Mode === 'nama') {
+                qTitle.innerText = "Tuliskan NAMA bilangannya:";
+                qVal.innerText = dataS5Nama[s5Idx].n;
+                inp.placeholder = "contoh: dua ribu lima ratus";
+            } else {
+                qTitle.innerText = "Tuliskan LAMBANG bilangannya:";
+                qVal.innerText = dataS5Lambang[s5Idx].n;
+                inp.placeholder = "contoh: 2500 (tanpa titik)";
+            }
+        }
+
+        function checkS5() {
+            const inp = document.getElementById('s5-ans');
+            const userAns = inp.value.toLowerCase().replace(/[^a-z0-9]/g, ''); // strip spaces and dots
+            const correctAns = s5Mode === 'nama' ? dataS5Nama[s5Idx].a.replace(/[^a-z0-9]/g, '') : dataS5Lambang[s5Idx].a.replace(/[^a-z0-9]/g, '');
+
+            if(userAns === correctAns) {
+                inp.classList.add('input-correct');
+                playSound(true);
+            } else {
+                inp.classList.add('input-wrong');
+                playSound(false);
+            }
+        }
+
+        function nextS5() {
+            s5Idx = (s5Idx + 1) % 10;
+            loadS5();
+        }
+
+        // S6: Nilai dan Dekomposisi
+        let s6Mode = 'nilai';
+        const flashcards = [
+            {n: "<u>4</u>.500", a: "4.000"}, {n: "3.<u>0</u>40", a: "0"}, {n: "7.8<u>9</u>1", a: "90"},
+            {n: "1.23<u>4</u>", a: "4"}, {n: "<u>9</u>.999", a: "9.000"}, {n: "5.<u>6</u>00", a: "600"}
+        ];
+        let fcIdx = 0;
+        
+        const dataS6Dekom = [
+            {n: "4.532", a: [4000, 500, 30, 2]}, {n: "1.025", a: [1000, 0, 20, 5]},
+            {n: "8.900", a: [8000, 900, 0, 0]}, {n: "3.456", a: [3000, 400, 50, 6]},
+            {n: "7.009", a: [7000, 0, 0, 9]}, {n: "5.555", a: [5000, 500, 50, 5]},
+            {n: "2.103", a: [2000, 100, 0, 3]}, {n: "9.870", a: [9000, 800, 70, 0]},
+            {n: "6.050", a: [6000, 0, 50, 0]}, {n: "10.000", a: [10000, 0, 0, 0]}
+        ];
+        let s6DIdx = 0;
+
+        function switchSubS6(mode) {
+            s6Mode = mode;
+            document.getElementById('btn-s6-nilai').className = mode === 'nilai' ? "bg-rose-500 text-white font-bold px-4 py-2 rounded-lg shadow" : "bg-slate-200 text-slate-600 font-bold px-4 py-2 rounded-lg hover:bg-slate-300";
+            document.getElementById('btn-s6-dekom').className = mode === 'dekomposisi' ? "bg-rose-500 text-white font-bold px-4 py-2 rounded-lg shadow" : "bg-slate-200 text-slate-600 font-bold px-4 py-2 rounded-lg hover:bg-slate-300";
+            
+            document.getElementById('s6-sub-nilai').classList.toggle('hidden', mode !== 'nilai');
+            document.getElementById('s6-sub-dekom').classList.toggle('hidden', mode !== 'dekomposisi');
+            if(mode === 'nilai') loadFlashcard();
+        }
+
+        function loadFlashcard() {
+            document.getElementById('flashcard-el').classList.remove('is-flipped');
+            setTimeout(() => {
+                document.getElementById('fc-front').innerHTML = flashcards[fcIdx].n;
+                document.getElementById('fc-back').innerHTML = flashcards[fcIdx].a;
+            }, 300);
+        }
+
+        function nextFlashcard() {
+            fcIdx = (fcIdx + 1) % flashcards.length;
+            loadFlashcard();
+        }
+
+        function loadS6Dekom() {
+            document.getElementById('s6-idx').innerText = s6DIdx + 1;
+            document.getElementById('s6-d-num').innerText = dataS6Dekom[s6DIdx].n;
+            ['r','h','t','o'].forEach(id => {
+                let el = document.getElementById('s6-d-'+id);
+                el.value = "";
+                el.className = "w-24 border-4 border-slate-200 rounded-xl p-3 text-center text-xl font-bold outline-none focus:border-rose-400 text-slate-700";
+            });
+        }
+
+        function checkS6Dekom() {
+            const ans = dataS6Dekom[s6DIdx].a;
+            const r = document.getElementById('s6-d-r');
+            const h = document.getElementById('s6-d-h');
+            const t = document.getElementById('s6-d-t');
+            const o = document.getElementById('s6-d-o');
+            
+            let isAllCorrect = true;
+            if(r.value == ans[0]) { r.classList.add('input-correct'); } else { r.classList.add('input-wrong'); isAllCorrect = false; }
+            if(h.value == ans[1]) { h.classList.add('input-correct'); } else { h.classList.add('input-wrong'); isAllCorrect = false; }
+            if(t.value == ans[2]) { t.classList.add('input-correct'); } else { t.classList.add('input-wrong'); isAllCorrect = false; }
+            if(o.value == ans[3]) { o.classList.add('input-correct'); } else { o.classList.add('input-wrong'); isAllCorrect = false; }
+
+            if(isAllCorrect) { r.classList.add('input-correct'); }
+        }
+
+        function nextS6Dekom() {
+            s6DIdx = (s6DIdx + 1) % 10;
+            loadS6Dekom();
+        }
+
+        // S7: Membandingkan (10 Soal)
+        const dataS7 = [
+            {n1: "1.200", n2: "2.500", a: "<"}, {n1: "4.500", n2: "4.300", a: ">"},
+            {n1: "3.000", n2: "3.000", a: "="}, {n1: "9.001", n2: "9.010", a: "<"},
+            {n1: "5.678", n2: "5.678", a: "="}, {n1: "1.050", n2: "1.005", a: ">"},
+            {n1: "8.999", n2: "9.000", a: "<"}, {n1: "2.345", n2: "2.340", a: ">"},
+            {n1: "7.700", n2: "7.700", a: "="}, {n1: "6.123", n2: "6.321", a: "<"}
+        ];
+        let s7Idx = 0;
+
+        function loadS7() {
+            document.getElementById('s7-idx').innerText = s7Idx + 1;
+            document.getElementById('s7-n1').innerText = dataS7[s7Idx].n1;
+            document.getElementById('s7-n2').innerText = dataS7[s7Idx].n2;
+            const inp = document.getElementById('s7-ans');
+            inp.value = "";
+            inp.className = "w-20 md:w-24 bg-slate-50 border-4 border-slate-200 rounded-2xl p-4 text-center text-4xl font-black outline-none focus:border-amber-400 text-amber-500";
+        }
+
+        function checkS7() {
+            const inp = document.getElementById('s7-ans');
+            if(inp.value.trim() === dataS7[s7Idx].a) {
+                inp.classList.add('input-correct');
+            } else {
+                inp.classList.add('input-wrong');
+            }
+        }
+
+        function nextS7() {
+            s7Idx = (s7Idx + 1) % 10;
+            loadS7();
+        }
+
+        // S8: Mengurutkan (10 Soal)
+        let s8Mode = 'asc';
+        let s8Idx = 0;
+        const dataS8 = [
+            [2000, 1500, 3000, 1000, 4000], [5400, 5100, 5800, 5200, 5900],
+            [1234, 1342, 1423, 1123, 1243], [8000, 7000, 9000, 6000, 10000],
+            [3050, 3005, 3500, 3055, 3550], [4567, 4657, 4765, 4576, 4675],
+            [2100, 2010, 2001, 2110, 2011], [9999, 9990, 9900, 9000, 9090],
+            [6543, 6453, 6345, 6534, 6435], [1010, 1100, 1001, 1110, 1101]
+        ];
+
+        function switchSubS8(mode) {
+            s8Mode = mode;
+            s8Idx = 0;
+            document.getElementById('btn-s8-asc').className = mode === 'asc' ? "flex-1 bg-sky-500 text-white font-bold px-4 py-2 rounded-lg shadow" : "flex-1 bg-slate-200 text-slate-600 font-bold px-4 py-2 rounded-lg hover:bg-slate-300";
+            document.getElementById('btn-s8-desc').className = mode === 'desc' ? "flex-1 bg-sky-500 text-white font-bold px-4 py-2 rounded-lg shadow" : "flex-1 bg-slate-200 text-slate-600 font-bold px-4 py-2 rounded-lg hover:bg-slate-300";
+            document.getElementById('s8-instruction').innerText = mode === 'asc' ? "Beri nomor urut 1 sampai 5 dari yang TERKECIL!" : "Beri nomor urut 1 sampai 5 dari yang TERBESAR!";
+            loadS8();
+        }
+
+        function loadS8() {
+            document.getElementById('s8-idx').innerText = s8Idx + 1;
+            const container = document.getElementById('s8-number-container');
+            container.innerHTML = "";
+            const nums = dataS8[s8Idx];
+            
+            nums.forEach((num, i) => {
+                container.innerHTML += `
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="bg-white px-6 py-4 rounded-xl border-4 border-slate-200 font-bold text-2xl text-slate-700">${num}</div>
+                        <input type="number" id="s8-ans-${i}" class="w-16 h-16 rounded-full border-4 border-sky-200 text-center font-black text-2xl outline-none focus:border-sky-500" placeholder="?">
+                    </div>
+                `;
+            });
+        }
+
+        function checkS8() {
+            const nums = [...dataS8[s8Idx]];
+            const sortedNums = [...nums].sort((a,b) => s8Mode === 'asc' ? a - b : b - a);
+            
+            // Expected ranks
+            const expectedRanks = nums.map(n => sortedNums.indexOf(n) + 1);
+            
+            let isAllCorrect = true;
+            for(let i=0; i<5; i++) {
+                const inp = document.getElementById(`s8-ans-${i}`);
+                if(parseInt(inp.value) === expectedRanks[i]) {
+                    inp.classList.add('input-correct');
+                } else {
+                    inp.classList.add('input-wrong');
+                    isAllCorrect = false;
+                }
+            }
+        }
+
+        function nextS8() {
+            s8Idx = (s8Idx + 1) % 10;
+            loadS8();
+        }
+
+        // S9: Kartu Cerita
+        const storyData = [
+            {q: "Pabrik roti membuat 2.500 roti cokelat dan 1.200 roti keju. Berapa jumlah semua roti?", a: "3700", d: "2.500 + 1.200 = 3.700 roti."},
+            {q: "Ayah punya Rp 5.000. Dibeli es krim Rp 3.000. Berapa sisa uang Ayah?", a: "2000", d: "5.000 - 3.000 = 2.000."},
+            {q: "Petani panen 4.500 kg beras. Dijual 2.000 kg. Sisa beras petani?", a: "2500", d: "4.500 - 2.000 = 2.500 kg."},
+            {q: "Sebuah desa punya 1.100 laki-laki dan 1.400 perempuan. Total penduduk?", a: "2500", d: "1.100 + 1.400 = 2.500 orang."},
+            {q: "Di toko ada 3.000 kelereng merah dan 4.500 kelereng biru. Mana yang lebih banyak?", a: "kelereng biru", d: "4.500 > 3.000, jadi kelereng biru lebih banyak."},
+            {q: "Budi menabung 1.000 per hari. Dalam 5 hari tabungannya menjadi?", a: "5000", d: "1.000 x 5 = 5.000."},
+            {q: "Tinggi Gunung A 3.100 meter. Gunung B 2.900 meter. Gunung mana yang lebih tinggi?", a: "gunung a", d: "3.100 > 2.900, jadi Gunung A lebih tinggi."},
+            {q: "Dari angka 5, 2, 8, 1 susunlah menjadi bilangan ribuan terkecil!", a: "1258", d: "Urutkan dari angka terkecil di depan: 1.258."},
+            {q: "Tulis lambang bilangan: Dua ribu empat ratus sepuluh.", a: "2410", d: "2 ribuan, 4 ratusan, 1 puluhan, 0 satuan = 2410."},
+            {q: "Jarak kota A ke B 1.500 km. Jarak kota B ke C 1.200 km. Jarak A ke C melalui B?", a: "2700", d: "1.500 + 1.200 = 2.700 km."},
+            {q: "Uang Susi 8.000, uang Doni 8.500. Siapa yang uangnya lebih sedikit?", a: "susi", d: "8.000 < 8.500, jadi uang Susi lebih sedikit."},
+            {q: "Pecah bilangan 7.045 berdasarkan nilai tempatnya!", a: "7000+0+40+5", d: "Ribuan 7, Ratusan 0, Puluhan 4, Satuan 5."},
+            {q: "Sebuah buku harganya 9.500. Jika uangmu 10.000, kembaliannya berapa?", a: "500", d: "10.000 - 9.500 = 500."},
+            {q: "Berapa nilai angka 6 pada bilangan 4.620?", a: "600", d: "Angka 6 berada di tempat ratusan, jadi nilainya 600."},
+            {q: "Pabrik A memproduksi 5.500 sepatu. Pabrik B 5.050 sepatu. Pabrik mana yang produksinya lebih besar?", a: "pabrik a", d: "5.500 > 5.050."},
+            {q: "Pak RT membagikan 2.000 paket sembako hari ini dan 1.500 paket besok. Totalnya?", a: "3500", d: "2.000 + 1.500 = 3.500."},
+            {q: "Ada 6.000 lembar kertas. Dipakai 1.000 lembar. Sisa kertas?", a: "5000", d: "6.000 - 1.000 = 5.000."},
+            {q: "Susun angka 9, 0, 4, 7 menjadi bilangan ribuan terbesar!", a: "9740", d: "Urutkan dari angka terbesar di depan: 9.740."},
+            {q: "Tuliskan nama bilangan 8.012!", a: "delapan ribu dua belas", d: "8 ribuan, 0 ratusan, 12 satuan = delapan ribu dua belas."},
+            {q: "Suhu di kota A 2.000 derajat (hipotetis), kota B 1.999 derajat. Mana yang lebih panas?", a: "kota a", d: "2.000 > 1.999."}
+        ];
+        let activeStory = null;
+
+        function initStoryCards() {
+            const grid = document.getElementById('story-cards');
+            grid.innerHTML = "";
+            for (let i = 1; i <= 20; i++) {
+                const btn = document.createElement('button');
+                btn.className = "story-card bg-indigo-500 text-white font-kids text-2xl font-bold rounded-xl py-3 border-b-4 border-indigo-700 hover:bg-indigo-400";
+                btn.innerText = i;
+                btn.id = "scard-" + i;
+                btn.onclick = () => openStoryCard(i);
+                grid.appendChild(btn);
+            }
+        }
+
+        function openStoryCard(n) {
+            if(document.getElementById('scard-' + n).classList.contains('opened')) return;
+            activeStory = n - 1;
+            
+            document.getElementById('story-title').innerText = `Kartu Soal #${n}`;
+            document.getElementById('story-text').innerText = storyData[activeStory].q;
+            
+            const inp = document.getElementById('story-ans');
+            inp.disabled = false;
+            inp.value = "";
+            inp.className = "w-full bg-slate-50 border-4 border-slate-200 rounded-xl px-4 py-3 text-center text-xl font-bold outline-none focus:border-indigo-400 mb-4";
+            
+            document.getElementById('story-btn-cek').disabled = false;
+            document.getElementById('story-btn-disc').disabled = false;
+            document.getElementById('story-fb').innerText = "";
+            document.getElementById('story-disc-panel').classList.add('hidden');
+        }
+
+        function checkStory() {
+            const inp = document.getElementById('story-ans');
+            const userAns = inp.value.toLowerCase().replace(/\s+/g, '');
+            const correctAns = storyData[activeStory].a.toLowerCase().replace(/\s+/g, '');
+
+            if(userAns === correctAns || userAns.includes(correctAns)) {
+                inp.classList.add('input-correct');
+                document.getElementById('scard-' + (activeStory+1)).classList.add('opened');
+                document.getElementById('story-btn-cek').disabled = true;
+                inp.disabled = true;
+            } else {
+                inp.classList.add('input-wrong');
+            }
+        }
+
+        function toggleStoryDisc() {
+            const panel = document.getElementById('story-disc-panel');
+            panel.innerText = storyData[activeStory].d;
+            panel.classList.toggle('hidden');
+        }
+
+    </script>
+</body>
+</html>
