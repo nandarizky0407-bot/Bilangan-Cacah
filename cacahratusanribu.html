@@ -1,0 +1,2588 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Petualangan Bilangan Cacah - Kelas Girly ✨</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --pink-soft: #FFE0EC;
+  --pink-bright: #FF6B9D;
+  --pink-deep: #E91E80;
+  --lavender: #C77DFF;
+  --lavender-soft: #F3E8FF;
+  --peach: #FFB4A2;
+  --mint: #B5EAD7;
+  --cream: #FFF5F7;
+  --gold: #FFD93D;
+  --text-dark: #4A1942;
+  --text-mid: #8B3A75;
+}
+
+* { font-family: 'Quicksand', sans-serif; box-sizing: border-box; }
+.font-display { font-family: 'Fredoka', sans-serif; }
+.font-script { font-family: 'Pacifico', cursive; }
+
+body {
+  background: linear-gradient(135deg, #FFE0EC 0%, #F3E8FF 50%, #FFE5D9 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: var(--text-dark);
+  overflow-x: hidden;
+}
+
+/* Floating decorations */
+.float-deco {
+  position: fixed;
+  font-size: 28px;
+  pointer-events: none;
+  opacity: 0.5;
+  z-index: 1;
+  animation: floatAround 8s ease-in-out infinite;
+}
+@keyframes floatAround {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(20px, -30px) rotate(15deg); }
+  50% { transform: translate(-15px, -20px) rotate(-10deg); }
+  75% { transform: translate(25px, 15px) rotate(20deg); }
+}
+
+/* Slides */
+.slide { display: none; animation: fadeIn 0.5s ease; }
+.slide.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Cards */
+.girly-card {
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(233, 30, 128, 0.12);
+  border: 2px solid rgba(255, 107, 157, 0.15);
+}
+
+/* Buttons */
+.btn-girly {
+  background: linear-gradient(135deg, #FF6B9D 0%, #C77DFF 100%);
+  color: white;
+  padding: 12px 28px;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: all 0.3s;
+  box-shadow: 0 4px 16px rgba(255, 107, 157, 0.4);
+  border: none;
+  cursor: pointer;
+  font-family: 'Fredoka', sans-serif;
+}
+.btn-girly:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 107, 157, 0.6);
+}
+.btn-girly:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-outline {
+  background: white;
+  color: var(--pink-deep);
+  border: 2px solid var(--pink-bright);
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.btn-outline:hover:not(:disabled) { background: var(--pink-soft); }
+.btn-outline:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn-mint {
+  background: linear-gradient(135deg, #B5EAD7 0%, #80FFDB 100%);
+  color: #1B4332;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-mint:hover { transform: scale(1.05); }
+
+.btn-coral {
+  background: linear-gradient(135deg, #FFB4A2 0%, #FF6B9D 100%);
+  color: white;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-coral:hover { transform: scale(1.05); }
+
+input.girly-input, textarea.girly-input {
+  background: white;
+  border: 2px solid #FFC1D9;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 500;
+  color: var(--text-dark);
+  transition: all 0.2s;
+  outline: none;
+  width: 100%;
+}
+input.girly-input:focus {
+  border-color: var(--pink-bright);
+  box-shadow: 0 0 0 4px rgba(255, 107, 157, 0.15);
+}
+
+/* Place value table */
+.pv-table {
+  border-collapse: separate;
+  border-spacing: 4px;
+  width: 100%;
+}
+.pv-table th {
+  background: linear-gradient(135deg, #FF6B9D 0%, #C77DFF 100%);
+  color: white;
+  padding: 12px 6px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 11px;
+  text-align: center;
+}
+.pv-table th small { font-size: 9px; opacity: 0.9; }
+.pv-table td {
+  background: white;
+  padding: 12px 6px;
+  text-align: center;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text-dark);
+  border: 2px solid #FFE0EC;
+}
+.pv-table td.correct {
+  background: linear-gradient(135deg, #B5EAD7 0%, #80FFDB 100%);
+  border-color: #2D6A4F;
+  color: #1B4332;
+}
+.pv-table td.wrong {
+  background: linear-gradient(135deg, #FFD0D0 0%, #FFB4A2 100%);
+  border-color: #C9184A;
+  color: #5C0A20;
+}
+.pv-table input {
+  width: 100%;
+  border: none;
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+  background: transparent;
+  color: var(--text-dark);
+  outline: none;
+}
+
+/* Flashcard */
+.flashcard {
+  background: white;
+  border-radius: 28px;
+  padding: 36px 28px;
+  box-shadow: 0 12px 40px rgba(199, 125, 255, 0.25);
+  border: 3px solid #FFC1D9;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.flashcard::before {
+  content: '';
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 150px; height: 150px;
+  background: radial-gradient(circle, rgba(255,107,157,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.flashcard::after {
+  content: '';
+  position: absolute;
+  bottom: -50px; left: -50px;
+  width: 150px; height: 150px;
+  background: radial-gradient(circle, rgba(199,125,255,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+/* Story card grid */
+.story-card {
+  aspect-ratio: 1;
+  background: linear-gradient(135deg, #FF6B9D 0%, #C77DFF 100%);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 36px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 8px 24px rgba(233, 30, 128, 0.3);
+  position: relative;
+  overflow: hidden;
+  font-family: 'Fredoka', sans-serif;
+}
+.story-card::before {
+  content: '?';
+  position: absolute;
+  font-size: 80px;
+  opacity: 0.2;
+  font-family: 'Pacifico', cursive;
+}
+.story-card:hover:not(.opened) {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 12px 32px rgba(233, 30, 128, 0.5);
+}
+.story-card.opened {
+  background: linear-gradient(135deg, #F3E8FF 0%, #FFE0EC 100%);
+  color: var(--pink-deep);
+  cursor: default;
+}
+.story-card.opened::before { display: none; }
+.story-card.correct {
+  background: linear-gradient(135deg, #B5EAD7 0%, #2D6A4F 100%);
+  color: white;
+}
+.story-card.wrong {
+  background: linear-gradient(135deg, #FFB4A2 0%, #C9184A 100%);
+  color: white;
+}
+
+/* Navigation dots */
+.nav-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 2px solid #FFC1D9;
+  color: var(--pink-deep);
+  font-size: 14px;
+}
+.nav-dot.active {
+  background: linear-gradient(135deg, #FF6B9D 0%, #C77DFF 100%);
+  color: white;
+  border-color: transparent;
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(255, 107, 157, 0.5);
+}
+.nav-dot:hover:not(.active) { background: var(--pink-soft); }
+
+/* Timer */
+.timer-circle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: white;
+  border: 4px solid #FFC1D9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--pink-deep);
+  font-family: 'Fredoka', sans-serif;
+  box-shadow: 0 4px 12px rgba(233, 30, 128, 0.2);
+}
+.timer-circle.warning {
+  border-color: #FF6B6B;
+  color: #C9184A;
+  animation: pulseWarn 1s infinite;
+}
+.timer-circle.danger {
+  border-color: #C9184A;
+  background: #FFE5E5;
+  animation: pulseWarn 0.5s infinite;
+}
+@keyframes pulseWarn {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+/* Quiz options */
+.quiz-option {
+  background: white;
+  border: 2px solid #FFE0EC;
+  border-radius: 14px;
+  padding: 12px 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+.quiz-option:hover { background: var(--pink-soft); border-color: #FF6B9D; }
+.quiz-option.selected {
+  background: linear-gradient(135deg, #FFE0EC 0%, #F3E8FF 100%);
+  border-color: var(--pink-bright);
+}
+.quiz-option.correct {
+  background: linear-gradient(135deg, #B5EAD7 0%, #80FFDB 100%);
+  border-color: #2D6A4F;
+  color: #1B4332;
+}
+.quiz-option.wrong {
+  background: linear-gradient(135deg, #FFD0D0 0%, #FFB4A2 100%);
+  border-color: #C9184A;
+  color: #5C0A20;
+}
+.quiz-option .opt-letter {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--pink-soft);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  color: var(--pink-deep);
+  flex-shrink: 0;
+}
+.quiz-option.correct .opt-letter { background: #2D6A4F; color: white; }
+.quiz-option.wrong .opt-letter { background: #C9184A; color: white; }
+
+/* Comparison */
+.sign-btn {
+  width: 70px;
+  height: 70px;
+  border-radius: 18px;
+  background: white;
+  border: 2px solid #FFC1D9;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--pink-deep);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.sign-btn:hover { background: var(--pink-soft); }
+.sign-btn.selected {
+  background: linear-gradient(135deg, #FF6B9D 0%, #C77DFF 100%);
+  color: white;
+  border-color: transparent;
+  transform: scale(1.05);
+}
+.compare-cell {
+  background: white;
+  padding: 16px 28px;
+  border-radius: 16px;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-dark);
+  text-align: center;
+  border: 2px solid #FFC1D9;
+  font-family: 'Fredoka', sans-serif;
+}
+.compare-cell.correct { background: linear-gradient(135deg, #B5EAD7 0%, #80FFDB 100%); border-color: #2D6A4F; color: #1B4332; }
+.compare-cell.wrong { background: linear-gradient(135deg, #FFD0D0 0%, #FFB4A2 100%); border-color: #C9184A; color: #5C0A20; }
+
+/* Tab buttons */
+.tab-btn {
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: white;
+  border: 2px solid #FFC1D9;
+  color: var(--pink-deep);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.tab-btn.active {
+  background: linear-gradient(135deg, #FF6B9D 0%, #C77DFF 100%);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(255, 107, 157, 0.4);
+}
+.tab-btn:hover:not(.active) { background: var(--pink-soft); }
+
+/* Difficulty badges */
+.diff-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.diff-easy { background: #B5EAD7; color: #1B4332; }
+.diff-medium { background: #FFD93D; color: #5C3A00; }
+.diff-hard { background: #FFB4A2; color: #5C0A20; }
+.diff-hots { background: #C77DFF; color: white; }
+
+/* Section tag */
+.section-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #FFD93D 0%, #FF6B9D 100%);
+  color: white;
+  padding: 4px 16px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Result stat */
+.result-stat {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  text-align: center;
+  border: 2px solid #FFC1D9;
+  box-shadow: 0 8px 24px rgba(233, 30, 128, 0.1);
+  transition: transform 0.3s;
+}
+.result-stat:hover { transform: translateY(-4px); }
+
+/* Confetti */
+.confetti {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+  z-index: 9999;
+  animation: confettiFall 3s linear forwards;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* Ordering */
+.order-input {
+  width: 60px;
+  height: 50px;
+  border-radius: 12px;
+  background: white;
+  border: 2px solid #FFC1D9;
+  text-align: center;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--pink-deep);
+  outline: none;
+  font-family: 'Fredoka', sans-serif;
+}
+.order-input:focus { border-color: var(--pink-bright); box-shadow: 0 0 0 4px rgba(255, 107, 157, 0.15); }
+.order-input.correct { background: #B5EAD7; border-color: #2D6A4F; color: #1B4332; }
+.order-input.wrong { background: #FFD0D0; border-color: #C9184A; color: #5C0A20; }
+
+.number-display {
+  background: white;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-dark);
+  text-align: center;
+  border: 2px solid #FFC1D9;
+  font-family: 'Fredoka', sans-serif;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: #FFE0EC; border-radius: 10px; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #FF6B9D 0%, #C77DFF 100%);
+  border-radius: 10px;
+}
+
+.heading-gradient {
+  background: linear-gradient(135deg, #E91E80 0%, #C77DFF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.obj-card {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  border: 2px solid #FFE0EC;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.obj-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(233, 30, 128, 0.15); }
+.obj-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
+  background: linear-gradient(135deg, #FF6B9D 0%, #C77DFF 100%);
+}
+
+/* Decomposition input */
+.decomp-input {
+  width: 90px;
+  height: 50px;
+  border-radius: 12px;
+  background: white;
+  border: 2px solid #FFC1D9;
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text-dark);
+  outline: none;
+  font-family: 'Fredoka', sans-serif;
+}
+.decomp-input:focus { border-color: var(--pink-bright); box-shadow: 0 0 0 4px rgba(255, 107, 157, 0.15); }
+.decomp-input.correct { background: #B5EAD7; border-color: #2D6A4F; color: #1B4332; }
+.decomp-input.wrong { background: #FFD0D0; border-color: #C9184A; color: #5C0A20; }
+
+.plus-sign {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--pink-bright);
+  align-self: center;
+}
+
+</style>
+</head>
+<body>
+
+<!-- Floating decorations -->
+<div class="float-deco" style="top: 8%; left: 4%;">🌸</div>
+<div class="float-deco" style="top: 18%; right: 6%; animation-delay: 1s;">✨</div>
+<div class="float-deco" style="top: 60%; left: 8%; animation-delay: 2s;">💖</div>
+<div class="float-deco" style="top: 80%; right: 12%; animation-delay: 3s;">🎀</div>
+<div class="float-deco" style="top: 40%; right: 4%; animation-delay: 0.5s;">🦋</div>
+<div class="float-deco" style="top: 88%; left: 18%; animation-delay: 1.5s;">🌷</div>
+
+<div class="relative z-10 max-w-7xl mx-auto p-3 md:p-6">
+
+  <!-- Header -->
+  <header class="girly-card p-4 mb-6">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-pink-400 to-purple-400 flex items-center justify-center text-white text-2xl shadow-lg">
+          <i class="fas fa-heart"></i>
+        </div>
+        <div>
+          <h1 class="font-display text-lg md:text-2xl font-bold text-pink-600">Petualangan Bilangan Cacah</h1>
+          <p class="text-xs text-purple-400">Sampai 1.000.000 ✨ Kelas Girly</p>
+        </div>
+      </div>
+      <div class="flex gap-2 flex-wrap" id="navDots"></div>
+      <div id="studentBadge" class="hidden text-sm font-semibold text-purple-600 bg-purple-50 px-4 py-2 rounded-full border-2 border-purple-200">
+        <i class="fas fa-user-circle mr-1"></i><span id="studentName">Siswa</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="slidesContainer">
+
+    <!-- ============================ SLIDE 1: COVER ============================ -->
+    <section class="slide active" data-slide="1">
+      <div class="girly-card p-8 md:p-12 text-center relative overflow-hidden">
+        <div class="absolute top-4 left-4 text-4xl opacity-30">🎀</div>
+        <div class="absolute top-4 right-4 text-4xl opacity-30">🌸</div>
+        <div class="absolute bottom-4 left-4 text-4xl opacity-30">💖</div>
+        <div class="absolute bottom-4 right-4 text-4xl opacity-30">✨</div>
+        
+        <div class="section-tag mb-6">Slide 1 • Cover</div>
+        <h2 class="font-script text-4xl md:text-6xl heading-gradient mb-4">Petualangan</h2>
+        <h3 class="font-display text-2xl md:text-4xl font-bold text-purple-600 mb-3">Bilangan Cacah hingga 1.000.000</h3>
+        <div class="flex justify-center gap-2 mb-6">
+          <span class="text-2xl">🎉</span>
+          <span class="text-2xl">💝</span>
+          <span class="text-2xl">🌟</span>
+        </div>
+        <p class="text-purple-500 max-w-2xl mx-auto mb-8 font-medium">
+          Hai! Mari kita berpetualang ke dunia bilangan cacah yang penuh warna dan menyenangkan. 
+          Kita akan belajar bersama tentang angka-angka hebat sampai satu juta! 💕
+        </p>
+
+        <div class="max-w-md mx-auto text-left">
+          <label class="block font-display font-semibold text-pink-600 mb-2">
+            <i class="fas fa-pencil-alt mr-2"></i>Nama Siswa
+          </label>
+          <input type="text" id="nameInput" class="girly-input text-lg" placeholder="Tulis namamu di sini ya..." />
+          <button id="startBtn" type="button" class="btn-girly w-full mt-4 text-lg">
+            <i class="fas fa-magic mr-2"></i>Mulai Petualangan!
+          </button>
+          <p id="nameWarn" class="text-red-500 text-sm mt-2 hidden">⚠️ Yuk tulis nama dulu!</p>
+        </div>
+
+        <div class="mt-8 flex justify-center gap-6 text-4xl opacity-60">
+          <span>🌷</span><span>🦋</span><span>🌸</span><span>💮</span><span>🌺</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ SLIDE 2: PEMANTIK ============================ -->
+    <section class="slide" data-slide="2">
+      <div class="girly-card p-6 md:p-10">
+        <div class="section-tag mb-3">Slide 2 • Pertanyaan Pemantik</div>
+        <h2 class="font-display text-3xl md:text-4xl font-bold heading-gradient mb-6">
+          🌈 Mari Berpikir Sejenak...
+        </h2>
+        
+        <div class="bg-gradient-to-br from-pink-50 to-purple-50 p-6 rounded-2xl mb-6 border-2 border-pink-200">
+          <p class="text-lg text-purple-700 font-medium leading-relaxed">
+            <i class="fas fa-quote-left text-pink-400 text-2xl mr-2"></i>
+            Pernahkah kamu memperhatikan di sekelilingmu? Di pasar, ibu menjual <b class="text-pink-600">5.000</b> butir telur. 
+            Di stadion, ada <b class="text-pink-600">25.000</b> penonton. Di sekolah, perpustakaan memiliki <b class="text-pink-600">8.500</b> buku. 
+            Bahkan, penduduk sebuah kota bisa mencapai <b class="text-pink-600">1.000.000</b> jiwa!
+            <i class="fas fa-quote-right text-pink-400 text-2xl ml-2"></i>
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+          <div class="bg-white p-5 rounded-2xl border-2 border-pink-200 text-center">
+            <div class="text-4xl mb-2">🥚</div>
+            <div class="font-display font-bold text-2xl text-pink-600">5.000</div>
+            <div class="text-xs text-purple-500 mt-1">butir telur di pasar</div>
+          </div>
+          <div class="bg-white p-5 rounded-2xl border-2 border-purple-200 text-center">
+            <div class="text-4xl mb-2">🏟️</div>
+            <div class="font-display font-bold text-2xl text-purple-600">25.000</div>
+            <div class="text-xs text-purple-500 mt-1">penonton di stadion</div>
+          </div>
+          <div class="bg-white p-5 rounded-2xl border-2 border-pink-200 text-center">
+            <div class="text-4xl mb-2">📚</div>
+            <div class="font-display font-bold text-2xl text-pink-600">8.500</div>
+            <div class="text-xs text-purple-500 mt-1">buku di perpustakaan</div>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-yellow-100 to-pink-100 p-6 rounded-2xl border-2 border-yellow-300">
+          <h3 class="font-display text-xl font-bold text-pink-700 mb-3">
+            <i class="fas fa-lightbulb mr-2"></i>Pertanyaan Pemantik
+          </h3>
+          <ul class="space-y-2 text-purple-700 font-medium">
+            <li class="flex items-start gap-2">
+              <span class="text-pink-500 font-bold">💕</span>
+              <span>Bilangan ribuan itu seperti apa sih bentuknya?</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-pink-500 font-bold">💕</span>
+              <span>Bagaimana cara membaca bilangan <b>5.000</b>, <b>25.000</b>, atau bahkan <b>1.000.000</b>?</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-pink-500 font-bold">💕</span>
+              <span>Kenapa sih ada tanda titik pada bilangan-bilangan besar itu?</span>
+            </li>
+          </ul>
+          <p class="text-sm text-purple-500 mt-4 italic">
+            ✨ Yuk kita cari jawabannya bersama-sama di petualangan ini!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ SLIDE 3: TUJUAN ============================ -->
+    <section class="slide" data-slide="3">
+      <div class="girly-card p-6 md:p-10">
+        <div class="section-tag mb-3">Slide 3 • Tujuan Pembelajaran</div>
+        <h2 class="font-display text-3xl md:text-4xl font-bold heading-gradient mb-2">
+          🎯 Petualangan Kita Hari Ini
+        </h2>
+        <p class="text-purple-500 mb-8">Setelah petualangan ini, kamu akan bisa:</p>
+
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="obj-card">
+            <div class="flex items-start gap-3">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-pink-400 to-pink-500 flex items-center justify-center text-white text-xl flex-shrink-0">1️⃣</div>
+              <div>
+                <h4 class="font-display font-bold text-pink-700">Mengenal Bilangan Ribuan</h4>
+                <p class="text-sm text-purple-600 mt-1">Memahami konsep bilangan cacah hingga 1.000.000</p>
+              </div>
+            </div>
+          </div>
+          <div class="obj-card">
+            <div class="flex items-start gap-3">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-purple-500 flex items-center justify-center text-white text-xl flex-shrink-0">2️⃣</div>
+              <div>
+                <h4 class="font-display font-bold text-purple-700">Nilai Tempat</h4>
+                <p class="text-sm text-purple-600 mt-1">Menentukan nilai tempat setiap angka pada bilangan</p>
+              </div>
+            </div>
+          </div>
+          <div class="obj-card">
+            <div class="flex items-start gap-3">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-pink-400 to-purple-400 flex items-center justify-center text-white text-xl flex-shrink-0">3️⃣</div>
+              <div>
+                <h4 class="font-display font-bold text-pink-700">Nama Bilangan</h4>
+                <p class="text-sm text-purple-600 mt-1">Membaca nama bilangan dengan tepat</p>
+              </div>
+            </div>
+          </div>
+          <div class="obj-card">
+            <div class="flex items-start gap-3">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white text-xl flex-shrink-0">4️⃣</div>
+              <div>
+                <h4 class="font-display font-bold text-purple-700">Lambang Bilangan</h4>
+                <p class="text-sm text-purple-600 mt-1">Menuliskan lambang bilangan dari nama yang diberikan</p>
+              </div>
+            </div>
+          </div>
+          <div class="obj-card">
+            <div class="flex items-start gap-3">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-purple-500 flex items-center justify-center text-white text-xl flex-shrink-0">5️⃣</div>
+              <div>
+                <h4 class="font-display font-bold text-pink-700">Dekomposisi Bilangan</h4>
+                <p class="text-sm text-purple-600 mt-1">Memecah bilangan dalam berbagai bentuk</p>
+              </div>
+            </div>
+          </div>
+          <div class="obj-card">
+            <div class="flex items-start gap-3">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xl flex-shrink-0">6️⃣</div>
+              <div>
+                <h4 class="font-display font-bold text-purple-700">Membandingkan Bilangan</h4>
+                <p class="text-sm text-purple-600 mt-1">Menentukan bilangan yang lebih besar atau lebih kecil</p>
+              </div>
+            </div>
+          </div>
+          <div class="obj-card md:col-span-2">
+            <div class="flex items-start gap-3">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center text-white text-xl flex-shrink-0">7️⃣</div>
+              <div>
+                <h4 class="font-display font-bold text-pink-700">Mengurutkan Bilangan</h4>
+                <p class="text-sm text-purple-600 mt-1">Mengurutkan bilangan dari terkecil ke terbesar maupun sebaliknya</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 text-center bg-gradient-to-r from-pink-100 to-purple-100 p-6 rounded-2xl">
+          <p class="font-display text-lg text-pink-700">
+            ✨ Siap menjadi pahlawan bilangan? Yuk lanjut! ✨
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ SLIDE 4: MATERI ============================ -->
+    <section class="slide" data-slide="4">
+      <div class="girly-card p-6 md:p-10">
+        <div class="section-tag mb-3">Slide 4 • Materi Inti</div>
+        <h2 class="font-display text-3xl md:text-4xl font-bold heading-gradient mb-4">
+          📚 Materi Bilangan Cacah
+        </h2>
+        
+        <!-- Tabs -->
+        <div class="flex gap-2 mb-6 overflow-x-auto pb-2" id="materialTabs">
+          <button class="tab-btn active" data-tab="definisi">1. Definisi</button>
+          <button class="tab-btn" data-tab="nilai-tempat">2. Nilai Tempat</button>
+          <button class="tab-btn" data-tab="nilai-bilangan">3. Nilai Bilangan</button>
+          <button class="tab-btn" data-tab="nama-lambang">4. Nama & Lambang</button>
+          <button class="tab-btn" data-tab="dekomposisi">5. Dekomposisi</button>
+          <button class="tab-btn" data-tab="membandingkan">6. Membandingkan</button>
+          <button class="tab-btn" data-tab="mengurutkan">7. Mengurutkan</button>
+        </div>
+
+        <!-- Tab 1: Definisi -->
+        <div class="material-panel active" data-panel="definisi">
+          <h3 class="font-display text-2xl font-bold text-pink-600 mb-4">🌸 Apa itu Bilangan Cacah?</h3>
+          <div class="bg-gradient-to-br from-pink-50 to-purple-50 p-6 rounded-2xl mb-4 border-2 border-pink-200">
+            <p class="text-purple-700 leading-relaxed">
+              <b class="text-pink-600">Bilangan cacah</b> adalah bilangan yang dimulai dari <b>0</b> dan terus bertambah satu 
+              secara tak terhingga. Bilangan cacah tidak mengandung bilangan negatif maupun pecahan.
+            </p>
+          </div>
+          <div class="bg-white p-6 rounded-2xl border-2 border-purple-200 mb-4">
+            <h4 class="font-display font-bold text-purple-700 mb-3">✨ Anggota Bilangan Cacah:</h4>
+            <div class="text-center text-2xl font-display font-bold text-pink-600 mb-3">
+              0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, ...
+            </div>
+            <p class="text-sm text-purple-600 text-center">
+              Angka <b>0</b> adalah anggota terkecil dari bilangan cacah 💕
+            </p>
+          </div>
+          <div class="grid md:grid-cols-3 gap-3">
+            <div class="bg-pink-50 p-4 rounded-xl border-2 border-pink-200">
+              <div class="text-3xl mb-2">🚫</div>
+              <h5 class="font-bold text-pink-700">Tidak Negatif</h5>
+              <p class="text-xs text-purple-600">Tidak ada -1, -2, -3 dalam bilangan cacah</p>
+            </div>
+            <div class="bg-purple-50 p-4 rounded-xl border-2 border-purple-200">
+              <div class="text-3xl mb-2">💯</div>
+              <h5 class="font-bold text-purple-700">Tidak Pecahan</h5>
+              <p class="text-xs text-purple-600">Tidak ada 1/2, 1.5, 2.75 dalam bilangan cacah</p>
+            </div>
+            <div class="bg-pink-50 p-4 rounded-xl border-2 border-pink-200">
+              <div class="text-3xl mb-2">♾️</div>
+              <h5 class="font-bold text-pink-700">Tak Terhingga</h5>
+              <p class="text-xs text-purple-600">Bilangan cacah tidak pernah berakhir</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Nilai Tempat -->
+        <div class="material-panel hidden" data-panel="nilai-tempat">
+          <h3 class="font-display text-2xl font-bold text-pink-600 mb-4">🎀 Tabel Nilai Tempat</h3>
+          <div class="bg-gradient-to-br from-pink-50 to-purple-50 p-5 rounded-2xl mb-5 border-2 border-pink-200">
+            <p class="text-purple-700 mb-3">Setiap angka pada bilangan memiliki <b>nilai tempat</b> yang berbeda tergantung posisinya. Yuk lihat tabel interaktif berikut!</p>
+            <p class="text-sm text-pink-600 font-semibold">Klik angka pada bilangan untuk melihat nilai tempatnya! ✨</p>
+          </div>
+
+          <!-- Interactive PV Table Demo -->
+          <div class="bg-white p-5 rounded-2xl border-2 border-purple-200 mb-6">
+            <h4 class="font-display font-bold text-purple-700 mb-3">📖 Contoh Interaktif</h4>
+            <div class="text-center mb-4">
+              <div class="text-xs text-purple-500 mb-2">Klik angka untuk melihat nilai tempat:</div>
+              <div id="pvDemoNumber" class="flex justify-center gap-1 flex-wrap"></div>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="pv-table" id="pvDemoTable">
+                <thead>
+                  <tr>
+                    <th>Ratusan<br>Ribu<small>(100.000)</small></th>
+                    <th>Puluhan<br>Ribu<small>(10.000)</small></th>
+                    <th>Ribuan<small>(1.000)</small></th>
+                    <th>Ratusan<small>(100)</small></th>
+                    <th>Puluhan<small>(10)</small></th>
+                    <th>Satuan<small>(1)</small></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr id="pvDemoDigits"></tr>
+                  <tr id="pvDemoValues"></tr>
+                </tbody>
+              </table>
+            </div>
+            <div id="pvDemoInfo" class="mt-4 text-center text-purple-700 font-medium p-3 bg-pink-50 rounded-xl"></div>
+          </div>
+
+          <!-- Practice -->
+          <h4 class="font-display text-xl font-bold text-purple-700 mb-3">📝 Latihan Nilai Tempat</h4>
+          <p class="text-purple-600 mb-3">Isi nilai tempat untuk setiap angka pada bilangan berikut, lalu klik cek jawaban!</p>
+          
+          <div id="pvPracticeContainer"></div>
+        </div>
+
+        <!-- Tab 3: Nilai Bilangan -->
+        <div class="material-panel hidden" data-panel="nilai-bilangan">
+          <h3 class="font-display text-2xl font-bold text-pink-600 mb-4">💖 Nilai Bilangan</h3>
+          <div class="bg-gradient-to-br from-pink-50 to-purple-50 p-5 rounded-2xl mb-5 border-2 border-pink-200">
+            <p class="text-purple-700">
+              <b>Nilai bilangan</b> adalah nilai dari setiap angka berdasarkan nilai tempatnya. 
+              Contoh: pada bilangan <b class="text-pink-600">345.678</b>, angka 4 berada di tempat puluhan ribu, 
+              sehingga nilainya adalah <b class="text-pink-600">40.000</b>.
+            </p>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl border-2 border-pink-200 mb-5">
+            <h4 class="font-display font-bold text-purple-700 mb-3">💡 Contoh:</h4>
+            <div class="text-center text-3xl font-display font-bold text-pink-600 mb-3">345.678</div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+              <div class="bg-pink-50 p-3 rounded-xl text-center border-2 border-pink-200">
+                <div class="text-2xl font-bold text-pink-600">3</div>
+                <div class="text-xs text-purple-600">Ratusan Ribu</div>
+                <div class="text-sm font-bold text-purple-700">= 300.000</div>
+              </div>
+              <div class="bg-purple-50 p-3 rounded-xl text-center border-2 border-purple-200">
+                <div class="text-2xl font-bold text-purple-600">4</div>
+                <div class="text-xs text-purple-600">Puluhan Ribu</div>
+                <div class="text-sm font-bold text-purple-700">= 40.000</div>
+              </div>
+              <div class="bg-pink-50 p-3 rounded-xl text-center border-2 border-pink-200">
+                <div class="text-2xl font-bold text-pink-600">5</div>
+                <div class="text-xs text-purple-600">Ribuan</div>
+                <div class="text-sm font-bold text-purple-700">= 5.000</div>
+              </div>
+              <div class="bg-purple-50 p-3 rounded-xl text-center border-2 border-purple-200">
+                <div class="text-2xl font-bold text-purple-600">6</div>
+                <div class="text-xs text-purple-600">Ratusan</div>
+                <div class="text-sm font-bold text-purple-700">= 600</div>
+              </div>
+              <div class="bg-pink-50 p-3 rounded-xl text-center border-2 border-pink-200">
+                <div class="text-2xl font-bold text-pink-600">7</div>
+                <div class="text-xs text-purple-600">Puluhan</div>
+                <div class="text-sm font-bold text-purple-700">= 70</div>
+              </div>
+              <div class="bg-purple-50 p-3 rounded-xl text-center border-2 border-purple-200">
+                <div class="text-2xl font-bold text-purple-600">8</div>
+                <div class="text-xs text-purple-600">Satuan</div>
+                <div class="text-sm font-bold text-purple-700">= 8</div>
+              </div>
+            </div>
+          </div>
+
+          <h4 class="font-display text-xl font-bold text-purple-700 mb-3">⚡ Flashcard Cepat (20 Kartu)</h4>
+          <p class="text-purple-600 mb-3">Siswa menjawab cepat nilai bilangan dari angka yang ditanyakan. Tutor menekan tombol Benar/Salah!</p>
+          
+          <div class="flashcard mb-4" id="flashcard">
+            <div class="text-xs text-purple-500 mb-2">Kartu <span id="flashcardNum">1</span> dari 20</div>
+            <div id="flashcardQuestion" class="text-xl font-display font-bold text-purple-700 mb-3"></div>
+            <div id="flashcardNumber" class="text-5xl font-display font-bold text-pink-600 mb-4"></div>
+            <div class="bg-pink-50 px-4 py-2 rounded-xl">
+              <div class="text-xs text-purple-500">Jawaban yang benar:</div>
+              <div id="flashcardAnswer" class="text-lg font-bold text-pink-700"></div>
+            </div>
+          </div>
+          <div class="flex justify-center gap-3 flex-wrap">
+            <button class="btn-mint" onclick="tutorFlashcard(true)"><i class="fas fa-check mr-1"></i>Benar</button>
+            <button class="btn-coral" onclick="tutorFlashcard(false)"><i class="fas fa-times mr-1"></i>Salah</button>
+            <button class="btn-girly" onclick="nextFlashcard()">Kartu Selanjutnya <i class="fas fa-arrow-right ml-1"></i></button>
+          </div>
+          <div class="mt-4 flex justify-center gap-4 text-sm font-semibold">
+            <span class="text-green-600">✓ Benar: <span id="flashcardTrue">0</span></span>
+            <span class="text-red-500">✗ Salah: <span id="flashcardFalse">0</span></span>
+            <span class="text-purple-500">Sisa: <span id="flashcardRemain">20</span></span>
+          </div>
+        </div>
+
+        <!-- Tab 4: Nama & Lambang -->
+        <div class="material-panel hidden" data-panel="nama-lambang">
+          <h3 class="font-display text-2xl font-bold text-pink-600 mb-4">🌷 Nama & Lambang Bilangan</h3>
+          <div class="bg-gradient-to-br from-pink-50 to-purple-50 p-5 rounded-2xl mb-5 border-2 border-pink-200">
+            <p class="text-purple-700 mb-3"><b>Cara membaca bilangan:</b> Baca dari kanan ke kiri, kelompokkan per tiga angka.</p>
+            <div class="bg-white p-4 rounded-xl border-2 border-pink-200">
+              <div class="text-center text-3xl font-display font-bold text-pink-600 mb-2">234.567</div>
+              <div class="text-center text-purple-700 font-medium">dibaca: <b class="text-purple-800">"dua ratus tiga puluh empat ribu lima ratus enam puluh tujuh"</b></div>
+            </div>
+          </div>
+
+          <div class="bg-yellow-50 p-5 rounded-2xl border-2 border-yellow-300 mb-5">
+            <h4 class="font-display font-bold text-yellow-700 mb-2">⚠️ Penting!</h4>
+            <p class="text-yellow-800">
+              Jika angka <b>0</b>, maka tidak perlu dibaca! Contoh: <b>205.000</b> dibaca 
+              "<b>dua ratus lima ribu</b>", bukan "dua ratus nol lima ribu nol nol nol". 
+              Angka 0 hanya dibaca jika berada di antara angka bukan 0 pada tempat satuan, puluhan, atau ratusan.
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-4 mb-5">
+            <div class="bg-white p-4 rounded-2xl border-2 border-pink-200">
+              <div class="text-xs text-purple-500 mb-1">Lambang → Nama</div>
+              <div class="text-2xl font-bold text-pink-600 mb-1">500.450</div>
+              <div class="text-sm text-purple-700">"lima ratus ribu empat ratus lima puluh"</div>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border-2 border-purple-200">
+              <div class="text-xs text-purple-500 mb-1">Nama → Lambang</div>
+              <div class="text-sm text-purple-700 mb-1">"tujuh ratus lima puluh ribu tiga"</div>
+              <div class="text-2xl font-bold text-purple-600">750.003</div>
+            </div>
+          </div>
+
+          <h4 class="font-display text-xl font-bold text-purple-700 mb-3">🎁 Latihan: Buka Kartu (10 Kartu)</h4>
+          <p class="text-purple-600 mb-3">Klik kartu untuk membukanya. Tentukan nama atau lambang bilangannya, lalu klik Benar/Salah!</p>
+          
+          <div class="grid grid-cols-5 gap-3 mb-4" id="nameCardsGrid"></div>
+          <div id="nameCardActive" class="hidden bg-white p-5 rounded-2xl border-2 border-purple-200"></div>
+        </div>
+
+        <!-- Tab 5: Dekomposisi -->
+        <div class="material-panel hidden" data-panel="dekomposisi">
+          <h3 class="font-display text-2xl font-bold text-pink-600 mb-4">💝 Dekomposisi Bilangan</h3>
+          <div class="bg-gradient-to-br from-pink-50 to-purple-50 p-5 rounded-2xl mb-5 border-2 border-pink-200">
+            <p class="text-purple-700 mb-3"><b>Dekomposisi bilangan</b> adalah memecah bilangan menjadi bagian-bagian berdasarkan nilai tempatnya.</p>
+            <div class="bg-white p-4 rounded-xl border-2 border-pink-200">
+              <div class="text-center text-2xl font-display font-bold text-pink-600 mb-2">192.563</div>
+              <div class="text-center text-purple-700 font-medium mb-3">dapat didekomposisi menjadi:</div>
+              <div class="text-center font-bold text-purple-800">100.000 + 90.000 + 2.000 + 500 + 60 + 3</div>
+            </div>
+          </div>
+
+          <div class="bg-yellow-50 p-5 rounded-2xl border-2 border-yellow-300 mb-5">
+            <h4 class="font-display font-bold text-yellow-700 mb-2">✨ Tahukah Kamu?</h4>
+            <p class="text-yellow-800 mb-2">Dekomposisi tidak selalu satu bentuk! Lihat contoh berikut:</p>
+            <div class="space-y-2">
+              <div class="bg-white p-2 rounded-lg text-sm">
+                <b class="text-pink-600">192.563</b> = 100.000 + 90.000 + 2.000 + 500 + 60 + 3
+              </div>
+              <div class="bg-white p-2 rounded-lg text-sm">
+                <b class="text-pink-600">192.563</b> = 190.000 + 2.500 + 63
+              </div>
+              <div class="bg-white p-2 rounded-lg text-sm">
+                <b class="text-pink-600">192.563</b> = 192.000 + 563
+              </div>
+              <div class="bg-white p-2 rounded-lg text-sm">
+                <b class="text-pink-600">192.563</b> = 100.000 + 92.000 + 500 + 63
+              </div>
+            </div>
+          </div>
+
+          <h4 class="font-display text-xl font-bold text-purple-700 mb-3">📝 Latihan Dekomposisi (10 Soal)</h4>
+          <p class="text-purple-600 mb-3">Isi bentuk dekomposisi bilangan berikut. Pisahkan dengan tanda + di kolom yang tersedia!</p>
+          
+          <div id="decompContainer" class="space-y-4"></div>
+
+          <h4 class="font-display text-xl font-bold text-purple-700 mb-3 mt-6">🎯 Pilihan Ganda Kompleks (10 Soal)</h4>
+          <p class="text-purple-600 mb-3">Pilih semua dekomposisi yang benar untuk setiap bilangan (bisa lebih dari satu jawaban)!</p>
+          
+          <div id="decompMcContainer" class="space-y-4"></div>
+        </div>
+
+        <!-- Tab 6: Membandingkan -->
+        <div class="material-panel hidden" data-panel="membandingkan">
+          <h3 class="font-display text-2xl font-bold text-pink-600 mb-4">💖 Membandingkan Bilangan</h3>
+          <div class="bg-gradient-to-br from-pink-50 to-purple-50 p-5 rounded-2xl mb-5 border-2 border-pink-200">
+            <p class="text-purple-700 mb-3">Untuk membandingkan dua bilangan, kita gunakan tanda:</p>
+            <div class="grid grid-cols-3 gap-3">
+              <div class="bg-white p-4 rounded-xl text-center border-2 border-pink-200">
+                <div class="text-4xl font-bold text-pink-600">&gt;</div>
+                <div class="text-xs text-purple-600 mt-1">Lebih besar dari</div>
+              </div>
+              <div class="bg-white p-4 rounded-xl text-center border-2 border-purple-200">
+                <div class="text-4xl font-bold text-purple-600">&lt;</div>
+                <div class="text-xs text-purple-600 mt-1">Lebih kecil dari</div>
+              </div>
+              <div class="bg-white p-4 rounded-xl text-center border-2 border-pink-200">
+                <div class="text-4xl font-bold text-pink-600">=</div>
+                <div class="text-xs text-purple-600 mt-1">Sama dengan</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl border-2 border-purple-200 mb-5">
+            <h4 class="font-display font-bold text-purple-700 mb-3">💡 Trik Membandingkan Bilangan:</h4>
+            <ol class="space-y-2 text-purple-700">
+              <li class="flex items-start gap-2">
+                <span class="bg-pink-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
+                <span>Hitung jumlah angka. Bilangan dengan lebih banyak angka adalah bilangan yang lebih besar.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="bg-pink-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
+                <span>Jika jumlah angka sama, bandingkan dari angka paling kiri (nilai tempat terbesar).</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="bg-pink-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
+                <span>Jika angka pertama sama, bandingkan angka kedua, dan seterusnya.</span>
+              </li>
+            </ol>
+            <div class="mt-3 bg-pink-50 p-3 rounded-xl text-sm text-purple-700">
+              <b>Contoh:</b> 456.789 <span class="text-pink-600 font-bold">&gt;</span> 456.788 
+              <span class="block text-xs mt-1">(lima angka pertama sama, angka terakhir 9 &gt; 8)</span>
+            </div>
+          </div>
+
+          <h4 class="font-display text-xl font-bold text-purple-700 mb-3">📝 Latihan (10 Soal)</h4>
+          <p class="text-purple-600 mb-3">Pilih tanda perbandingan yang tepat, lalu klik Cek Jawaban!</p>
+          
+          <div id="compareContainer" class="space-y-3"></div>
+        </div>
+
+        <!-- Tab 7: Mengurutkan -->
+        <div class="material-panel hidden" data-panel="mengurutkan">
+          <h3 class="font-display text-2xl font-bold text-pink-600 mb-4">🌸 Mengurutkan Bilangan</h3>
+          <div class="bg-gradient-to-br from-pink-50 to-purple-50 p-5 rounded-2xl mb-5 border-2 border-pink-200">
+            <p class="text-purple-700 mb-3">Mengurutkan bilangan ada dua jenis:</p>
+            <div class="grid md:grid-cols-2 gap-3">
+              <div class="bg-white p-4 rounded-xl border-2 border-pink-200">
+                <div class="text-3xl mb-2">📈</div>
+                <h5 class="font-bold text-pink-700">Terkecil → Terbesar</h5>
+                <p class="text-xs text-purple-600 mt-1">Naik (ascending)</p>
+                <div class="mt-2 text-sm font-bold text-purple-700">100 &lt; 200 &lt; 300 &lt; 400</div>
+              </div>
+              <div class="bg-white p-4 rounded-xl border-2 border-purple-200">
+                <div class="text-3xl mb-2">📉</div>
+                <h5 class="font-bold text-purple-700">Terbesar → Terkecil</h5>
+                <p class="text-xs text-purple-600 mt-1">Turun (descending)</p>
+                <div class="mt-2 text-sm font-bold text-purple-700">400 &gt; 300 &gt; 200 &gt; 100</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl border-2 border-purple-200 mb-5">
+            <h4 class="font-display font-bold text-purple-700 mb-3">💡 Cara Mengurutkan:</h4>
+            <ol class="space-y-2 text-purple-700">
+              <li class="flex items-start gap-2">
+                <span class="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
+                <span>Bandingkan jumlah angka terlebih dahulu.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
+                <span>Jika sama, bandingkan angka dari paling kiri.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
+                <span>Urutkan sesuai jenis urutan yang diminta.</span>
+              </li>
+            </ol>
+            <div class="mt-3 bg-pink-50 p-3 rounded-xl text-sm">
+              <b class="text-pink-700">Contoh:</b><br>
+              Urutkan <b>345.678</b>, <b>345.876</b>, <b>345.687</b> dari terkecil ke terbesar:<br>
+              <span class="font-bold text-purple-700">345.678 &lt; 345.687 &lt; 345.876</span>
+            </div>
+          </div>
+
+          <h4 class="font-display text-xl font-bold text-purple-700 mb-3">📝 Latihan (10 Soal)</h4>
+          <p class="text-purple-600 mb-3">Tutor: Pilih jenis urutan terlebih dahulu, lalu siswa mengisi urutan tiap bilangan!</p>
+          
+          <div class="flex gap-2 mb-4 flex-wrap">
+            <button class="btn-outline" id="orderAscBtn" onclick="setOrderType('asc')">
+              <i class="fas fa-arrow-up mr-1"></i>Terkecil → Terbesar
+            </button>
+            <button class="btn-outline" id="orderDescBtn" onclick="setOrderType('desc')">
+              <i class="fas fa-arrow-down mr-1"></i>Terbesar → Terkecil
+            </button>
+          </div>
+          <div id="orderTypeIndicator" class="text-center text-purple-700 font-semibold mb-4 p-2 bg-pink-50 rounded-xl">
+            Belum memilih jenis urutan. Tutor: silakan klik salah satu tombol di atas!
+          </div>
+          
+          <div id="orderContainer" class="space-y-4"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ SLIDE 5: LATIHAN ============================ -->
+    <section class="slide" data-slide="5">
+      <div class="girly-card p-6 md:p-10">
+        <div class="section-tag mb-3">Slide 5 • Latihan Komprehensif</div>
+        <h2 class="font-display text-3xl md:text-4xl font-bold heading-gradient mb-4">
+          🎉 Latihan Akhir - 30 Soal
+        </h2>
+        <p class="text-purple-600 mb-4">Kerjakan 30 soal berikut. Ada pilihan ganda, pilihan ganda kompleks, dan benar-salah. Klik Cek Jawaban untuk memeriksa, dan Pembahasan untuk melihat penjelasan!</p>
+        
+        <div class="flex gap-2 mb-4 flex-wrap text-xs">
+          <span class="diff-badge diff-easy">Mudah</span>
+          <span class="diff-badge diff-medium">Sedang</span>
+          <span class="diff-badge diff-hard">Sulit</span>
+          <span class="diff-badge diff-hots">HOTS</span>
+        </div>
+
+        <div id="quizContainer" class="space-y-4"></div>
+
+        <div class="mt-6 bg-gradient-to-r from-pink-100 to-purple-100 p-5 rounded-2xl text-center">
+          <h4 class="font-display text-xl font-bold text-pink-700 mb-2">📊 Hasil Latihan</h4>
+          <div class="grid grid-cols-3 gap-3">
+            <div>
+              <div class="text-3xl font-bold text-pink-600" id="quizAnswered">0</div>
+              <div class="text-xs text-purple-600">Soal Dijawab</div>
+            </div>
+            <div>
+              <div class="text-3xl font-bold text-green-600" id="quizCorrect">0</div>
+              <div class="text-xs text-purple-600">Jawaban Benar</div>
+            </div>
+            <div>
+              <div class="text-3xl font-bold text-purple-600" id="quizScore">0%</div>
+              <div class="text-xs text-purple-600">Skor</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ SLIDE 6: KARTU CERITA ============================ -->
+    <section class="slide" data-slide="6">
+      <div class="girly-card p-6 md:p-10">
+        <div class="section-tag mb-3">Slide 6 • Kartu Cerita</div>
+        <h2 class="font-display text-3xl md:text-4xl font-bold heading-gradient mb-4">
+          🎴 Petualangan Kartu Cerita
+        </h2>
+        <p class="text-purple-600 mb-4">Pilih kartu untuk membuka soal cerita. Setiap kartu punya soal berbeda tentang membandingkan dan mengurutkan bilangan. Waktu pengerjaan <b>2 menit</b> per kartu!</p>
+        
+        <div class="grid grid-cols-5 md:grid-cols-10 gap-2 md:gap-3 mb-6" id="storyCardsGrid"></div>
+
+        <!-- Active story card -->
+        <div id="storyActive" class="hidden">
+          <div class="bg-gradient-to-br from-pink-50 to-purple-50 p-5 rounded-2xl border-2 border-pink-200">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <h3 class="font-display text-xl font-bold text-pink-700">
+                <i class="fas fa-book-open mr-2"></i>Soal Cerita Kartu <span id="storyCardNum">-</span>
+              </h3>
+              <div class="flex items-center gap-3">
+                <div id="storyTimer" class="timer-circle">2:00</div>
+                <button class="btn-mint text-sm" onclick="addTime15()">
+                  <i class="fas fa-plus mr-1"></i>+15 detik
+                </button>
+              </div>
+            </div>
+            
+            <div class="bg-white p-5 rounded-2xl border-2 border-purple-200 mb-4">
+              <p id="storyQuestion" class="text-purple-700 leading-relaxed"></p>
+            </div>
+
+            <div class="mb-4">
+              <label class="block font-display font-semibold text-purple-700 mb-2">
+                <i class="fas fa-pencil-alt mr-1"></i>Jawaban:
+              </label>
+              <input type="text" id="storyAnswer" class="girly-input" placeholder="Tulis jawabanmu di sini..." />
+            </div>
+
+            <div class="flex flex-wrap gap-3 mb-3">
+              <button class="btn-girly" onclick="checkStoryAnswer()">
+                <i class="fas fa-check mr-1"></i>Cek Jawaban
+              </button>
+              <button class="btn-outline" onclick="showStoryExplanation()">
+                <i class="fas fa-info-circle mr-1"></i>Pembahasan
+              </button>
+              <button class="btn-mint" onclick="closeStoryCard()">
+                <i class="fas fa-times mr-1"></i>Tutup Kartu
+              </button>
+            </div>
+
+            <div id="storyResult" class="hidden p-3 rounded-xl mb-3"></div>
+            <div id="storyExplanation" class="hidden bg-yellow-50 p-4 rounded-xl border-2 border-yellow-300">
+              <h4 class="font-display font-bold text-yellow-700 mb-1"><i class="fas fa-lightbulb mr-1"></i>Pembahasan:</h4>
+              <p id="storyExplanationText" class="text-yellow-800 text-sm"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 bg-gradient-to-r from-pink-100 to-purple-100 p-4 rounded-2xl text-center">
+          <div class="grid grid-cols-3 gap-3">
+            <div>
+              <div class="text-2xl font-bold text-pink-600" id="storyAnswered">0</div>
+              <div class="text-xs text-purple-600">Kartu Dijawab</div>
+            </div>
+            <div>
+              <div class="text-2xl font-bold text-green-600" id="storyCorrect">0</div>
+              <div class="text-xs text-purple-600">Jawaban Benar</div>
+            </div>
+            <div>
+              <div class="text-2xl font-bold text-purple-600" id="storyAvgTime">-</div>
+              <div class="text-xs text-purple-600">Rata-rata Waktu</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ SLIDE 7: KESIMPULAN ============================ -->
+    <section class="slide" data-slide="7">
+      <div class="girly-card p-6 md:p-10">
+        <div class="section-tag mb-3">Slide 7 • Kesimpulan & Refleksi</div>
+        <h2 class="font-display text-3xl md:text-4xl font-bold heading-gradient mb-6">
+          🌟 Penutup Petualangan
+        </h2>
+
+        <!-- Kesimpulan -->
+        <div class="bg-gradient-to-br from-pink-50 to-purple-50 p-6 rounded-2xl border-2 border-pink-200 mb-6">
+          <h3 class="font-display text-2xl font-bold text-pink-700 mb-3">💕 Apa yang Sudah Kita Pelajari?</h3>
+          <div class="grid md:grid-cols-2 gap-3 text-purple-700">
+            <div class="flex items-start gap-2">
+              <i class="fas fa-check-circle text-pink-500 mt-1"></i>
+              <span><b>Bilangan cacah</b> dimulai dari 0 dan terus bertambah.</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <i class="fas fa-check-circle text-pink-500 mt-1"></i>
+              <span><b>Nilai tempat</b> menentukan nilai setiap angka pada bilangan.</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <i class="fas fa-check-circle text-pink-500 mt-1"></i>
+              <span><b>Nama bilangan</b> dibaca per kelompok tiga angka dari kanan.</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <i class="fas fa-check-circle text-pink-500 mt-1"></i>
+              <span><b>Angka 0</b> tidak perlu dibaca dalam nama bilangan.</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <i class="fas fa-check-circle text-pink-500 mt-1"></i>
+              <span><b>Dekomposisi</b> dapat dilakukan dengan berbagai cara.</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <i class="fas fa-check-circle text-pink-500 mt-1"></i>
+              <span><b>Membandingkan</b> bilangan dari jumlah angka & nilai tempat.</span>
+            </div>
+            <div class="flex items-start gap-2 col-span-2">
+              <i class="fas fa-check-circle text-pink-500 mt-1"></i>
+              <span><b>Mengurutkan</b> bilangan bisa naik (terkecil-terbesar) atau turun (terbesar-terkecil).</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Refleksi -->
+        <div class="bg-white p-6 rounded-2xl border-2 border-purple-200 mb-6">
+          <h3 class="font-display text-2xl font-bold text-purple-700 mb-3">🌷 Refleksi Diri</h3>
+          <p class="text-purple-600 mb-3">Yuk jawab pertanyaan refleksi berikut dengan jujur:</p>
+          <div class="space-y-3">
+            <div class="bg-pink-50 p-3 rounded-xl">
+              <p class="text-purple-700 font-medium mb-2">1. Bagian mana yang paling kamu sukai dari pelajaran hari ini? 💖</p>
+              <textarea class="girly-input" rows="2" placeholder="Tulis jawabanmu..."></textarea>
+            </div>
+            <div class="bg-purple-50 p-3 rounded-xl">
+              <p class="text-purple-700 font-medium mb-2">2. Bagian mana yang masih sulit untukmu? 🤔</p>
+              <textarea class="girly-input" rows="2" placeholder="Tulis jawabanmu..."></textarea>
+            </div>
+            <div class="bg-pink-50 p-3 rounded-xl">
+              <p class="text-purple-700 font-medium mb-2">3. Apa yang akan kamu lakukan untuk lebih baik lagi? ✨</p>
+              <textarea class="girly-input" rows="2" placeholder="Tulis jawabanmu..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hasil Kuis -->
+        <div class="bg-gradient-to-br from-pink-100 to-purple-100 p-6 rounded-2xl border-2 border-pink-200 mb-6">
+          <h3 class="font-display text-2xl font-bold text-pink-700 mb-4">📊 Hasil Kuis Petualanganmu</h3>
+          
+          <h4 class="font-display font-bold text-purple-700 mb-2">📝 Latihan Soal (Slide 5)</h4>
+          <div class="grid grid-cols-3 gap-3 mb-5">
+            <div class="result-stat">
+              <div class="text-3xl font-bold text-pink-600" id="finalQuizAnswered">0</div>
+              <div class="text-xs text-purple-600">Soal Dijawab</div>
+            </div>
+            <div class="result-stat">
+              <div class="text-3xl font-bold text-green-600" id="finalQuizCorrect">0</div>
+              <div class="text-xs text-purple-600">Jawaban Benar</div>
+            </div>
+            <div class="result-stat">
+              <div class="text-3xl font-bold text-purple-600" id="finalQuizScore">0%</div>
+              <div class="text-xs text-purple-600">Skor Akhir</div>
+            </div>
+          </div>
+
+          <h4 class="font-display font-bold text-purple-700 mb-2">🎴 Kartu Cerita (Slide 6)</h4>
+          <div class="grid grid-cols-3 gap-3">
+            <div class="result-stat">
+              <div class="text-3xl font-bold text-pink-600" id="finalStoryAnswered">0</div>
+              <div class="text-xs text-purple-600">Kartu Dijawab</div>
+            </div>
+            <div class="result-stat">
+              <div class="text-3xl font-bold text-green-600" id="finalStoryCorrect">0</div>
+              <div class="text-xs text-purple-600">Jawaban Benar</div>
+            </div>
+            <div class="result-stat">
+              <div class="text-3xl font-bold text-purple-600" id="finalStoryAvgTime">-</div>
+              <div class="text-xs text-purple-600">Rata-rata Waktu</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Thank You -->
+        <div class="text-center bg-gradient-to-br from-pink-200 via-purple-200 to-pink-200 p-8 rounded-3xl relative overflow-hidden">
+          <div class="absolute top-2 left-4 text-3xl">🎀</div>
+          <div class="absolute top-2 right-4 text-3xl">🌸</div>
+          <div class="absolute bottom-2 left-4 text-3xl">💖</div>
+          <div class="absolute bottom-2 right-4 text-3xl">✨</div>
+          
+          <h3 class="font-script text-4xl md:text-5xl text-pink-700 mb-3">Thank You!</h3>
+          <p class="font-display text-lg text-purple-700 mb-2">Untuk Hari Ini 💕</p>
+          <p class="text-purple-600 max-w-xl mx-auto mb-4">
+            Terima kasih sudah belajar dengan penuh semangat hari ini, <span id="finalName" class="font-bold text-pink-600">sayang</span>! 
+            Kamu sudah menjadi pahlawan bilangan yang hebat! 🌟
+          </p>
+          <div class="flex justify-center gap-3 text-4xl mb-3">
+            <span>🌷</span><span>🦋</span><span>🌸</span><span>💮</span><span>🌺</span>
+          </div>
+          <p class="text-sm text-purple-500 italic">Sampai jumpa di petualangan berikutnya! 💝</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer Navigation -->
+  <footer class="mt-6 girly-card p-4 flex flex-wrap justify-between items-center gap-3">
+    <button id="prevBtn" class="btn-outline" disabled>
+      <i class="fas fa-arrow-left mr-2"></i>Sebelumnya
+    </button>
+    <span class="text-sm font-semibold text-pink-500">
+      Slide <span id="currentSlide">1</span> / 7
+    </span>
+    <button id="nextBtn" class="btn-girly">
+      Selanjutnya<i class="fas fa-arrow-right ml-2"></i>
+    </button>
+  </footer>
+</div>
+
+<script>
+// ============================ STATE ============================
+const state = {
+  currentSlide: 1,
+  studentName: '',
+  quizAnswered: 0,
+  quizCorrect: 0,
+  quizQuestions: [],
+  storyAnswered: 0,
+  storyCorrect: 0,
+  storyTimes: [],
+  currentStoryCard: null,
+  timerInterval: null,
+  timeRemaining: 120,
+  storyCardStates: {},
+  flashcardIdx: 0,
+  flashcardTrue: 0,
+  flashcardFalse: 0,
+  orderType: null,
+  pvDemoSelected: null,
+};
+
+// ============================ HELPERS ============================
+function formatNumber(n) {
+  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+function normalizeText(t) {
+  return t.toLowerCase().trim().replace(/\s+/g, ' ').replace(/[.,]/g, '');
+}
+
+function confetti() {
+  const colors = ['#FF6B9D', '#C77DFF', '#FFD93D', '#B5EAD7', '#FFB4A2'];
+  for (let i = 0; i < 50; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti';
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.background = colors[Math.floor(Math.random() * colors.length)];
+    el.style.animationDelay = Math.random() * 0.5 + 's';
+    el.style.animationDuration = (2 + Math.random() * 2) + 's';
+    if (Math.random() > 0.5) el.style.borderRadius = '50%';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4000);
+  }
+}
+
+// ============================ NAVIGATION ============================
+const slideTitles = ['Cover', 'Pemantik', 'Tujuan', 'Materi', 'Latihan', 'Kartu Cerita', 'Kesimpulan'];
+
+function initNavDots() {
+  const container = document.getElementById('navDots');
+  container.innerHTML = '';
+  for (let i = 1; i <= 7; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'nav-dot' + (i === 1 ? ' active' : '');
+    dot.textContent = i;
+    dot.title = slideTitles[i-1];
+    dot.onclick = () => goToSlide(i);
+    container.appendChild(dot);
+  }
+}
+
+function goToSlide(num) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.querySelector(`[data-slide="${num}"]`).classList.add('active');
+  state.currentSlide = num;
+  document.getElementById('currentSlide').textContent = num;
+  document.querySelectorAll('.nav-dot').forEach((d, i) => {
+    d.classList.toggle('active', i + 1 === num);
+  });
+  document.getElementById('prevBtn').disabled = num === 1;
+  document.getElementById('nextBtn').disabled = num === 7;
+  
+  if (num !== 6 && state.timerInterval) {
+    clearInterval(state.timerInterval);
+    state.timerInterval = null;
+  }
+  
+  if (num === 7) {
+    updateFinalResults();
+  }
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================ SLIDE 1: START BUTTON ============================
+function handleStart() {
+  const nameInput = document.getElementById('nameInput');
+  const name = nameInput.value.trim();
+  const warn = document.getElementById('nameWarn');
+  
+  if (!name) {
+    warn.classList.remove('hidden');
+    nameInput.focus();
+    return;
+  }
+  
+  state.studentName = name;
+  document.getElementById('studentName').textContent = name;
+  document.getElementById('studentBadge').classList.remove('hidden');
+  document.getElementById('finalName').textContent = name;
+  confetti();
+  goToSlide(2);
+}
+
+// ============================ SLIDE 4: TABS ============================
+function initTabs() {
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.material-panel').forEach(p => p.classList.add('hidden'));
+      const panel = document.querySelector(`[data-panel="${btn.dataset.tab}"]`);
+      if (panel) panel.classList.remove('hidden');
+    });
+  });
+}
+
+// ============================ SLIDE 4.2: PV DEMO ============================
+const pvDemoNumber = '345.678';
+const pvPlaces = ['Ratusan Ribu', 'Puluhan Ribu', 'Ribuan', 'Ratusan', 'Puluhan', 'Satuan'];
+const pvPlaceValues = [100000, 10000, 1000, 100, 10, 1];
+
+function renderPvDemo() {
+  const numContainer = document.getElementById('pvDemoNumber');
+  const digitsRow = document.getElementById('pvDemoDigits');
+  const valuesRow = document.getElementById('pvDemoValues');
+  
+  const digits = pvDemoNumber.replace(/\./g, '').split('');
+  numContainer.innerHTML = '';
+  digitsRow.innerHTML = '';
+  valuesRow.innerHTML = '';
+  
+  digits.forEach((d, i) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'w-12 h-14 rounded-xl bg-white border-2 border-pink-300 text-2xl font-bold text-pink-600 hover:bg-pink-100 transition';
+    btn.textContent = d;
+    btn.onclick = () => selectPvDigit(i);
+    numContainer.appendChild(btn);
+    
+    const tdD = document.createElement('td');
+    tdD.textContent = d;
+    tdD.id = `pvDemoD${i}`;
+    digitsRow.appendChild(tdD);
+    
+    const tdV = document.createElement('td');
+    tdV.textContent = formatNumber(parseInt(d) * pvPlaceValues[i]);
+    tdV.id = `pvDemoV${i}`;
+    tdV.style.background = '#FFE0EC';
+    valuesRow.appendChild(tdV);
+  });
+  
+  selectPvDigit(0);
+}
+
+function selectPvDigit(idx) {
+  state.pvDemoSelected = idx;
+  for (let i = 0; i < 6; i++) {
+    const d = document.getElementById(`pvDemoD${i}`);
+    const v = document.getElementById(`pvDemoV${i}`);
+    if (!d || !v) continue;
+    if (i === idx) {
+      d.style.background = 'linear-gradient(135deg, #FF6B9D 0%, #C77DFF 100%)';
+      d.style.color = 'white';
+      v.style.background = 'linear-gradient(135deg, #B5EAD7 0%, #80FFDB 100%)';
+    } else {
+      d.style.background = 'white';
+      d.style.color = '#4A1942';
+      v.style.background = '#FFE0EC';
+    }
+  }
+  const digit = parseInt(pvDemoNumber.replace(/\./g, '')[idx]);
+  const value = digit * pvPlaceValues[idx];
+  document.getElementById('pvDemoInfo').innerHTML = 
+    `Angka <b class="text-pink-600">${digit}</b> berada di tempat <b class="text-purple-700">${pvPlaces[idx]}</b>, sehingga nilai bilangannya adalah <b class="text-pink-600">${formatNumber(value)}</b>`;
+}
+
+// ============================ SLIDE 4.2: PV PRACTICE ============================
+const pvPracticeNumbers = [234567, 567890, 100000, 999999, 678901, 543210, 345678, 876543, 135792, 456789];
+
+function renderPvPractice() {
+  const container = document.getElementById('pvPracticeContainer');
+  container.innerHTML = '';
+  pvPracticeNumbers.forEach((num, idx) => {
+    const digits = num.toString().padStart(6, '0').split('');
+    const card = document.createElement('div');
+    card.className = 'bg-white p-4 rounded-2xl border-2 border-purple-200 mb-3';
+    card.innerHTML = `
+      <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+        <h5 class="font-display font-bold text-purple-700">Soal ${idx + 1}</h5>
+        <div class="number-display inline-block">${formatNumber(num)}</div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="pv-table">
+          <thead>
+            <tr>
+              <th>Ratusan Ribu</th><th>Puluhan Ribu</th><th>Ribuan</th>
+              <th>Ratusan</th><th>Puluhan</th><th>Satuan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr id="pvAns${idx}">
+              ${digits.map((d, i) => `<td><input type="text" data-q="${idx}" data-i="${i}" placeholder="?" class="pv-input" /></td>`).join('')}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-3 flex gap-2 flex-wrap">
+        <button class="btn-girly text-sm" onclick="checkPvPractice(${idx}, ${num})">Cek Jawaban</button>
+        <button class="btn-outline text-sm" onclick="resetPvPractice(${idx})">Reset</button>
+      </div>
+      <div id="pvResult${idx}" class="mt-3 hidden"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function checkPvPractice(idx, num) {
+  const digits = num.toString().padStart(6, '0').split('');
+  const inputs = document.querySelectorAll(`#pvAns${idx} input`);
+  let allCorrect = true;
+  inputs.forEach((inp, i) => {
+    const expected = parseInt(digits[i]) * pvPlaceValues[i];
+    const userVal = parseInt(inp.value.replace(/\./g, '')) || 0;
+    const td = inp.parentElement;
+    td.classList.remove('correct', 'wrong');
+    if (userVal === expected) {
+      td.classList.add('correct');
+    } else {
+      td.classList.add('wrong');
+      allCorrect = false;
+    }
+  });
+  const result = document.getElementById(`pvResult${idx}`);
+  result.classList.remove('hidden');
+  if (allCorrect) {
+    result.className = 'mt-3 p-3 rounded-xl bg-green-100 text-green-700 font-semibold text-center';
+    result.innerHTML = '🎉 Hebat! Semua jawaban benar!';
+    confetti();
+  } else {
+    result.className = 'mt-3 p-3 rounded-xl bg-red-100 text-red-700 font-semibold text-center';
+    result.innerHTML = '💔 Ada yang salah. Nilai tempat: ' + digits.map((d, i) => formatNumber(parseInt(d) * pvPlaceValues[i])).join(' + ');
+  }
+}
+
+function resetPvPractice(idx) {
+  document.querySelectorAll(`#pvAns${idx} input`).forEach(inp => {
+    inp.value = '';
+    inp.parentElement.classList.remove('correct', 'wrong');
+  });
+  document.getElementById(`pvResult${idx}`).classList.add('hidden');
+}
+
+// ============================ SLIDE 4.3: FLASHCARDS ============================
+const flashcards = [
+  { q: 'Berapa nilai angka 5 pada bilangan:', num: '523.456', a: '500.000' },
+  { q: 'Berapa nilai angka 4 pada bilangan:', num: '234.567', a: '4.000' },
+  { q: 'Berapa nilai angka 7 pada bilangan:', num: '765.432', a: '700.000' },
+  { q: 'Berapa nilai angka 9 pada bilangan:', num: '987.654', a: '900.000' },
+  { q: 'Berapa nilai angka 3 pada bilangan:', num: '345.678', a: '300.000' },
+  { q: 'Berapa nilai angka 6 pada bilangan:', num: '456.789', a: '50.000' },
+  { q: 'Berapa nilai angka 8 pada bilangan:', num: '180.234', a: '80.000' },
+  { q: 'Berapa nilai angka 2 pada bilangan:', num: '125.678', a: '20.000' },
+  { q: 'Berapa nilai angka 1 pada bilangan:', num: '521.349', a: '1.000' },
+  { q: 'Berapa nilai angka 9 pada bilangan:', num: '349.876', a: '900' },
+  { q: 'Berapa nilai angka 0 pada bilangan:', num: '405.678', a: '0' },
+  { q: 'Berapa nilai angka 4 pada bilangan:', num: '654.321', a: '4.000' },
+  { q: 'Berapa nilai angka 5 pada bilangan:', num: '256.789', a: '50.000' },
+  { q: 'Berapa nilai angka 3 pada bilangan:', num: '938.471', a: '1.000' },
+  { q: 'Berapa nilai angka 7 pada bilangan:', num: '217.845', a: '700' },
+  { q: 'Berapa nilai angka 8 pada bilangan:', num: '128.456', a: '8.000' },
+  { q: 'Berapa nilai angka 6 pada bilangan:', num: '612.345', a: '600.000' },
+  { q: 'Berapa nilai angka 2 pada bilangan:', num: '789.012', a: '10' },
+  { q: 'Berapa nilai angka 9 pada bilangan:', num: '845.923', a: '900' },
+  { q: 'Berapa nilai angka 1 pada bilangan:', num: '999.901', a: '1' },
+];
+
+function renderFlashcard() {
+  const card = flashcards[state.flashcardIdx];
+  document.getElementById('flashcardNum').textContent = state.flashcardIdx + 1;
+  document.getElementById('flashcardQuestion').textContent = card.q;
+  document.getElementById('flashcardNumber').textContent = card.num;
+  document.getElementById('flashcardAnswer').textContent = card.a;
+  document.getElementById('flashcardTrue').textContent = state.flashcardTrue;
+  document.getElementById('flashcardFalse').textContent = state.flashcardFalse;
+  document.getElementById('flashcardRemain').textContent = 20 - state.flashcardIdx - 1;
+}
+
+function tutorFlashcard(correct) {
+  if (correct) {
+    state.flashcardTrue++;
+    confetti();
+  } else {
+    state.flashcardFalse++;
+  }
+  document.getElementById('flashcardTrue').textContent = state.flashcardTrue;
+  document.getElementById('flashcardFalse').textContent = state.flashcardFalse;
+}
+
+function nextFlashcard() {
+  if (state.flashcardIdx < flashcards.length - 1) {
+    state.flashcardIdx++;
+    renderFlashcard();
+  } else {
+    alert('🌸 Semua kartu sudah selesai! Hasil: Benar ' + state.flashcardTrue + ', Salah ' + state.flashcardFalse);
+  }
+}
+
+// ============================ SLIDE 4.4: NAME CARDS ============================
+const nameCards = [
+  { type: 'lambang', value: '234.567', answer: 'dua ratus tiga puluh empat ribu lima ratus enam puluh tujuh' },
+  { type: 'nama', value: 'lima ratus enam puluh tujuh ribu delapan ratus sembilan puluh', answer: '567.890' },
+  { type: 'lambang', value: '100.005', answer: 'seratus ribu lima' },
+  { type: 'nama', value: 'tujuh ratus tujuh puluh tujuh ribu tujuh ratus tujuh puluh tujuh', answer: '777.777' },
+  { type: 'lambang', value: '450.000', answer: 'empat ratus lima puluh ribu' },
+  { type: 'nama', value: 'tiga ratus dua belas ribu empat ratus lima puluh enam', answer: '312.456' },
+  { type: 'lambang', value: '999.999', answer: 'sembilan ratus sembilan puluh sembilan ribu sembilan ratus sembilan puluh sembilan' },
+  { type: 'nama', value: 'delapan ratus ribu dua puluh', answer: '800.020' },
+  { type: 'lambang', value: '605.043', answer: 'enam ratus lima ribu empat puluh tiga' },
+  { type: 'nama', value: 'satu juta', answer: '1.000.000' },
+];
+
+function renderNameCards() {
+  const grid = document.getElementById('nameCardsGrid');
+  grid.innerHTML = '';
+  nameCards.forEach((card, idx) => {
+    const div = document.createElement('div');
+    div.className = 'story-card' + (state.storyCardStates['name'+idx] ? ' opened' : '');
+    if (state.storyCardStates['name'+idx]?.correct) div.classList.add('correct');
+    if (state.storyCardStates['name'+idx]?.wrong) div.classList.add('wrong');
+    div.textContent = idx + 1;
+    div.onclick = () => openNameCard(idx);
+    grid.appendChild(div);
+  });
+}
+
+function openNameCard(idx) {
+  const card = nameCards[idx];
+  const activeDiv = document.getElementById('nameCardActive');
+  activeDiv.classList.remove('hidden');
+  const isLambang = card.type === 'lambang';
+  activeDiv.innerHTML = `
+    <div class="flex justify-between items-center mb-3">
+      <h4 class="font-display font-bold text-pink-700">Kartu ${idx + 1}</h4>
+      <button class="btn-outline text-sm" onclick="document.getElementById('nameCardActive').classList.add('hidden')">Tutup</button>
+    </div>
+    <div class="bg-pink-50 p-4 rounded-xl mb-3">
+      <p class="text-sm text-purple-600 mb-2">${isLambang ? 'Lambang bilangan:' : 'Nama bilangan:'}</p>
+      <div class="text-2xl font-display font-bold text-pink-600">${card.value}</div>
+    </div>
+    <p class="text-purple-700 mb-2">Tentukan ${isLambang ? 'nama' : 'lambang'} bilangan di atas!</p>
+    <input type="text" id="nameCardInput${idx}" class="girly-input mb-3" placeholder="Tulis jawabanmu..." />
+    <div class="flex gap-2 flex-wrap">
+      <button class="btn-mint" onclick="tutorNameCard(${idx}, true)"><i class="fas fa-check mr-1"></i>Benar</button>
+      <button class="btn-coral" onclick="tutorNameCard(${idx}, false)"><i class="fas fa-times mr-1"></i>Salah</button>
+      <button class="btn-outline" onclick="revealNameCard(${idx})"><i class="fas fa-eye mr-1"></i>Tunjukkan Jawaban</button>
+    </div>
+    <div id="nameCardResult${idx}" class="mt-3"></div>
+  `;
+  activeDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function tutorNameCard(idx, correct) {
+  if (correct) {
+    state.storyCardStates['name'+idx] = { correct: true };
+    confetti();
+    document.getElementById(`nameCardResult${idx}`).innerHTML = 
+      '<div class="p-3 rounded-xl bg-green-100 text-green-700 font-bold text-center">🎉 Benar! Pintar sekali!</div>';
+  } else {
+    state.storyCardStates['name'+idx] = { wrong: true };
+    document.getElementById(`nameCardResult${idx}`).innerHTML = 
+      '<div class="p-3 rounded-xl bg-red-100 text-red-700 font-bold text-center">💔 Belum tepat. Lihat jawaban yang benar!</div>';
+  }
+  renderNameCards();
+}
+
+function revealNameCard(idx) {
+  document.getElementById(`nameCardResult${idx}`).innerHTML = 
+    `<div class="p-3 rounded-xl bg-yellow-100 text-yellow-800 font-bold text-center">✨ Jawaban: ${nameCards[idx].answer}</div>`;
+}
+
+// ============================ SLIDE 4.5: DEKOMPOSISI ============================
+const decompProblems = [
+  { num: 345678, parts: 6 },
+  { num: 123456, parts: 6 },
+  { num: 500000, parts: 1 },
+  { num: 999999, parts: 6 },
+  { num: 105050, parts: 3 },
+  { num: 250750, parts: 4 },
+  { num: 678901, parts: 6 },
+  { num: 432100, parts: 5 },
+  { num: 780654, parts: 5 },
+  { num: 1000000, parts: 1 },
+];
+
+function renderDecomp() {
+  const container = document.getElementById('decompContainer');
+  container.innerHTML = '';
+  decompProblems.forEach((p, idx) => {
+    const card = document.createElement('div');
+    card.className = 'bg-white p-4 rounded-2xl border-2 border-purple-200';
+    const numStr = formatNumber(p.num);
+    let inputs = '';
+    for (let i = 0; i < p.parts; i++) {
+      inputs += `<input type="text" class="decomp-input" id="dec${idx}_${i}" placeholder="?" />`;
+      if (i < p.parts - 1) inputs += '<span class="plus-sign">+</span>';
+    }
+    card.innerHTML = `
+      <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+        <h5 class="font-display font-bold text-purple-700">Soal ${idx + 1}</h5>
+        <div class="number-display inline-block">${numStr}</div>
+      </div>
+      <div class="flex items-center gap-2 flex-wrap mb-3">${inputs}</div>
+      <div class="flex gap-2">
+        <button class="btn-girly text-sm" onclick="checkDecomp(${idx})">Cek Jawaban</button>
+        <button class="btn-outline text-sm" onclick="resetDecomp(${idx})">Reset</button>
+      </div>
+      <div id="decResult${idx}" class="mt-3 hidden"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function checkDecomp(idx) {
+  const p = decompProblems[idx];
+  const numStr = p.num.toString().padStart(6, '0').split('');
+  const expected = numStr.map((d, i) => parseInt(d) * pvPlaceValues[i]).filter(v => v > 0);
+  expected.sort((a, b) => b - a);
+  
+  let userVals = [];
+  for (let i = 0; i < p.parts; i++) {
+    const v = parseInt(document.getElementById(`dec${idx}_${i}`).value.replace(/\./g, '')) || 0;
+    if (v > 0) userVals.push(v);
+  }
+  
+  let allCorrect = true;
+  for (let i = 0; i < p.parts; i++) {
+    const inp = document.getElementById(`dec${idx}_${i}`);
+    const v = parseInt(inp.value.replace(/\./g, '')) || 0;
+    inp.classList.remove('correct', 'wrong');
+    if (v === 0 && !expected[i]) continue;
+    if (expected.includes(v)) {
+      inp.classList.add('correct');
+    } else {
+      inp.classList.add('wrong');
+      allCorrect = false;
+    }
+  }
+  
+  const result = document.getElementById(`decResult${idx}`);
+  result.classList.remove('hidden');
+  const sum = userVals.reduce((a, b) => a + b, 0);
+  if (allCorrect && sum === p.num) {
+    result.className = 'mt-3 p-3 rounded-xl bg-green-100 text-green-700 font-semibold text-center';
+    result.innerHTML = '🎉 Hebat! Dekomposisi benar!';
+    confetti();
+  } else {
+    result.className = 'mt-3 p-3 rounded-xl bg-red-100 text-red-700 font-semibold text-center';
+    result.innerHTML = `💔 Jawaban belum tepat. Contoh: ${numStr.map((d, i) => formatNumber(parseInt(d) * pvPlaceValues[i])).filter(v => !v.startsWith('0')).join(' + ')} = ${formatNumber(p.num)}`;
+  }
+}
+
+function resetDecomp(idx) {
+  const p = decompProblems[idx];
+  for (let i = 0; i < p.parts; i++) {
+    const inp = document.getElementById(`dec${idx}_${i}`);
+    inp.value = '';
+    inp.classList.remove('correct', 'wrong');
+  }
+  document.getElementById(`decResult${idx}`).classList.add('hidden');
+}
+
+// Dekomposisi Multiple Choice (complex)
+const decompMcProblems = [
+  { num: 234567, options: ['200.000 + 30.000 + 4.000 + 500 + 60 + 7', '230.000 + 4.567', '234.000 + 567', '200.000 + 34.500 + 67'], correct: [0, 1, 2] },
+  { num: 100000, options: ['100.000', '50.000 + 50.000', '99.000 + 1.000', '90.000 + 10.000'], correct: [0, 1, 2, 3] },
+  { num: 345678, options: ['300.000 + 45.678', '345.000 + 678', '300.000 + 40.000 + 5.000 + 678', '300.000 + 45.000 + 678'], correct: [0, 1, 2, 3] },
+  { num: 500500, options: ['500.000 + 500', '400.000 + 100.500', '500.500', '500.000 + 400 + 100'], correct: [0, 1, 2, 3] },
+  { num: 678901, options: ['600.000 + 78.901', '678.000 + 901', '600.000 + 70.000 + 8.000 + 900 + 1', '670.000 + 8.901'], correct: [0, 1, 2, 3] },
+  { num: 999999, options: ['999.000 + 999', '900.000 + 99.999', '990.000 + 9.999', '999.999'], correct: [0, 1, 2, 3] },
+  { num: 105050, options: ['100.000 + 5.000 + 50', '105.000 + 50', '100.000 + 5.050', '105.050'], correct: [0, 1, 2, 3] },
+  { num: 250750, options: ['250.000 + 750', '200.000 + 50.750', '200.000 + 50.000 + 750', '250.750'], correct: [0, 1, 2, 3] },
+  { num: 432100, options: ['432.000 + 100', '400.000 + 32.100', '430.000 + 2.100', '432.100'], correct: [0, 1, 2, 3] },
+  { num: 780654, options: ['780.000 + 654', '700.000 + 80.654', '700.000 + 80.000 + 654', '780.654'], correct: [0, 1, 2, 3] },
+];
+
+function renderDecompMc() {
+  const container = document.getElementById('decompMcContainer');
+  container.innerHTML = '';
+  decompMcProblems.forEach((p, idx) => {
+    const card = document.createElement('div');
+    card.className = 'bg-white p-4 rounded-2xl border-2 border-pink-200';
+    const optionsHtml = p.options.map((opt, i) => `
+      <div class="quiz-option" data-q="decompMc${idx}" data-opt="${i}" onclick="toggleOption(this)">
+        <div class="opt-letter">${String.fromCharCode(65 + i)}</div>
+        <div>${opt}</div>
+      </div>
+    `).join('');
+    card.innerHTML = `
+      <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+        <h5 class="font-display font-bold text-purple-700">Soal ${idx + 1}</h5>
+        <div class="number-display inline-block">${formatNumber(p.num)}</div>
+      </div>
+      <p class="text-sm text-purple-600 mb-2">Pilih semua dekomposisi yang benar (bisa lebih dari satu):</p>
+      ${optionsHtml}
+      <div class="mt-3 flex gap-2">
+        <button class="btn-girly text-sm" onclick="checkDecompMc(${idx})">Cek Jawaban</button>
+        <button class="btn-outline text-sm" onclick="resetDecompMc(${idx})">Reset</button>
+      </div>
+      <div id="decompMcResult${idx}" class="mt-3 hidden"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function toggleOption(el) {
+  el.classList.toggle('selected');
+}
+
+function checkDecompMc(idx) {
+  const p = decompMcProblems[idx];
+  const options = document.querySelectorAll(`[data-q="decompMc${idx}"]`);
+  let allCorrect = true;
+  options.forEach((opt, i) => {
+    opt.classList.remove('correct', 'wrong');
+    const isSelected = opt.classList.contains('selected');
+    const shouldBeSelected = p.correct.includes(i);
+    if (isSelected && shouldBeSelected) {
+      opt.classList.add('correct');
+    } else if (isSelected && !shouldBeSelected) {
+      opt.classList.add('wrong');
+      allCorrect = false;
+    } else if (!isSelected && shouldBeSelected) {
+      opt.classList.add('wrong');
+      allCorrect = false;
+    }
+  });
+  const result = document.getElementById(`decompMcResult${idx}`);
+  result.classList.remove('hidden');
+  if (allCorrect) {
+    result.className = 'mt-3 p-3 rounded-xl bg-green-100 text-green-700 font-semibold text-center';
+    result.innerHTML = '🎉 Benar semua! Pintar!';
+    confetti();
+  } else {
+    result.className = 'mt-3 p-3 rounded-xl bg-red-100 text-red-700 font-semibold text-center';
+    const correctLetters = p.correct.map(i => String.fromCharCode(65 + i)).join(', ');
+    result.innerHTML = `💔 Ada yang salah. Jawaban benar: ${correctLetters}`;
+  }
+}
+
+function resetDecompMc(idx) {
+  document.querySelectorAll(`[data-q="decompMc${idx}"]`).forEach(opt => {
+    opt.classList.remove('selected', 'correct', 'wrong');
+  });
+  document.getElementById(`decompMcResult${idx}`).classList.add('hidden');
+}
+
+// ============================ SLIDE 4.6: MEMBANDINGKAN ============================
+const compareProblems = [
+  { a: 234567, b: 234765, sign: '<' },
+  { a: 999999, b: 1000000, sign: '<' },
+  { a: 500500, b: 500500, sign: '=' },
+  { a: 678901, b: 678899, sign: '>' },
+  { a: 345678, b: 345687, sign: '<' },
+  { a: 750000, b: 570000, sign: '>' },
+  { a: 1000000, b: 999999, sign: '>' },
+  { a: 123456, b: 123456, sign: '=' },
+  { a: 888888, b: 888889, sign: '<' },
+  { a: 605050, b: 505050, sign: '>' },
+];
+
+function renderCompare() {
+  const container = document.getElementById('compareContainer');
+  container.innerHTML = '';
+  compareProblems.forEach((p, idx) => {
+    const card = document.createElement('div');
+    card.className = 'bg-white p-4 rounded-2xl border-2 border-pink-200';
+    card.innerHTML = `
+      <div class="flex items-center justify-center gap-4 mb-3">
+        <div class="compare-cell" id="cmpA${idx}">${formatNumber(p.a)}</div>
+        <div class="flex flex-col gap-2">
+          <button class="sign-btn" data-q="cmp${idx}" data-sign=">" onclick="selectSign(this, ${idx})">&gt;</button>
+          <button class="sign-btn" data-q="cmp${idx}" data-sign="<" onclick="selectSign(this, ${idx})">&lt;</button>
+          <button class="sign-btn" data-q="cmp${idx}" data-sign="=" onclick="selectSign(this, ${idx})">=</button>
+        </div>
+        <div class="compare-cell" id="cmpB${idx}">${formatNumber(p.b)}</div>
+      </div>
+      <div class="text-center">
+        <button class="btn-girly text-sm" onclick="checkCompare(${idx})">Cek Jawaban</button>
+      </div>
+      <div id="cmpResult${idx}" class="mt-3 hidden"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function selectSign(btn, idx) {
+  document.querySelectorAll(`[data-q="cmp${idx}"]`).forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById(`cmpA${idx}`).classList.remove('correct', 'wrong');
+  document.getElementById(`cmpB${idx}`).classList.remove('correct', 'wrong');
+  document.getElementById(`cmpResult${idx}`).classList.add('hidden');
+}
+
+function checkCompare(idx) {
+  const p = compareProblems[idx];
+  const selected = document.querySelector(`[data-q="cmp${idx}"].selected`);
+  const cellA = document.getElementById(`cmpA${idx}`);
+  const cellB = document.getElementById(`cmpB${idx}`);
+  const result = document.getElementById(`cmpResult${idx}`);
+  
+  cellA.classList.remove('correct', 'wrong');
+  cellB.classList.remove('correct', 'wrong');
+  
+  if (!selected) {
+    result.classList.remove('hidden');
+    result.className = 'mt-3 p-3 rounded-xl bg-yellow-100 text-yellow-700 font-semibold text-center';
+    result.innerHTML = '⚠️ Pilih tanda perbandingan dulu!';
+    return;
+  }
+  
+  const userSign = selected.dataset.sign;
+  if (userSign === p.sign) {
+    cellA.classList.add('correct');
+    cellB.classList.add('correct');
+    result.classList.remove('hidden');
+    result.className = 'mt-3 p-3 rounded-xl bg-green-100 text-green-700 font-semibold text-center';
+    result.innerHTML = `🎉 Benar! ${formatNumber(p.a)} ${p.sign} ${formatNumber(p.b)}`;
+    confetti();
+  } else {
+    cellA.classList.add('wrong');
+    cellB.classList.add('wrong');
+    result.classList.remove('hidden');
+    result.className = 'mt-3 p-3 rounded-xl bg-red-100 text-red-700 font-semibold text-center';
+    result.innerHTML = `💔 Salah. Jawaban yang benar: ${formatNumber(p.a)} <b>${p.sign}</b> ${formatNumber(p.b)}`;
+  }
+}
+
+// ============================ SLIDE 4.7: MENGURUTKAN ============================
+function setOrderType(type) {
+  state.orderType = type;
+  document.getElementById('orderAscBtn').classList.toggle('btn-girly', type === 'asc');
+  document.getElementById('orderAscBtn').classList.toggle('btn-outline', type !== 'asc');
+  document.getElementById('orderDescBtn').classList.toggle('btn-girly', type === 'desc');
+  document.getElementById('orderDescBtn').classList.toggle('btn-outline', type !== 'desc');
+  document.getElementById('orderTypeIndicator').innerHTML = type === 'asc' 
+    ? '📈 Urutkan dari <b>Terkecil ke Terbesar</b> (Naik)'
+    : '📉 Urutkan dari <b>Terbesar ke Terkecil</b> (Turun)';
+}
+
+const orderProblems = [
+  [345678, 345876, 345687, 354678, 344678],
+  [123456, 132456, 123465, 132546, 213456],
+  [999999, 999989, 999998, 989999, 999899],
+  [500500, 505500, 500050, 505050, 550000],
+  [100000, 10000, 1000000, 1000, 100001],
+  [678901, 678910, 687901, 678091, 678911],
+  [222222, 222022, 220222, 222220, 202222],
+  [765432, 756432, 765342, 765423, 756423],
+  [888888, 888088, 880888, 888880, 808888],
+  [135792, 153792, 135729, 315792, 135972],
+];
+
+function renderOrdering() {
+  const container = document.getElementById('orderContainer');
+  container.innerHTML = '';
+  orderProblems.forEach((nums, idx) => {
+    const card = document.createElement('div');
+    card.className = 'bg-white p-4 rounded-2xl border-2 border-purple-200';
+    const numsHtml = nums.map((n, i) => `
+      <div class="text-center">
+        <div class="number-display mb-2">${formatNumber(n)}</div>
+        <input type="number" min="1" max="5" class="order-input" data-q="ord${idx}" data-i="${i}" placeholder="?" />
+      </div>
+    `).join('');
+    card.innerHTML = `
+      <h5 class="font-display font-bold text-purple-700 mb-3">Soal ${idx + 1}</h5>
+      <p class="text-sm text-purple-600 mb-3">Masukkan urutan (1-5) untuk setiap bilangan:</p>
+      <div class="grid grid-cols-5 gap-2 mb-3">${numsHtml}</div>
+      <div class="flex gap-2">
+        <button class="btn-girly text-sm" onclick="checkOrdering(${idx})">Cek Jawaban</button>
+        <button class="btn-outline text-sm" onclick="resetOrdering(${idx})">Reset</button>
+      </div>
+      <div id="ordResult${idx}" class="mt-3 hidden"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function checkOrdering(idx) {
+  if (!state.orderType) {
+    alert('Tutor: Pilih jenis urutan (Terkecil→Terbesar atau Terbesar→Terkecil) dulu!');
+    return;
+  }
+  const nums = [...orderProblems[idx]];
+  const sorted = nums.slice().sort((a, b) => state.orderType === 'asc' ? a - b : b - a);
+  const expectedOrder = sorted.map(n => nums.indexOf(n) + 1);
+  
+  const inputs = document.querySelectorAll(`[data-q="ord${idx}"]`);
+  let allCorrect = true;
+  inputs.forEach((inp, i) => {
+    inp.classList.remove('correct', 'wrong');
+    const userVal = parseInt(inp.value);
+    const expected = expectedOrder.indexOf(i + 1) + 1;
+    if (userVal === expected) {
+      inp.classList.add('correct');
+    } else {
+      inp.classList.add('wrong');
+      allCorrect = false;
+    }
+  });
+  
+  const result = document.getElementById(`ordResult${idx}`);
+  result.classList.remove('hidden');
+  if (allCorrect) {
+    result.className = 'mt-3 p-3 rounded-xl bg-green-100 text-green-700 font-semibold text-center';
+    result.innerHTML = '🎉 Urutan benar! Hebat!';
+    confetti();
+  } else {
+    result.className = 'mt-3 p-3 rounded-xl bg-red-100 text-red-700 font-semibold text-center';
+    result.innerHTML = `💔 Urutan belum tepat. Urutan benar: ${sorted.map(n => formatNumber(n)).join(state.orderType === 'asc' ? ' < ' : ' > ')}`;
+  }
+}
+
+function resetOrdering(idx) {
+  document.querySelectorAll(`[data-q="ord${idx}"]`).forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct', 'wrong');
+  });
+  document.getElementById(`ordResult${idx}`).classList.add('hidden');
+}
+
+// ============================ SLIDE 5: QUIZ (30 SOAL) ============================
+const quizQuestions = [
+  { type: 'mc', diff: 'easy', q: 'Bilangan cacah dimulai dari angka...', opts: ['1', '0', '-1', '10'], correct: [1] },
+  { type: 'mc', diff: 'easy', q: 'Lambang bilangan "lima ribu" adalah...', opts: ['500', '5.000', '50.000', '500.000'], correct: [1] },
+  { type: 'tf', diff: 'easy', q: 'Bilangan 0 termasuk dalam bilangan cacah.', correct: true },
+  { type: 'mc', diff: 'easy', q: 'Nilai angka 5 pada bilangan 5.432 adalah...', opts: ['5', '50', '500', '5.000'], correct: [3] },
+  { type: 'mc', diff: 'easy', q: 'Bilangan 3.456 dibaca...', opts: ['tiga ribu empat ratus lima puluh enam', 'tiga empat lima enam', 'tiga juta empat ratus lima puluh enam', 'tiga ratus empat puluh lima'], correct: [0] },
+  { type: 'tf', diff: 'easy', q: 'Bilangan 1.500 dan 1.500 memiliki nilai yang sama.', correct: true },
+  { type: 'mc', diff: 'easy', q: 'Urutan naik berikut: 100, 200, 300, 400, ...', opts: ['450', '500', '350', '600'], correct: [1] },
+  { type: 'tf', diff: 'easy', q: 'Pada bilangan 234, angka 2 bernilai 200.', correct: true },
+  { type: 'mc', diff: 'easy', q: 'Anggota bilangan cacah yang paling kecil adalah...', opts: ['1', '0', '10', '100'], correct: [1] },
+  { type: 'mc', diff: 'easy', q: 'Angka 0 pada bilangan 305 bernilai...', opts: ['0', '10', '100', 'tidak ada'], correct: [0] },
+  
+  { type: 'mc', diff: 'medium', q: 'Pada bilangan 456.789, angka 5 bernilai...', opts: ['5.000', '50.000', '500.000', '50'], correct: [1] },
+  { type: 'mc', diff: 'medium', q: 'Bilangan 234.567 dibaca...', opts: ['dua ratus tiga puluh empat ribu lima ratus enam puluh tujuh', 'dua tiga empat lima enam tujuh', 'dua juta tiga ratus empat puluh lima ribu enam puluh tujuh', 'dua ratus tiga empat ribu lima ratus enam puluh tujuh'], correct: [0] },
+  { type: 'cmc', diff: 'medium', q: 'Manakah dekomposisi yang benar untuk 345?', opts: ['300 + 40 + 5', '300 + 45', '340 + 5', '300 + 50 - 5'], correct: [0, 1, 2] },
+  { type: 'mc', diff: 'medium', q: 'Bilangan terbesar di antara berikut adalah...', opts: ['234.567', '243.567', '234.765', '324.567'], correct: [3] },
+  { type: 'tf', diff: 'medium', q: '100.000 + 20.000 + 3 = 123.000.', correct: false },
+  { type: 'mc', diff: 'medium', q: 'Urutan turun: 800, 700, 600, ...', opts: ['500', '650', '750', '400'], correct: [0] },
+  { type: 'cmc', diff: 'medium', q: 'Pilih dekomposisi yang mungkin untuk 1.234:', opts: ['1.000 + 200 + 30 + 4', '1.200 + 34', '1.000 + 234', '1.234'], correct: [0, 1, 2, 3] },
+  { type: 'mc', diff: 'medium', q: '999.999 + 1 = ...', opts: ['1.000.000', '100.000', '10.000.000', '9.999.999'], correct: [0] },
+  { type: 'tf', diff: 'medium', q: 'Bilangan 012 sama dengan bilangan 12.', correct: true },
+  { type: 'mc', diff: 'medium', q: 'Tanda yang tepat: 45.678 ___ 45.687', opts: ['>', '<', '=', '≠'], correct: [1] },
+  
+  { type: 'cmc', diff: 'hard', q: 'Pilih dekomposisi yang benar untuk 234.567:', opts: ['200.000 + 30.000 + 4.000 + 500 + 60 + 7', '230.000 + 4.567', '234.000 + 567', '200.000 + 34.000 + 567'], correct: [0, 1, 2, 3] },
+  { type: 'mc', diff: 'hard', q: 'Berapa banyak bilangan cacah di antara 100 dan 105?', opts: ['4', '5', '6', '3'], correct: [0] },
+  { type: 'mc', diff: 'hard', q: 'Bilangan 6 angka terkecil yang semua angkanya sama adalah...', opts: ['100.000', '111.111', '110.000', '100.001'], correct: [1] },
+  { type: 'tf', diff: 'hard', q: '999.999 adalah bilangan cacah 6 angka terbesar.', correct: true },
+  { type: 'cmc', diff: 'hard', q: 'Urutan naik yang benar untuk: 234, 432, 342, 423 adalah:', opts: ['234 < 342 < 423 < 432', '234 < 432 < 342 < 423', '234 < 342 < 432 < 423', '432 < 423 < 342 < 234'], correct: [0] },
+  
+  { type: 'mc', diff: 'hots', q: 'Sebuah stadion memiliki 250.000 kursi. Jika 1.250 kursi ditambah, berapa total sekarang?', opts: ['251.250', '250.250', '262.500', '251.000'], correct: [0] },
+  { type: 'mc', diff: 'hots', q: 'Andi punya 100.000 permen. Dia memberi Budi 25.000 dan Cicu 35.000. Berapa sisa permen Andi?', opts: ['40.000', '35.000', '50.000', '30.000'], correct: [0] },
+  { type: 'tf', diff: 'hots', q: 'Jika A < B dan B < C, maka A < C.', correct: true },
+  { type: 'mc', diff: 'hots', q: 'Sebuah sekolah memiliki 1.234 siswa laki-laki dan 1.243 siswa perempuan. Total siswa adalah...', opts: ['2.477', '2.467', '2.476', '2.487'], correct: [0] },
+  { type: 'cmc', diff: 'hots', q: 'Bilangan 6 angka terbesar yang dapat dibuat dari angka 0,1,2,3,4,5 (setiap angka dipakai sekali) adalah...', opts: ['543.210', '540.321', '504.321', '453.210'], correct: [0] },
+];
+
+const quizExplanations = [
+  'Bilangan cacah dimulai dari 0, yaitu: 0, 1, 2, 3, ...',
+  'Lima ribu = 5 × 1.000 = 5.000. Tanda titik adalah pemisah ribuan.',
+  'Bilangan cacah meliputi 0, 1, 2, 3, ... jadi 0 termasuk.',
+  'Angka 5 di tempat ribuan bernilai 5 × 1.000 = 5.000.',
+  '3.456 dibaca dengan mengelompokkan: 3 ribu + 456 = "tiga ribu empat ratus lima puluh enam".',
+  '1.500 = 1.500, jadi keduanya sama.',
+  'Pola naik bertambah 100: 100, 200, 300, 400, 500.',
+  'Angka 2 di tempat ratusan bernilai 2 × 100 = 200.',
+  'Bilangan cacah terkecil adalah 0.',
+  'Angka 0 di tempat puluhan bernilai 0 × 10 = 0.',
+  'Angka 5 di tempat puluhan ribu bernilai 5 × 10.000 = 50.000.',
+  '234.567 = 234 ribu + 567 = "dua ratus tiga puluh empat ribu lima ratus enam puluh tujuh".',
+  '345 dapat didekomposisi: 300+40+5, 300+45, atau 340+5. Semua benar.',
+  'Bandingkan dari kiri: 3>2, jadi 324.567 terbesar.',
+  '100.000 + 20.000 + 3 = 120.003, bukan 123.000.',
+  'Pola turun berkurang 100: 800, 700, 600, 500.',
+  '1.234 dapat didekomposisi dengan berbagai cara, semua benar.',
+  '999.999 + 1 = 1.000.000 (satu juta).',
+  '0 di depan tidak bernilai, jadi 012 = 12.',
+  'Bandingkan digit ke-5 dari kiri: 7 vs 8, jadi 45.678 < 45.687.',
+  '234.567 dapat didekomposisi dalam berbagai bentuk, semua benar.',
+  'Antara 100 dan 105 (eksklusif): 101, 102, 103, 104 = 4 bilangan.',
+  'Bilangan 6 angka terkecil dengan semua angka sama: 111.111.',
+  '999.999 adalah 6 angka terbesar karena semua digitnya 9.',
+  'Urutkan: 234 < 342 < 423 < 432 (bandingkan digit demi digit).',
+  '250.000 + 1.250 = 251.250.',
+  '100.000 - 25.000 - 35.000 = 40.000.',
+  'Sifat transitif: jika A < B dan B < C, maka A < C.',
+  '1.234 + 1.243 = 2.477 siswa.',
+  'Susun dari angka terbesar ke terkecil dari kiri: 543.210.',
+];
+
+function renderQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  quizQuestions.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'bg-white p-4 rounded-2xl border-2 border-pink-200';
+    let optsHtml = '';
+    let typeLabel = '';
+    if (q.type === 'mc') {
+      typeLabel = 'Pilihan Ganda';
+      optsHtml = q.opts.map((opt, i) => `
+        <div class="quiz-option" data-q="quiz${idx}" data-opt="${i}" onclick="toggleQuizOption(this, '${q.type}')">
+          <div class="opt-letter">${String.fromCharCode(65 + i)}</div>
+          <div>${opt}</div>
+        </div>
+      `).join('');
+    } else if (q.type === 'cmc') {
+      typeLabel = 'PG Kompleks';
+      optsHtml = q.opts.map((opt, i) => `
+        <div class="quiz-option" data-q="quiz${idx}" data-opt="${i}" onclick="toggleQuizOption(this, '${q.type}')">
+          <div class="opt-letter">${String.fromCharCode(65 + i)}</div>
+          <div>${opt}</div>
+        </div>
+      `).join('');
+    } else if (q.type === 'tf') {
+      typeLabel = 'Benar - Salah';
+      optsHtml = `
+        <div class="quiz-option" data-q="quiz${idx}" data-opt="0" onclick="toggleQuizOption(this, '${q.type}')">
+          <div class="opt-letter">B</div><div>Benar</div>
+        </div>
+        <div class="quiz-option" data-q="quiz${idx}" data-opt="1" onclick="toggleQuizOption(this, '${q.type}')">
+          <div class="opt-letter">S</div><div>Salah</div>
+        </div>
+      `;
+    }
+    const diffClass = q.diff === 'easy' ? 'diff-easy' : q.diff === 'medium' ? 'diff-medium' : q.diff === 'hard' ? 'diff-hard' : 'diff-hots';
+    const diffLabel = q.diff === 'easy' ? 'Mudah' : q.diff === 'medium' ? 'Sedang' : q.diff === 'hard' ? 'Sulit' : 'HOTS';
+    card.innerHTML = `
+      <div class="flex items-start justify-between mb-2 gap-2 flex-wrap">
+        <h5 class="font-display font-bold text-purple-700">Soal ${idx + 1}</h5>
+        <div class="flex gap-2">
+          <span class="diff-badge ${diffClass}">${diffLabel}</span>
+          <span class="text-xs text-purple-500 bg-purple-50 px-2 py-1 rounded-full">${typeLabel}</span>
+        </div>
+      </div>
+      <p class="text-purple-800 font-medium mb-3">${q.q}</p>
+      ${optsHtml}
+      <div class="mt-3 flex gap-2 flex-wrap">
+        <button class="btn-girly text-sm" onclick="checkQuiz(${idx})">Cek Jawaban</button>
+        <button class="btn-outline text-sm" onclick="showQuizExplanation(${idx})"><i class="fas fa-lightbulb mr-1"></i>Pembahasan</button>
+        <button class="btn-outline text-sm" onclick="resetQuiz(${idx})">Reset</button>
+      </div>
+      <div id="quizResult${idx}" class="mt-3 hidden"></div>
+      <div id="quizExplain${idx}" class="hidden mt-3 p-3 rounded-xl bg-yellow-50 border-2 border-yellow-300">
+        <b class="text-yellow-700">💡 Pembahasan:</b> <span class="text-yellow-800">${quizExplanations[idx]}</span>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function toggleQuizOption(el, type) {
+  if (type === 'mc' || type === 'tf') {
+    document.querySelectorAll(`[data-q="${el.dataset.q}"]`).forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+  } else {
+    el.classList.toggle('selected');
+  }
+  const idx = el.dataset.q.replace('quiz', '');
+  document.querySelectorAll(`[data-q="${el.dataset.q}"]`).forEach(o => o.classList.remove('correct', 'wrong'));
+  document.getElementById(`quizResult${idx}`).classList.add('hidden');
+}
+
+function checkQuiz(idx) {
+  const q = quizQuestions[idx];
+  const options = document.querySelectorAll(`[data-q="quiz${idx}"]`);
+  const result = document.getElementById(`quizResult${idx}`);
+  
+  let selected = [];
+  options.forEach((opt, i) => {
+    opt.classList.remove('correct', 'wrong');
+    if (opt.classList.contains('selected')) selected.push(i);
+  });
+  
+  if (selected.length === 0) {
+    result.classList.remove('hidden');
+    result.className = 'mt-3 p-3 rounded-xl bg-yellow-100 text-yellow-700 font-semibold text-center';
+    result.innerHTML = '⚠️ Pilih jawaban dulu!';
+    return;
+  }
+  
+  let correct = false;
+  if (q.type === 'tf') {
+    const correctIdx = q.correct ? 0 : 1;
+    correct = selected.includes(correctIdx);
+    options.forEach((opt, i) => {
+      if (i === correctIdx) opt.classList.add('correct');
+      else if (selected.includes(i)) opt.classList.add('wrong');
+    });
+  } else if (q.type === 'mc') {
+    correct = selected.length === 1 && selected[0] === q.correct[0];
+    options.forEach((opt, i) => {
+      if (q.correct.includes(i)) opt.classList.add('correct');
+      else if (selected.includes(i)) opt.classList.add('wrong');
+    });
+  } else if (q.type === 'cmc') {
+    correct = selected.length === q.correct.length && selected.every(s => q.correct.includes(s));
+    options.forEach((opt, i) => {
+      if (q.correct.includes(i)) opt.classList.add('correct');
+      else if (selected.includes(i)) opt.classList.add('wrong');
+    });
+  }
+  
+  if (!q._answered) {
+    q._answered = true;
+    state.quizAnswered++;
+    if (correct) state.quizCorrect++;
+    updateQuizStats();
+  }
+  
+  result.classList.remove('hidden');
+  if (correct) {
+    result.className = 'mt-3 p-3 rounded-xl bg-green-100 text-green-700 font-semibold text-center';
+    result.innerHTML = '🎉 Benar! Pintar sekali!';
+    confetti();
+  } else {
+    result.className = 'mt-3 p-3 rounded-xl bg-red-100 text-red-700 font-semibold text-center';
+    const correctLetters = q.correct.map(i => String.fromCharCode(65 + i)).join(', ');
+    result.innerHTML = `💔 Belum tepat. Jawaban benar: <b>${correctLetters}</b>`;
+  }
+}
+
+function showQuizExplanation(idx) {
+  const el = document.getElementById(`quizExplain${idx}`);
+  el.classList.toggle('hidden');
+}
+
+function resetQuiz(idx) {
+  document.querySelectorAll(`[data-q="quiz${idx}"]`).forEach(o => {
+    o.classList.remove('selected', 'correct', 'wrong');
+  });
+  document.getElementById(`quizResult${idx}`).classList.add('hidden');
+  document.getElementById(`quizExplain${idx}`).classList.add('hidden');
+}
+
+function updateQuizStats() {
+  document.getElementById('quizAnswered').textContent = state.quizAnswered;
+  document.getElementById('quizCorrect').textContent = state.quizCorrect;
+  const score = state.quizAnswered > 0 ? Math.round((state.quizCorrect / state.quizAnswered) * 100) : 0;
+  document.getElementById('quizScore').textContent = score + '%';
+}
+
+// ============================ SLIDE 6: STORY CARDS ============================
+const storyProblems = [
+  { q: 'Andi menyimpan 245.600 buah permen, Budi menyimpan 254.600 buah. Siapakah yang memiliki permen lebih banyak? (Andi/Budi)', a: 'budi', explain: '254.600 > 245.600, jadi Budi punya lebih banyak permen.' },
+  { q: 'Tiga kota memiliki penduduk: Kota Mawar 123.456 jiwa, Kota Melati 132.456 jiwa, Kota Anggrek 123.465 jiwa. Urutkan dari penduduk terkecil ke terbesar. (Tulis: Mawar, Anggrek, Melati)', a: 'mawar anggrek melati', explain: '123.456 < 123.465 < 132.456, jadi: Mawar < Anggrek < Melati.' },
+  { q: 'Pak Budi memiliki 5.678 ekor ayam, Pak Siti memiliki 5.687 ekor. Siapa yang ayamnya lebih sedikit? (Budi/Siti)', a: 'budi', explain: '5.678 < 5.687, jadi Pak Budi yang lebih sedikit.' },
+  { q: 'Sekolah A memiliki 234.500 siswa, sekolah B 243.500 siswa, sekolah C 234.050 siswa. Urutkan dari terbesar ke terkecil. (Tulis: B, A, C)', a: 'b a c', explain: '243.500 > 234.500 > 234.050, jadi: B > A > C.' },
+  { q: 'Toko Merah meraup untung Rp 567.890, Toko Biru Rp 576.890, Toko Hijau Rp 567.980. Toko mana yang untungnya paling besar? (Merah/Biru/Hijau)', a: 'biru', explain: '576.890 adalah yang terbesar, jadi Toko Biru paling besar untungnya.' },
+  { q: 'Doni menempuh jarak 12.500 m, Rina 12.050 m, Sinta 12.005 m. Siapa yang jarak tempuhnya paling jauh? (Doni/Rina/Sinta)', a: 'doni', explain: '12.500 > 12.050 > 12.005, jadi Doni paling jauh.' },
+  { q: 'Tiga buah bilangan: 345.678, 345.687, 345.768. Urutkan dari terkecil ke terbesar. Pisahkan dengan koma.', a: '345.678 345.687 345.768', explain: 'Bandingkan digit per digit: 345.678 < 345.687 < 345.768.' },
+  { q: 'Andi memiliki 100.000 sticker. Budi memiliki 99.999 sticker. Berapa selisih sticker mereka? (Tulis angka)', a: '1', explain: '100.000 - 99.999 = 1.' },
+  { q: '"Lima belas ribu empat ratus lima" ditulis dalam lambang bilangan... (Tulis angka)', a: '15405', explain: '15.405 dibaca "lima belas ribu empat ratus lima".' },
+  { q: 'Bandingkan: 456.789 ___ 456.789. Tanda apa yang tepat? (>/< /=)', a: '=', explain: 'Kedua bilangan sama, jadi tanda yang tepat adalah =.' },
+  { q: 'Lima buah bilangan: 100.000, 99.999, 100.001, 100.010, 100.100. Mana yang terkecil? (Tulis angka)', a: '99999', explain: '99.999 adalah yang terkecil karena 5 digit < 6 digit.' },
+  { q: 'Sebuah pabrik sepatu memproduksi 234.567 pasang sepatu. Tuliskan cara membaca bilangan tersebut.', a: 'dua ratus tiga puluh empat ribu lima ratus enam puluh tujuh', explain: '234.567 dibaca "dua ratus tiga puluh empat ribu lima ratus enam puluh tujuh".' },
+  { q: 'Hasil dari 100.000 + 50.000 + 3.000 + 200 + 40 + 5 = ... (Tulis angka)', a: '153245', explain: 'Jumlahkan: 100.000 + 50.000 + 3.000 + 200 + 40 + 5 = 153.245.' },
+  { q: '567.890 ... 576.890. Tanda perbandingan yang tepat adalah... (>/< /=)', a: '<', explain: '567.890 < 576.890 karena 67 < 76 di tempat puluhan ribu.' },
+  { q: 'Tiga anak berlomba memetik buah: Andi 12.345, Budi 12.435, Cicu 12.453. Siapa yang memetik paling banyak? (Andi/Budi/Cicu)', a: 'cicu', explain: '12.453 adalah terbesar, jadi Cicu paling banyak.' },
+  { q: 'Bilangan 6 angka terkecil dengan semua angka berbeda adalah... (Tulis angka)', a: '102345', explain: 'Susun angka terkecil di kiri: 102.345 (angka 0 tidak boleh di depan).' },
+  { q: 'Urutkan naik: 999.999, 100.000, 500.000, 250.000, 750.000. Tulis bilangan KEDUA dalam urutan. (Tulis angka)', a: '250000', explain: 'Urutan: 100.000 < 250.000 < 500.000 < 750.000 < 999.999. Bilangan kedua: 250.000.' },
+  { q: 'Sebuah perpustakaan memiliki 345.678 buku. Ditambah 12.345 buku, totalnya menjadi... (Tulis angka)', a: '358023', explain: '345.678 + 12.345 = 358.023 buku.' },
+  { q: 'Tanda perbandingan: 234.567 ___ 234.576. (>/< /=)', a: '<', explain: '234.567 < 234.576 karena pada puluhan: 6 < 7.' },
+  { q: 'Tiga buah bilangan 111.111, 222.222, 333.333 diurutkan dari terbesar ke terkecil. Yang di tengah adalah... (Tulis angka)', a: '222222', explain: 'Urutan turun: 333.333 > 222.222 > 111.111. Yang di tengah: 222.222.' },
+];
+
+function renderStoryCards() {
+  const grid = document.getElementById('storyCardsGrid');
+  grid.innerHTML = '';
+  for (let i = 1; i <= 20; i++) {
+    const div = document.createElement('div');
+    div.className = 'story-card';
+    if (state.storyCardStates[i]?.answered) {
+      div.classList.add('opened');
+      if (state.storyCardStates[i].correct) div.classList.add('correct');
+      else div.classList.add('wrong');
+    }
+    div.textContent = i;
+    div.onclick = () => openStoryCard(i);
+    grid.appendChild(div);
+  }
+}
+
+function openStoryCard(num) {
+  if (state.timerInterval) clearInterval(state.timerInterval);
+  state.currentStoryCard = num;
+  state.timeRemaining = 120;
+  
+  document.getElementById('storyActive').classList.remove('hidden');
+  document.getElementById('storyCardNum').textContent = num;
+  document.getElementById('storyQuestion').textContent = storyProblems[num - 1].q;
+  document.getElementById('storyAnswer').value = state.storyCardStates[num]?.userAnswer || '';
+  document.getElementById('storyResult').classList.add('hidden');
+  document.getElementById('storyExplanation').classList.add('hidden');
+  
+  renderStoryCards();
+  updateStoryStats();
+  startStoryTimer();
+  
+  document.getElementById('storyActive').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function startStoryTimer() {
+  updateStoryTimerDisplay();
+  state.timerInterval = setInterval(() => {
+    state.timeRemaining--;
+    updateStoryTimerDisplay();
+    if (state.timeRemaining <= 0) {
+      clearInterval(state.timerInterval);
+      state.timerInterval = null;
+      document.getElementById('storyResult').classList.remove('hidden');
+      document.getElementById('storyResult').className = 'p-3 rounded-xl bg-red-100 text-red-700 font-semibold text-center mb-3';
+      document.getElementById('storyResult').innerHTML = '⏰ Waktu habis! Tetap semangat ya!';
+    }
+  }, 1000);
+}
+
+function updateStoryTimerDisplay() {
+  const m = Math.floor(state.timeRemaining / 60);
+  const s = state.timeRemaining % 60;
+  const display = `${m}:${s.toString().padStart(2, '0')}`;
+  const timer = document.getElementById('storyTimer');
+  timer.textContent = display;
+  timer.classList.remove('warning', 'danger');
+  if (state.timeRemaining <= 10) timer.classList.add('danger');
+  else if (state.timeRemaining <= 30) timer.classList.add('warning');
+}
+
+function addTime15() {
+  state.timeRemaining += 15;
+  updateStoryTimerDisplay();
+}
+
+function checkStoryAnswer() {
+  if (state.currentStoryCard === null) return;
+  const userAns = document.getElementById('storyAnswer').value.trim();
+  if (!userAns) {
+    alert('Tulis jawaban dulu ya!');
+    return;
+  }
+  
+  if (state.timerInterval) {
+    clearInterval(state.timerInterval);
+    state.timerInterval = null;
+  }
+  
+  const timeTaken = 120 - state.timeRemaining;
+  const problem = storyProblems[state.currentStoryCard - 1];
+  const correct = normalizeText(userAns) === normalizeText(problem.a);
+  
+  if (!state.storyCardStates[state.currentStoryCard]?.answered) {
+    state.storyAnswered++;
+    state.storyTimes.push(timeTaken);
+    if (correct) state.storyCorrect++;
+  }
+  state.storyCardStates[state.currentStoryCard] = { 
+    answered: true, 
+    correct, 
+    userAnswer: userAns 
+  };
+  
+  const result = document.getElementById('storyResult');
+  result.classList.remove('hidden');
+  if (correct) {
+    result.className = 'p-3 rounded-xl bg-green-100 text-green-700 font-semibold text-center mb-3';
+    result.innerHTML = `🎉 Benar! Waktu: ${timeTaken} detik. Hebat!`;
+    confetti();
+  } else {
+    result.className = 'p-3 rounded-xl bg-red-100 text-red-700 font-semibold text-center mb-3';
+    result.innerHTML = `💔 Belum tepat. Waktu: ${timeTaken} detik. Klik pembahasan untuk lihat jawaban.`;
+  }
+  
+  renderStoryCards();
+  updateStoryStats();
+}
+
+function showStoryExplanation() {
+  if (state.currentStoryCard === null) return;
+  const problem = storyProblems[state.currentStoryCard - 1];
+  document.getElementById('storyExplanationText').textContent = problem.explain + ' Jawaban: ' + problem.a;
+  document.getElementById('storyExplanation').classList.remove('hidden');
+}
+
+function closeStoryCard() {
+  if (state.timerInterval) {
+    clearInterval(state.timerInterval);
+    state.timerInterval = null;
+  }
+  document.getElementById('storyActive').classList.add('hidden');
+  state.currentStoryCard = null;
+}
+
+function updateStoryStats() {
+  document.getElementById('storyAnswered').textContent = state.storyAnswered;
+  document.getElementById('storyCorrect').textContent = state.storyCorrect;
+  if (state.storyTimes.length > 0) {
+    const avg = Math.round(state.storyTimes.reduce((a, b) => a + b, 0) / state.storyTimes.length);
+    document.getElementById('storyAvgTime').textContent = avg + 's';
+  } else {
+    document.getElementById('storyAvgTime').textContent = '-';
+  }
+}
+
+// ============================ SLIDE 7: FINAL RESULTS ============================
+function updateFinalResults() {
+  document.getElementById('finalQuizAnswered').textContent = state.quizAnswered;
+  document.getElementById('finalQuizCorrect').textContent = state.quizCorrect;
+  const quizScore = state.quizAnswered > 0 ? Math.round((state.quizCorrect / state.quizAnswered) * 100) : 0;
+  document.getElementById('finalQuizScore').textContent = quizScore + '%';
+  
+  document.getElementById('finalStoryAnswered').textContent = state.storyAnswered;
+  document.getElementById('finalStoryCorrect').textContent = state.storyCorrect;
+  if (state.storyTimes.length > 0) {
+    const avg = Math.round(state.storyTimes.reduce((a, b) => a + b, 0) / state.storyTimes.length);
+    document.getElementById('finalStoryAvgTime').textContent = avg + 's';
+  } else {
+    document.getElementById('finalStoryAvgTime').textContent = '-';
+  }
+}
+
+// ============================ INIT ============================
+function init() {
+  // Navigation dots
+  initNavDots();
+  
+  // Start button - attach with multiple methods for reliability
+  const startBtn = document.getElementById('startBtn');
+  if (startBtn) {
+    startBtn.onclick = handleStart;
+    startBtn.addEventListener('click', handleStart);
+  }
+  
+  // Enter key on name input
+  const nameInput = document.getElementById('nameInput');
+  if (nameInput) {
+    nameInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        handleStart();
+      }
+    });
+  }
+  
+  // Navigation buttons
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  if (prevBtn) {
+    prevBtn.onclick = () => goToSlide(state.currentSlide - 1);
+  }
+  if (nextBtn) {
+    nextBtn.onclick = () => {
+      if (state.currentSlide < 7) goToSlide(state.currentSlide + 1);
+    };
+  }
+  
+  // Tabs
+  initTabs();
+  
+  // Render all components
+  renderPvDemo();
+  renderPvPractice();
+  renderFlashcard();
+  renderNameCards();
+  renderDecomp();
+  renderDecompMc();
+  renderCompare();
+  renderOrdering();
+  renderQuiz();
+  renderStoryCards();
+  
+  console.log('✨ Petualangan Bilangan Cacah siap digunakan!');
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+</script>
+</body>
+</html>
