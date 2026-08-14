@@ -1,0 +1,2595 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Bilangan Cacah Hingga 1.000.000</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --pink-soft: #FFE5EC;
+  --pink-medium: #FFC2D1;
+  --pink-hot: #FF6B9D;
+  --pink-deep: #E84A8A;
+  --lavender: #C8B6FF;
+  --purple-soft: #E8C5F5;
+  --purple-deep: #A66CFF;
+  --cream: #FFF5F7;
+  --mint: #B8E0D2;
+  --mint-deep: #6FCBA8;
+  --dark: #4A1942;
+  --dark-soft: #7A3E70;
+  --white: #FFFFFF;
+  --gold: #FFD166;
+  --shadow-card: 0 12px 40px rgba(232, 74, 138, 0.15);
+}
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(135deg, #FFE5EC 0%, #FFD6E5 25%, #F5D0F8 50%, #E0C8FF 75%, #C8B6FF 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 25s ease infinite;
+  min-height: 100vh;
+  color: var(--dark);
+  overflow-x: hidden;
+  padding: 20px 0;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.deco {
+  position: fixed;
+  pointer-events: none;
+  opacity: 0.5;
+  animation: floatUp linear infinite;
+  z-index: 1;
+  font-size: 22px;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(105vh) rotate(0deg) scale(0.8); opacity: 0; }
+  10% { opacity: 0.5; }
+  90% { opacity: 0.5; }
+  100% { transform: translateY(-15vh) rotate(360deg) scale(1.1); opacity: 0; }
+}
+
+.app-container {
+  position: relative;
+  z-index: 10;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.slide {
+  display: none;
+  animation: slideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.slide.active { display: block; }
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Welcome */
+.welcome-card {
+  background: var(--white);
+  border-radius: 32px;
+  padding: 50px 40px;
+  box-shadow: var(--shadow-card);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin-top: 30px;
+}
+
+.welcome-card::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, var(--pink-medium), transparent);
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+.welcome-card::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, var(--purple-soft), transparent);
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+.welcome-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+  display: inline-block;
+  animation: bounce 2s infinite;
+  position: relative;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.welcome-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--pink-deep), var(--purple-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 12px;
+  position: relative;
+  line-height: 1.1;
+}
+
+.welcome-subtitle {
+  font-size: 17px;
+  color: var(--dark-soft);
+  margin-bottom: 32px;
+  position: relative;
+  font-weight: 500;
+}
+
+.name-input-group {
+  position: relative;
+  margin: 24px auto;
+  max-width: 420px;
+}
+
+.name-input {
+  width: 100%;
+  padding: 18px 24px;
+  border: 3px solid var(--pink-medium);
+  border-radius: 20px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  background: var(--cream);
+  color: var(--dark);
+  outline: none;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.name-input:focus {
+  border-color: var(--pink-hot);
+  background: var(--white);
+  box-shadow: 0 0 0 4px rgba(255, 107, 157, 0.15);
+}
+
+.name-input::placeholder { color: #C8A2B5; font-weight: 500; }
+
+.btn {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 18px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--pink-hot), var(--purple-deep));
+  color: var(--white);
+  box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(255, 107, 157, 0.55);
+}
+
+.btn-secondary {
+  background: var(--white);
+  color: var(--pink-deep);
+  border: 3px solid var(--pink-medium);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--pink-soft);
+  border-color: var(--pink-hot);
+  transform: translateY(-2px);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, var(--mint-deep), #4FB286);
+  color: var(--white);
+  box-shadow: 0 6px 20px rgba(111, 203, 168, 0.4);
+}
+
+.btn-success:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(111, 203, 168, 0.55);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, #FFD166, #FFA500);
+  color: var(--white);
+  box-shadow: 0 6px 20px rgba(255, 209, 102, 0.5);
+}
+
+.btn-gold:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(255, 209, 102, 0.7);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Progress */
+.progress-text {
+  text-align: center;
+  font-weight: 600;
+  color: var(--dark-soft);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.progress-bar {
+  height: 14px;
+  background: var(--white);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  position: relative;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--pink-hot), var(--purple-deep));
+  border-radius: 10px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Question Card */
+.question-card {
+  background: var(--white);
+  border-radius: 28px;
+  padding: 32px;
+  box-shadow: var(--shadow-card);
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 2px dashed var(--pink-medium);
+}
+
+.question-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.question-number {
+  background: linear-gradient(135deg, var(--pink-hot), var(--purple-deep));
+  color: var(--white);
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  padding: 8px 16px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
+}
+
+.type-badge {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.type-pg { background: rgba(255, 107, 157, 0.15); color: var(--pink-deep); }
+.type-bs { background: rgba(166, 108, 255, 0.15); color: var(--purple-deep); }
+.type-pgk { background: rgba(111, 203, 168, 0.2); color: var(--mint-deep); }
+
+.stopwatch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, var(--cream), var(--pink-soft));
+  padding: 10px 18px;
+  border-radius: 16px;
+  border: 2px solid var(--pink-medium);
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--pink-deep);
+  min-width: 130px;
+  justify-content: center;
+}
+
+.stopwatch.running i {
+  animation: pulse 1s infinite;
+  color: var(--pink-hot);
+}
+
+.stopwatch.stopped {
+  background: linear-gradient(135deg, #E8F5E9, var(--mint));
+  border-color: var(--mint-deep);
+  color: var(--mint-deep);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.15); }
+}
+
+.question-text {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 28px;
+  color: var(--dark);
+  font-weight: 500;
+}
+
+.num {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  color: var(--pink-deep);
+  background: var(--pink-soft);
+  padding: 1px 8px;
+  border-radius: 7px;
+  display: inline-block;
+  margin: 0 1px;
+  white-space: nowrap;
+}
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.option {
+  background: var(--cream);
+  border: 2.5px solid transparent;
+  border-radius: 16px;
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: all 0.25s;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 15px;
+  font-weight: 500;
+  user-select: none;
+}
+
+.option:hover:not(.disabled) {
+  background: var(--pink-soft);
+  border-color: var(--pink-medium);
+  transform: translateX(4px);
+}
+
+.option-label {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 2.5px solid var(--pink-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  color: var(--pink-deep);
+  flex-shrink: 0;
+  transition: all 0.25s;
+  font-size: 15px;
+}
+
+.option.selected .option-label {
+  background: linear-gradient(135deg, var(--pink-hot), var(--purple-deep));
+  color: var(--white);
+  border-color: transparent;
+  transform: scale(1.05);
+}
+
+.option.selected {
+  background: linear-gradient(135deg, rgba(255, 107, 157, 0.08), rgba(166, 108, 255, 0.08));
+  border-color: var(--pink-hot);
+}
+
+.option.correct {
+  background: linear-gradient(135deg, rgba(111, 203, 168, 0.18), rgba(79, 178, 134, 0.1));
+  border-color: var(--mint-deep);
+}
+
+.option.correct .option-label {
+  background: linear-gradient(135deg, var(--mint-deep), #4FB286);
+  color: var(--white);
+  border-color: transparent;
+}
+
+.option.wrong {
+  background: linear-gradient(135deg, rgba(232, 74, 138, 0.12), rgba(232, 74, 138, 0.05));
+  border-color: var(--pink-deep);
+}
+
+.option.wrong .option-label {
+  background: var(--pink-deep);
+  color: var(--white);
+  border-color: transparent;
+}
+
+.option.disabled { cursor: default; }
+.option.disabled:hover { transform: none; }
+
+.option-text { flex: 1; line-height: 1.5; }
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.feedback {
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  display: none;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+}
+
+.feedback.show { display: flex; animation: slideIn 0.4s; }
+
+.feedback.correct {
+  background: rgba(111, 203, 168, 0.18);
+  color: #2D7A5F;
+  border: 2px solid var(--mint-deep);
+}
+
+.feedback.wrong {
+  background: rgba(232, 74, 138, 0.12);
+  color: var(--pink-deep);
+  border: 2px solid var(--pink-deep);
+}
+
+.explanation {
+  background: linear-gradient(135deg, var(--purple-soft), var(--lavender));
+  border-radius: 16px;
+  padding: 18px 22px;
+  margin-bottom: 18px;
+  display: none;
+  border-left: 5px solid var(--purple-deep);
+}
+
+.explanation.show { display: block; animation: slideIn 0.4s; }
+
+.explanation-title {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--purple-deep);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.explanation-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--dark);
+}
+
+.explanation-text .num {
+  background: var(--white);
+  color: var(--purple-deep);
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.finish-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+/* Statistics */
+.stats-card {
+  background: var(--white);
+  border-radius: 32px;
+  padding: 40px;
+  box-shadow: var(--shadow-card);
+  margin-top: 20px;
+}
+
+.stats-header { text-align: center; margin-bottom: 28px; }
+
+.stats-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 34px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--pink-deep), var(--purple-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 8px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.stat-box {
+  background: linear-gradient(135deg, var(--pink-soft), var(--purple-soft));
+  border-radius: 18px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.stat-box:hover { transform: translateY(-3px); }
+
+.stat-value {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--pink-deep);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--dark-soft);
+  margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-box.success .stat-value { color: var(--mint-deep); }
+.stat-box.success {
+  background: linear-gradient(135deg, rgba(111, 203, 168, 0.2), rgba(184, 224, 210, 0.25));
+}
+
+.stat-box.warning .stat-value { color: #C99A1F; }
+.stat-box.warning {
+  background: linear-gradient(135deg, rgba(255, 209, 102, 0.25), rgba(255, 209, 102, 0.1));
+}
+
+.stat-box.info .stat-value { color: var(--purple-deep); }
+.stat-box.info {
+  background: linear-gradient(135deg, var(--lavender), var(--purple-soft));
+}
+
+.detail-stats {
+  background: var(--cream);
+  border-radius: 18px;
+  padding: 12px;
+  margin-bottom: 24px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.detail-stat-row {
+  display: grid;
+  grid-template-columns: 45px 1fr 90px 90px;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  align-items: center;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.detail-stat-row.header {
+  font-weight: 700;
+  color: var(--dark-soft);
+  background: var(--pink-soft);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.detail-stat-row:not(.header):nth-child(even) { background: var(--white); }
+
+.status-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  margin: 0 auto;
+}
+
+.status-icon.correct { background: var(--mint-deep); }
+.status-icon.wrong { background: var(--pink-deep); }
+.status-icon.unanswered { background: #B0A0B0; }
+
+.detail-q-text {
+  font-weight: 600;
+  color: var(--dark);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.detail-time, .detail-status {
+  text-align: center;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.detail-time { color: var(--purple-deep); font-family: 'Fredoka', sans-serif; }
+.detail-status { color: var(--dark-soft); }
+
+/* Thank You */
+.thankyou-card {
+  background: var(--white);
+  border-radius: 32px;
+  padding: 50px 40px;
+  box-shadow: var(--shadow-card);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.thankyou-card::before {
+  content: '';
+  position: absolute;
+  top: -80px; left: -80px;
+  width: 250px; height: 250px;
+  background: radial-gradient(circle, var(--purple-soft), transparent);
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+.thankyou-card::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; right: -80px;
+  width: 250px; height: 250px;
+  background: radial-gradient(circle, var(--pink-medium), transparent);
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+.thankyou-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+  display: inline-block;
+  animation: heartbeat 1.5s infinite;
+  position: relative;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+
+.thankyou-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--pink-deep), var(--purple-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 14px;
+  position: relative;
+  line-height: 1.1;
+}
+
+.reflection-box {
+  background: linear-gradient(135deg, var(--cream), var(--pink-soft));
+  border-radius: 20px;
+  padding: 22px 26px;
+  margin: 20px 0;
+  text-align: left;
+  position: relative;
+}
+
+.reflection-title {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 19px;
+  color: var(--pink-deep);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.reflection-content {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--dark);
+}
+
+.reflection-content ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.reflection-content li {
+  padding: 6px 0;
+  padding-left: 26px;
+  position: relative;
+}
+
+.reflection-content li::before {
+  content: '🌸';
+  position: absolute;
+  left: 0;
+}
+
+.confetti {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+  z-index: 100;
+  animation: confettiFall 3s linear forwards;
+  border-radius: 2px;
+}
+
+@keyframes confettiFall {
+  0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* ============ GAME MEMORY ============ */
+.game-card {
+  background: var(--white);
+  border-radius: 32px;
+  padding: 36px;
+  box-shadow: var(--shadow-card);
+  margin-top: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.game-card::before {
+  content: '';
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, var(--lavender), transparent);
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+.game-header {
+  text-align: center;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.game-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--pink-deep), var(--purple-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 8px;
+}
+
+.game-subtitle {
+  font-size: 15px;
+  color: var(--dark-soft);
+  font-weight: 500;
+}
+
+.game-icon-big {
+  font-size: 60px;
+  margin-bottom: 12px;
+  display: inline-block;
+  animation: bounce 2s infinite;
+}
+
+/* Level selector */
+.level-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.level-card {
+  background: linear-gradient(135deg, var(--cream), var(--pink-soft));
+  border: 3px solid var(--pink-medium);
+  border-radius: 20px;
+  padding: 24px 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.level-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  border-color: var(--pink-hot);
+  box-shadow: 0 12px 30px rgba(255, 107, 157, 0.25);
+}
+
+.level-card .level-emoji {
+  font-size: 40px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.level-card .level-name {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--pink-deep);
+  margin-bottom: 4px;
+}
+
+.level-card .level-desc {
+  font-size: 13px;
+  color: var(--dark-soft);
+  font-weight: 600;
+}
+
+.level-card.level-medium { background: linear-gradient(135deg, var(--purple-soft), var(--lavender)); border-color: var(--purple-deep); }
+.level-card.level-medium .level-name { color: var(--purple-deep); }
+.level-card.level-hard { background: linear-gradient(135deg, rgba(255,209,102,0.3), rgba(255,165,0,0.2)); border-color: var(--gold); }
+.level-card.level-hard .level-name { color: #C99A1F; }
+
+/* Game stats bar */
+.game-stats-bar {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.game-stat {
+  background: linear-gradient(135deg, var(--cream), var(--pink-soft));
+  border: 2px solid var(--pink-medium);
+  border-radius: 16px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  color: var(--pink-deep);
+  font-size: 16px;
+}
+
+.game-stat i { color: var(--pink-hot); }
+
+.game-stat.stat-time { background: linear-gradient(135deg, #E8F5E9, var(--mint)); border-color: var(--mint-deep); color: var(--mint-deep); }
+.game-stat.stat-time i { color: var(--mint-deep); }
+
+.game-stat.stat-moves { background: linear-gradient(135deg, var(--lavender), var(--purple-soft)); border-color: var(--purple-deep); color: var(--purple-deep); }
+.game-stat.stat-moves i { color: var(--purple-deep); }
+
+/* Memorize Countdown Banner */
+.memorize-banner {
+  background: linear-gradient(135deg, var(--gold), #FFA500);
+  color: var(--white);
+  padding: 14px 20px;
+  border-radius: 16px;
+  text-align: center;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 6px 20px rgba(255, 209, 102, 0.4);
+  display: none;
+  animation: pulse 1.5s infinite;
+}
+
+.memorize-banner span {
+  font-size: 28px;
+  margin-left: 8px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Memory cards grid */
+.memory-grid {
+  display: grid;
+  gap: 12px;
+  margin: 0 auto 24px;
+  perspective: 1000px;
+}
+
+.memory-grid.size-easy {
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 500px;
+}
+
+.memory-grid.size-medium {
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 600px;
+}
+
+.memory-grid.size-hard {
+  grid-template-columns: repeat(5, 1fr);
+  max-width: 700px;
+}
+
+.mem-card {
+  aspect-ratio: 1;
+  cursor: pointer;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mem-card.flipped { transform: rotateY(180deg); }
+.mem-card.matched { transform: rotateY(180deg); cursor: default; }
+
+.mem-card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(232, 74, 138, 0.15);
+}
+
+.mem-card-front {
+  background: linear-gradient(135deg, var(--pink-hot), var(--purple-deep));
+  color: var(--white);
+  font-size: 28px;
+}
+
+.mem-card-back {
+  background: var(--white);
+  border: 3px solid var(--pink-medium);
+  transform: rotateY(180deg);
+  font-family: 'Fredoka', sans-serif;
+  color: var(--dark);
+  font-size: 13px;
+  line-height: 1.3;
+  overflow: hidden;
+}
+
+.mem-card-back.type-number {
+  background: linear-gradient(135deg, var(--pink-soft), var(--pink-medium));
+  border-color: var(--pink-hot);
+  color: var(--pink-deep);
+  font-size: 17px;
+}
+
+.mem-card.matched .mem-card-back {
+  background: linear-gradient(135deg, rgba(111, 203, 168, 0.3), rgba(79, 178, 134, 0.2));
+  border-color: var(--mint-deep);
+  color: #2D7A5F;
+  animation: matchedPulse 0.6s;
+}
+
+@keyframes matchedPulse {
+  0% { transform: rotateY(180deg) scale(1); }
+  50% { transform: rotateY(180deg) scale(1.1); }
+  100% { transform: rotateY(180deg) scale(1); }
+}
+
+.mem-card.wrong .mem-card-back {
+  background: linear-gradient(135deg, rgba(232, 74, 138, 0.2), rgba(232, 74, 138, 0.1));
+  border-color: var(--pink-deep);
+  animation: shake 0.4s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: rotateY(180deg) translateX(0); }
+  25% { transform: rotateY(180deg) translateX(-6px); }
+  75% { transform: rotateY(180deg) translateX(6px); }
+}
+
+/* Win screen */
+.win-screen {
+  text-align: center;
+  padding: 20px;
+}
+
+.win-icon {
+  font-size: 70px;
+  margin-bottom: 16px;
+  display: inline-block;
+  animation: heartbeat 1.5s infinite;
+}
+
+.win-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--pink-deep), var(--purple-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 10px;
+}
+
+.win-stars {
+  font-size: 36px;
+  margin: 16px 0;
+  letter-spacing: 6px;
+}
+
+.win-star { display: inline-block; animation: starPop 0.5s backwards; }
+.win-star:nth-child(1) { animation-delay: 0.2s; }
+.win-star:nth-child(2) { animation-delay: 0.4s; }
+.win-star:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes starPop {
+  0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.win-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 20px 0;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.win-stat {
+  background: linear-gradient(135deg, var(--cream), var(--pink-soft));
+  border-radius: 14px;
+  padding: 14px 8px;
+}
+
+.win-stat-value {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--pink-deep);
+}
+
+.win-stat-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--dark-soft);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.game-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.game-instructions {
+  background: linear-gradient(135deg, var(--cream), var(--pink-soft));
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin: 16px 0;
+  font-size: 14px;
+  color: var(--dark);
+  line-height: 1.7;
+}
+
+.game-instructions strong { color: var(--pink-deep); font-family: 'Fredoka', sans-serif; }
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--pink-soft); border-radius: 10px; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--pink-hot), var(--purple-deep));
+  border-radius: 10px;
+}
+
+@media (max-width: 640px) {
+  .welcome-title, .thankyou-title, .stats-title, .game-title { font-size: 26px; }
+  .welcome-card, .question-card, .stats-card, .thankyou-card, .game-card { padding: 24px 18px; }
+  .question-text { font-size: 16px; }
+  .detail-stat-row {
+    grid-template-columns: 35px 1fr 65px 65px;
+    font-size: 11px;
+    gap: 6px;
+    padding: 8px;
+  }
+  .option { padding: 12px 14px; font-size: 14px; }
+  .option-label { width: 34px; height: 34px; font-size: 14px; }
+  .stopwatch { font-size: 16px; padding: 8px 14px; min-width: 110px; }
+  .nav-buttons { flex-direction: column-reverse; }
+  .nav-buttons .btn { width: 100%; justify-content: center; }
+  .question-header { gap: 10px; }
+  .stat-value { font-size: 28px; }
+  .mem-card-back { font-size: 11px; }
+  .mem-card-back.type-number { font-size: 14px; }
+  .memory-grid.size-hard { grid-template-columns: repeat(4, 1fr); }
+  .win-stats-grid { grid-template-columns: 1fr; }
+  .memorize-banner { font-size: 16px; padding: 10px 14px; }
+  .memorize-banner span { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<div id="decorations"></div>
+
+<div class="app-container">
+
+  <!-- WELCOME SLIDE -->
+  <div class="slide active" id="slide-welcome">
+    <div class="welcome-card">
+      <div class="welcome-icon">🎀</div>
+      <h1 class="welcome-title">Latihan Bilangan Cacah</h1>
+      <p class="welcome-subtitle">Bilangan Cacah hingga 1.000.000 • Matematika Kelas 5</p>
+
+      <div class="name-input-group">
+        <input type="text" class="name-input" id="studentName" placeholder="Tulis namamu di sini..." maxlength="40">
+      </div>
+
+      <button class="btn btn-primary" id="startBtn" onclick="startQuiz()">
+        <i class="fas fa-play"></i>
+        <span>Mulai Latihan</span>
+      </button>
+
+      <div style="margin-top: 28px; padding: 16px 20px; background: var(--cream); border-radius: 16px; font-size: 13px; color: var(--dark-soft); line-height: 1.7; position: relative;">
+        <strong style="color: var(--pink-deep); font-family: 'Fredoka', sans-serif;">📚 Petunjuk Pengerjaan:</strong><br>
+        💕 Kerjakan <strong>30 soal</strong> dengan jujur dan teliti<br>
+        ⏱️ <strong>Stopwatch</strong> akan mencatat waktu pengerjaanmu<br>
+        ✅ Tekan <strong>Cek Jawaban</strong> untuk menghentikan stopwatch & melihat hasil<br>
+        💡 Tekan <strong>Pembahasan</strong> untuk membaca penjelasan lengkap<br>
+        🎯 Tekan <strong>Finish</strong> kapan saja untuk melihat statistik hasil belajarmu<br>
+        🎮 Selesai? Main <strong>Game Memory</strong> yang seru sambil belajar!
+      </div>
+    </div>
+  </div>
+
+  <!-- QUESTION SLIDE -->
+  <div class="slide" id="slide-question">
+    <div class="progress-text" id="progressText">Soal 1 dari 30</div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+    </div>
+
+    <div class="question-card" id="questionContent"></div>
+
+    <div class="nav-buttons">
+      <button class="btn btn-secondary" id="prevBtn" onclick="prevQuestion()">
+        <i class="fas fa-arrow-left"></i>
+        <span>Sebelumnya</span>
+      </button>
+      <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">
+        <span>Selanjutnya</span>
+        <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+
+    <div class="finish-btn-wrapper">
+      <button class="btn btn-success" onclick="finishQuiz()">
+        <i class="fas fa-flag-checkered"></i>
+        <span>Finish & Lihat Statistik</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- STATISTICS SLIDE -->
+  <div class="slide" id="slide-stats">
+    <div class="stats-card">
+      <div class="stats-header">
+        <h1 class="stats-title">✨ Statistik Hasil Belajar ✨</h1>
+        <p style="color: var(--dark-soft); font-size: 16px;">Kerja bagus, <strong id="statsName" style="color: var(--pink-deep);"></strong>! 🎉</p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-box success">
+          <div class="stat-value" id="statCorrect">0</div>
+          <div class="stat-label">Jawaban Benar</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="statWrong">0</div>
+          <div class="stat-label">Jawaban Salah</div>
+        </div>
+        <div class="stat-box warning">
+          <div class="stat-value" id="statAccuracy">0%</div>
+          <div class="stat-label">Tingkat Kebenaran</div>
+        </div>
+        <div class="stat-box info">
+          <div class="stat-value" id="statAvgTime">0s</div>
+          <div class="stat-label">Rata-rata Waktu</div>
+        </div>
+      </div>
+
+      <h3 style="font-family: 'Fredoka', sans-serif; color: var(--pink-deep); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; font-size: 18px;">
+        <i class="fas fa-list-check"></i> Detail Per Soal
+      </h3>
+
+      <div class="detail-stats" id="detailStats"></div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" onclick="goToQuestion(0)">
+          <i class="fas fa-rotate-left"></i>
+          <span>Ulangi Latihan</span>
+        </button>
+        <button class="btn btn-primary" onclick="showReflection()">
+          <span>Refleksi & Kesimpulan</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- THANK YOU SLIDE -->
+  <div class="slide" id="slide-thankyou">
+    <div class="thankyou-card">
+      <div class="thankyou-icon">🌟</div>
+      <h1 class="thankyou-title">Thank You for Today!</h1>
+      <p style="font-size: 17px; color: var(--dark-soft); margin-bottom: 16px; position: relative;">
+        Kamu sudah bekerja keras, <strong id="thankName" style="color: var(--pink-deep);"></strong>! 💕
+      </p>
+
+      <div class="reflection-box">
+        <h3 class="reflection-title">
+          <i class="fas fa-lightbulb"></i> Refleksi Pembelajaran
+        </h3>
+        <div class="reflection-content">
+          <ul id="reflectionList"></ul>
+        </div>
+      </div>
+
+      <div class="reflection-box" style="background: linear-gradient(135deg, var(--purple-soft), var(--lavender));">
+        <h3 class="reflection-title" style="color: var(--purple-deep);">
+          <i class="fas fa-flag"></i> Kesimpulan
+        </h3>
+        <div class="reflection-content">
+          <p>Latihan ini membantumu memahami <strong>bilangan cacah hingga <span class="num" style="background: white; color: var(--purple-deep);">1.000.000</span></strong>. Kamu sudah berlatih menulis lambang bilangan, membaca nama bilangan, menentukan nilai tempat dan nilai angka, mendekomposisi bilangan, membandingkan, serta mengurutkan bilangan.</p>
+          <p style="margin-top: 12px;">Teruslah berlatih dan jangan menyerah! Matematika itu menyenangkan seperti menyusun puzzle warna-warni. 🧩💖</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 24px; position: relative;">
+        <p style="font-family: 'Caveat', cursive; font-size: 28px; color: var(--pink-deep); margin-bottom: 18px; line-height: 1.3;">
+          "Belajar hari ini membuatmu<br>lebih hebat dari kemarin!" 💖
+        </p>
+        
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px;">
+          <button class="btn btn-gold" onclick="goToGame()">
+            <i class="fas fa-gamepad"></i>
+            <span>Main Game Memory!</span>
+          </button>
+          <button class="btn btn-primary" onclick="restartAll()">
+            <i class="fas fa-rotate-right"></i>
+            <span>Belajar Lagi Yuk!</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME MEMORY SLIDE -->
+  <div class="slide" id="slide-game">
+    <div class="game-card">
+      <div class="game-header">
+        <div class="game-icon-big">🧠✨</div>
+        <h1 class="game-title">Game Memory Bilangan</h1>
+        <p class="game-subtitle">Cocokkan lambang bilangan dengan nama bilangannya! 🎮</p>
+      </div>
+
+      <!-- Start Screen -->
+      <div id="gameStartScreen">
+        <div class="game-instructions">
+          <strong>📝 Cara Bermain:</strong><br>
+          👀 Semua kartu akan dibuka selama <strong>10 detik</strong> untuk kamu hafalkan<br>
+          🙈 Setelah 10 detik, kartu akan ditutup otomatis<br>
+          🃏 Klik kartu untuk membukanya<br>
+          🎯 Cari pasangan: <strong>lambang bilangan</strong> dengan <strong>nama bilangan</strong> yang cocok<br>
+          ⏱️ Selesaikan secepat mungkin dengan langkah sesedikit mungkin<br>
+          ⭐ Dapatkan 3 bintang untuk performa terbaik!
+        </div>
+
+        <h3 style="text-align: center; font-family: 'Fredoka', sans-serif; color: var(--pink-deep); margin: 20px 0 10px; font-size: 20px;">
+          <i class="fas fa-signal"></i> Pilih Tingkat Kesulitan
+        </h3>
+
+        <div class="level-grid">
+          <div class="level-card" onclick="startGame('easy')">
+            <span class="level-emoji">🌱</span>
+            <div class="level-name">Mudah</div>
+            <div class="level-desc">6 pasang kartu<br>(12 kartu)</div>
+          </div>
+          <div class="level-card level-medium" onclick="startGame('medium')">
+            <span class="level-emoji">🌸</span>
+            <div class="level-name">Sedang</div>
+            <div class="level-desc">8 pasang kartu<br>(16 kartu)</div>
+          </div>
+          <div class="level-card level-hard" onclick="startGame('hard')">
+            <span class="level-emoji">🔥</span>
+            <div class="level-name">Sulit</div>
+            <div class="level-desc">10 pasang kartu<br>(20 kartu)</div>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+          <button class="btn btn-secondary" onclick="backToThankYou()">
+            <i class="fas fa-arrow-left"></i>
+            <span>Kembali</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Play Screen -->
+      <div id="gamePlayScreen" style="display:none;">
+        <div class="memorize-banner" id="memorizeBanner">
+          👀 Hafalkan posisi kartunya! Mulai bermain dalam: <span id="memorizeCountdown">10</span>
+        </div>
+
+        <div class="game-stats-bar">
+          <div class="game-stat stat-time">
+            <i class="fas fa-stopwatch"></i>
+            <span id="gameTimer">0.0s</span>
+          </div>
+          <div class="game-stat stat-moves">
+            <i class="fas fa-hand-pointer"></i>
+            <span>Langkah: <span id="gameMoves">0</span></span>
+          </div>
+          <div class="game-stat">
+            <i class="fas fa-heart"></i>
+            <span>Cocok: <span id="gameMatches">0</span>/<span id="gameTotalPairs">0</span></span>
+          </div>
+        </div>
+
+        <div class="memory-grid" id="memoryGrid"></div>
+
+        <div style="text-align: center;">
+          <button class="btn btn-secondary" onclick="resetGame()">
+            <i class="fas fa-rotate-right"></i>
+            <span>Acak Ulang</span>
+          </button>
+          <button class="btn btn-secondary" onclick="backToGameStart()" style="margin-left: 8px;">
+            <i class="fas fa-list"></i>
+            <span>Pilih Level</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Win Screen -->
+      <div id="gameWinScreen" style="display:none;">
+        <div class="win-screen">
+          <div class="win-icon">🏆</div>
+          <h2 class="win-title">Hebat sekali!</h2>
+          <p style="color: var(--dark-soft); font-size: 16px;">Kamu berhasil menyelesaikan game memory! 🎉</p>
+          
+          <div class="win-stars" id="winStars"></div>
+
+          <div class="win-stats-grid">
+            <div class="win-stat">
+              <div class="win-stat-value" id="winTime">0s</div>
+              <div class="win-stat-label">Waktu</div>
+            </div>
+            <div class="win-stat">
+              <div class="win-stat-value" id="winMoves">0</div>
+              <div class="win-stat-label">Langkah</div>
+            </div>
+            <div class="win-stat">
+              <div class="win-stat-value" id="winScore">0</div>
+              <div class="win-stat-label">Skor</div>
+            </div>
+          </div>
+
+          <p id="winMessage" style="font-size: 15px; color: var(--dark); margin-bottom: 20px; line-height: 1.6;"></p>
+
+          <div class="game-actions">
+            <button class="btn btn-gold" onclick="resetGame()">
+              <i class="fas fa-redo"></i>
+              <span>Main Lagi</span>
+            </button>
+            <button class="btn btn-secondary" onclick="backToGameStart()">
+              <i class="fas fa-list"></i>
+              <span>Ganti Level</span>
+            </button>
+            <button class="btn btn-primary" onclick="backToThankYou()">
+              <i class="fas fa-home"></i>
+              <span>Selesai</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// DATA SOAL - Bilangan Cacah hingga 1.000.000
+// ============================================================
+const questions = [
+  // A. PILIHAN GANDA (1-10)
+  {
+    id: 1, type: 'pg', typeLabel: 'Pilihan Ganda',
+    question: 'Dalam sebuah sensus penduduk, diketahui jumlah penduduk di Kota Makmur adalah <span class="num">tiga ratus empat puluh lima ribu tujuh ratus dua belas</span> jiwa. Penulisan lambang bilangan dari jumlah penduduk tersebut adalah...',
+    options: [
+      { label: 'A', text: '<span class="num">345.721</span>' },
+      { label: 'B', text: '<span class="num">345.712</span>' },
+      { label: 'C', text: '<span class="num">354.712</span>' },
+      { label: 'D', text: '<span class="num">345.217</span>' }
+    ],
+    correct: 'B',
+    explanation: 'Tiga ratus empat puluh lima ribu (<span class="num">345.000</span>) ditambah tujuh ratus dua belas (<span class="num">712</span>) ditulis <span class="num">345.712</span>.'
+  },
+  {
+    id: 2, type: 'pg', typeLabel: 'Pilihan Ganda',
+    question: 'Pak Dedi membeli sebuah mesin pertanian bekas seharga <span class="num">Rp 876.500</span>. Nama bilangan dari harga mesin pertanian tersebut adalah...',
+    options: [
+      { label: 'A', text: 'Delapan ratus tujuh puluh enam ribu lima ratus' },
+      { label: 'B', text: 'Delapan ratus enam puluh tujuh ribu lima ratus' },
+      { label: 'C', text: 'Delapan ratus tujuh puluh enam ribu lima puluh' },
+      { label: 'D', text: 'Delapan ratus tujuh puluh enam ribu lima' }
+    ],
+    correct: 'A',
+    explanation: '<span class="num">876.500</span> dibaca delapan ratus (<span class="num">800</span>) tujuh puluh enam ribu (<span class="num">76.000</span>) lima ratus (<span class="num">500</span>).'
+  },
+  {
+    id: 3, type: 'pg', typeLabel: 'Pilihan Ganda',
+    question: 'Dika bermain video game dan mendapatkan skor <span class="num">458.910</span>. Angka <span class="num">5</span> pada skor Dika menempati nilai tempat...',
+    options: [
+      { label: 'A', text: 'Ratusan ribu' },
+      { label: 'B', text: 'Puluhan ribu' },
+      { label: 'C', text: 'Ribuan' },
+      { label: 'D', text: 'Ratusan' }
+    ],
+    correct: 'B',
+    explanation: 'Pada <span class="num">458.910</span>: 4 (ratusan ribu), 5 (puluhan ribu), 8 (ribuan), 9 (ratusan), 1 (puluhan), 0 (satuan). Jadi angka 5 menempati puluhan ribu.'
+  },
+  {
+    id: 4, type: 'pg', typeLabel: 'Pilihan Ganda',
+    question: 'Jarak antara Bumi dan Bulan rata-rata adalah <span class="num">384.400 km</span>. Nilai angka <span class="num">8</span> pada bilangan tersebut adalah...',
+    options: [
+      { label: 'A', text: '<span class="num">800.000</span>' },
+      { label: 'B', text: '<span class="num">80.000</span>' },
+      { label: 'C', text: '<span class="num">8.000</span>' },
+      { label: 'D', text: '<span class="num">800</span>' }
+    ],
+    correct: 'B',
+    explanation: 'Angka 8 berada di tempat puluhan ribu, sehingga nilainya adalah <span class="num">8 × 10.000 = 80.000</span>.'
+  },
+  {
+    id: 5, type: 'pg', typeLabel: 'Pilihan Ganda',
+    question: 'Koperasi desa berhasil mengumpulkan panen jagung sebanyak <span class="num">156.420 kg</span>. Dekomposisi yang tepat untuk bilangan tersebut adalah...',
+    options: [
+      { label: 'A', text: '<span class="num">100.000 + 50.000 + 6.000 + 400 + 20</span>' },
+      { label: 'B', text: '<span class="num">100.000 + 5.000 + 60.000 + 400 + 20</span>' },
+      { label: 'C', text: '<span class="num">100.000 + 50.000 + 600 + 40 + 2</span>' },
+      { label: 'D', text: '<span class="num">150.000 + 60.000 + 400 + 20</span>' }
+    ],
+    correct: 'A',
+    explanation: '<span class="num">156.420</span> = <span class="num">100.000</span> (ratusan ribu) + <span class="num">50.000</span> (puluhan ribu) + <span class="num">6.000</span> (ribuan) + <span class="num">400</span> (ratusan) + <span class="num">20</span> (puluhan).'
+  },
+  {
+    id: 6, type: 'pg', typeLabel: 'Pilihan Ganda',
+    question: 'Susi menabung uang receh. Setelah dihitung, jumlahnya adalah <span class="num">4 ratusan ribu + 8 ribuan + 3 ratusan + 5 satuan</span>. Lambang bilangan dari jumlah uang Susi adalah...',
+    options: [
+      { label: 'A', text: '<span class="num">480.305</span>' },
+      { label: 'B', text: '<span class="num">408.305</span>' },
+      { label: 'C', text: '<span class="num">408.350</span>' },
+      { label: 'D', text: '<span class="num">483.005</span>' }
+    ],
+    correct: 'B',
+    explanation: '4 ratusan ribu (<span class="num">400.000</span>) + 8 ribuan (<span class="num">8.000</span>) + 3 ratusan (<span class="num">300</span>) + 5 satuan (<span class="num">5</span>) = <span class="num">408.305</span>. Perhatikan tidak ada puluhan ribu dan puluhan, sehingga diisi 0.'
+  },
+  {
+    id: 7, type: 'pg', typeLabel: 'Pilihan Ganda',
+    question: 'Toko A menjual sepeda listrik seharga <span class="num">Rp950.000</span>, sedangkan Toko B menjual sepeda yang sama seharga <span class="num">Rp905.000</span>. Pernyataan yang benar adalah...',
+    options: [
+      { label: 'A', text: 'Harga di Toko A lebih murah daripada Toko B' },
+      { label: 'B', text: 'Harga di Toko A sama dengan di Toko B' },
+      { label: 'C', text: 'Harga di Toko A lebih mahal daripada Toko B' },
+      { label: 'D', text: 'Selisih harga kedua toko adalah <span class="num">Rp5.000</span>' }
+    ],
+    correct: 'C',
+    explanation: '<span class="num">950.000 &gt; 905.000</span>. Jadi, sepeda di Toko A lebih mahal. Selisihnya adalah <span class="num">950.000 − 905.000 = 45.000</span>, bukan 5.000.'
+  },
+  {
+    id: 8, type: 'pg', typeLabel: 'Pilihan Ganda',
+    question: 'Sebuah video edukasi ditonton oleh anak-anak dengan jumlah tayangan di tiga hari berturut-turut: <span class="num">125.400</span>, <span class="num">152.000</span>, dan <span class="num">125.040</span>. Urutan jumlah tayangan dari yang paling banyak adalah...',
+    options: [
+      { label: 'A', text: '<span class="num">152.000</span>, <span class="num">125.400</span>, <span class="num">125.040</span>' },
+      { label: 'B', text: '<span class="num">152.000</span>, <span class="num">125.040</span>, <span class="num">125.400</span>' },
+      { label: 'C', text: '<span class="num">125.040</span>, <span class="num">125.400</span>, <span class="num">152.000</span>' },
+      { label: 'D', text: '<span class="num">125.400</span>, <span class="num">152.000</span>, <span class="num">125.040</span>' }
+    ],
+    correct: 'A',
+    explanation: 'Bandingkan dari ratusan ribu (semua 1). Puluhan ribu: 5 (pada <span class="num">152.000</span>) terbesar. Sisa <span class="num">125.400</span> dan <span class="num">125.040</span>, ratusannya 4 &gt; 0. Jadi: <span class="num">152.000 &gt; 125.400 &gt; 125.040</span>.'
+  },
+  {
+    id: 9, type: 'pg', typeLabel: 'Pilihan Ganda',
+    question: 'Paman memiliki tabungan sebesar <span class="num">Rp750.000</span>. Angka <span class="num">7</span> dan <span class="num">5</span> secara berturut-turut menempati nilai tempat...',
+    options: [
+      { label: 'A', text: 'Ratusan ribu dan ribuan' },
+      { label: 'B', text: 'Puluhan ribu dan ribuan' },
+      { label: 'C', text: 'Ratusan ribu dan puluhan ribu' },
+      { label: 'D', text: 'Puluhan ribu dan ratusan' }
+    ],
+    correct: 'C',
+    explanation: 'Pada <span class="num">750.000</span>, angka 7 menempati ratusan ribu, dan angka 5 menempati puluhan ribu.'
+  },
+  {
+    id: 10, type: 'pg', typeLabel: 'Pilihan Ganda',
+    question: 'Berdasarkan data perpustakaan, jumlah buku di 3 sekolah adalah: SD A (<span class="num">112.500</span>), SD B (<span class="num">121.500</span>), SD C (<span class="num">112.050</span>). Sekolah yang memiliki buku paling sedikit adalah...',
+    options: [
+      { label: 'A', text: 'SD A' },
+      { label: 'B', text: 'SD B' },
+      { label: 'C', text: 'SD C' },
+      { label: 'D', text: 'SD A dan SD C' }
+    ],
+    correct: 'C',
+    explanation: 'Membandingkan: <span class="num">112.050 &lt; 112.500 &lt; 121.500</span>. SD C dengan <span class="num">112.050</span> buku memiliki jumlah paling sedikit.'
+  },
+
+  // B. BENAR ATAU SALAH (11-20)
+  {
+    id: 11, type: 'bs', typeLabel: 'Benar atau Salah',
+    question: 'Uang saku Budi selama satu tahun terkumpul sebanyak <span class="num">Rp245.500</span>. Bilangan <span class="num">245.500</span> dibaca dua ratus empat puluh lima ribu lima ratus.',
+    options: [
+      { label: 'BENAR', text: '✅ Benar' },
+      { label: 'SALAH', text: '❌ Salah' }
+    ],
+    correct: 'BENAR',
+    explanation: '<span class="num">245.500</span> dibaca dua ratus empat puluh lima ribu lima ratus rupiah. Pernyataan benar.'
+  },
+  {
+    id: 12, type: 'bs', typeLabel: 'Benar atau Salah',
+    question: 'Penduduk Desa Sukamaju berjumlah <span class="num">108.920 jiwa</span>. Angka <span class="num">8</span> pada jumlah tersebut menempati nilai tempat puluhan ribu.',
+    options: [
+      { label: 'BENAR', text: '✅ Benar' },
+      { label: 'SALAH', text: '❌ Salah' }
+    ],
+    correct: 'SALAH',
+    explanation: 'Angka 8 menempati nilai tempat <strong>ribuan</strong> (nilainya <span class="num">8.000</span>). Puluhan ribu ditempati oleh angka 0.'
+  },
+  {
+    id: 13, type: 'bs', typeLabel: 'Benar atau Salah',
+    question: 'Jumlah pengunjung sebuah kebun binatang tahun lalu adalah <span class="num">654.321</span>. Nilai angka <span class="num">6</span> pada bilangan tersebut adalah <span class="num">600.000</span>.',
+    options: [
+      { label: 'BENAR', text: '✅ Benar' },
+      { label: 'SALAH', text: '❌ Salah' }
+    ],
+    correct: 'BENAR',
+    explanation: 'Angka 6 berada di posisi ratusan ribu, nilainya <span class="num">6 × 100.000 = 600.000</span>. Pernyataan benar.'
+  },
+  {
+    id: 14, type: 'bs', typeLabel: 'Benar atau Salah',
+    question: 'Dekomposisi dari uang hasil penjualan tiket <span class="num">Rp520.407</span> adalah <span class="num">500.000 + 20.000 + 400 + 7</span>.',
+    options: [
+      { label: 'BENAR', text: '✅ Benar' },
+      { label: 'SALAH', text: '❌ Salah' }
+    ],
+    correct: 'BENAR',
+    explanation: '<span class="num">500.000</span> (ratusan ribu) + <span class="num">20.000</span> (puluhan ribu) + <span class="num">400</span> (ratusan) + <span class="num">7</span> (satuan) = <span class="num">520.407</span>. Pernyataan benar.'
+  },
+  {
+    id: 15, type: 'bs', typeLabel: 'Benar atau Salah',
+    question: 'Pipa air A panjangnya <span class="num">345.678 meter</span>, dan pipa B panjangnya <span class="num">345.768 meter</span>. Pipa A lebih panjang dari pipa B.',
+    options: [
+      { label: 'BENAR', text: '✅ Benar' },
+      { label: 'SALAH', text: '❌ Salah' }
+    ],
+    correct: 'SALAH',
+    explanation: 'Jika dibandingkan, ratusan pada pipa B (7) lebih besar dari pipa A (6). Jadi <span class="num">345.768 &gt; 345.678</span>, artinya pipa B lebih panjang.'
+  },
+  {
+    id: 16, type: 'bs', typeLabel: 'Benar atau Salah',
+    question: 'Tiga buah smartphone dijual dengan harga <span class="num">Rp925.000</span>, <span class="num">Rp920.500</span>, dan <span class="num">Rp915.000</span>. Urutan harga dari yang termurah adalah <span class="num">Rp915.000</span>, <span class="num">Rp920.500</span>, <span class="num">Rp925.000</span>.',
+    options: [
+      { label: 'BENAR', text: '✅ Benar' },
+      { label: 'SALAH', text: '❌ Salah' }
+    ],
+    correct: 'BENAR',
+    explanation: 'Berdasarkan nilai bilangannya, <span class="num">915.000 &lt; 920.500 &lt; 925.000</span>. Jadi urutannya sudah tepat dari termurah.'
+  },
+  {
+    id: 17, type: 'bs', typeLabel: 'Benar atau Salah',
+    question: 'Sembilan ratus sembilan ribu sembilan ditulis dengan lambang bilangan <span class="num">909.009</span>.',
+    options: [
+      { label: 'BENAR', text: '✅ Benar' },
+      { label: 'SALAH', text: '❌ Salah' }
+    ],
+    correct: 'BENAR',
+    explanation: '<span class="num">909.000</span> (sembilan ratus sembilan ribu) + <span class="num">9</span> (sembilan) ditulis <span class="num">909.009</span>. Pernyataan benar.'
+  },
+  {
+    id: 18, type: 'bs', typeLabel: 'Benar atau Salah',
+    question: 'Pak RT membagikan <span class="num">134.500</span> bibit tanaman. Angka <span class="num">3</span> pada bilangan tersebut bernilai <span class="num">3.000</span>.',
+    options: [
+      { label: 'BENAR', text: '✅ Benar' },
+      { label: 'SALAH', text: '❌ Salah' }
+    ],
+    correct: 'SALAH',
+    explanation: 'Angka 3 menempati <strong>puluhan ribu</strong>, sehingga bernilai <span class="num">30.000</span>, bukan <span class="num">3.000</span>.'
+  },
+  {
+    id: 19, type: 'bs', typeLabel: 'Benar atau Salah',
+    question: 'Skor bermain game Cici <span class="num">450.600</span> dan Dika <span class="num">405.600</span>. Dapat dikatakan bahwa skor Cici lebih besar daripada skor Dika.',
+    options: [
+      { label: 'BENAR', text: '✅ Benar' },
+      { label: 'SALAH', text: '❌ Salah' }
+    ],
+    correct: 'BENAR',
+    explanation: 'Angka puluhan ribu Cici (5) &gt; puluhan ribu Dika (0). Maka <span class="num">450.600 &gt; 405.600</span>. Pernyataan benar.'
+  },
+  {
+    id: 20, type: 'bs', typeLabel: 'Benar atau Salah',
+    question: 'Jumlah gabah yang terkumpul adalah <span class="num">7 ratusan ribu + 8 ribuan + 4 puluhan</span>. Jumlah gabah tersebut ditulis <span class="num">708.040</span>.',
+    options: [
+      { label: 'BENAR', text: '✅ Benar' },
+      { label: 'SALAH', text: '❌ Salah' }
+    ],
+    correct: 'BENAR',
+    explanation: '<span class="num">700.000 + 8.000 + 40 = 708.040</span>. Pernyataan benar.'
+  },
+
+  // C. PILIHAN GANDA KOMPLEKS (21-30)
+  {
+    id: 21, type: 'pgk', typeLabel: 'Pilihan Ganda Kompleks',
+    question: 'Pemerintah mengalokasikan dana perbaikan jalan desa sebesar <span class="num">Rp854.320</span>. Pernyataan berikut yang benar mengenai bilangan <span class="num">854.320</span> adalah... <em>(pilih semua yang benar)</em>',
+    options: [
+      { label: 'A', text: 'Angka 8 menempati nilai tempat ratusan ribu dan bernilai <span class="num">800.000</span>.' },
+      { label: 'B', text: 'Angka 5 menempati nilai tempat puluhan ribu dan bernilai <span class="num">50.000</span>.' },
+      { label: 'C', text: 'Bilangan tersebut dibaca delapan ratus lima puluh empat ribu tiga ratus dua puluh.' },
+      { label: 'D', text: 'Angka 4 menempati nilai tempat ratusan dan bernilai <span class="num">400</span>.' }
+    ],
+    correct: ['A', 'B', 'C'],
+    explanation: 'Pilihan a, b, dan c benar. Pilihan d salah karena angka 4 menempati nilai tempat <strong>ribuan</strong> (bernilai <span class="num">4.000</span>), bukan ratusan.'
+  },
+  {
+    id: 22, type: 'pgk', typeLabel: 'Pilihan Ganda Kompleks',
+    question: 'Tiga perusahaan mencatat keuntungan hari ini: Perusahaan X <span class="num">Rp765.000</span>, Perusahaan Y <span class="num">Rp756.000</span>, dan Perusahaan Z <span class="num">Rp760.500</span>. Pernyataan yang tepat adalah... <em>(pilih semua yang benar)</em>',
+    options: [
+      { label: 'A', text: 'Keuntungan Perusahaan X lebih besar dari Perusahaan Y.' },
+      { label: 'B', text: 'Keuntungan Perusahaan Z adalah yang paling kecil.' },
+      { label: 'C', text: 'Keuntungan Perusahaan X adalah yang paling besar.' },
+      { label: 'D', text: 'Urutan keuntungan dari yang terkecil adalah Y, Z, X.' }
+    ],
+    correct: ['A', 'C', 'D'],
+    explanation: 'Urutan dari yang terkecil: <span class="num">756.000</span> (Y) &lt; <span class="num">760.500</span> (Z) &lt; <span class="num">765.000</span> (X). Maka pernyataan a, c, dan d benar. Pilihan b salah karena yang terkecil adalah Y.'
+  },
+  {
+    id: 23, type: 'pgk', typeLabel: 'Pilihan Ganda Kompleks',
+    question: 'Dekomposisi yang tepat untuk jumlah penonton sebuah konser <span class="num">908.705</span> adalah... <em>(pilih semua yang benar)</em>',
+    options: [
+      { label: 'A', text: '<span class="num">900.000 + 8.000 + 700 + 5</span>' },
+      { label: 'B', text: '9 ratusan ribu + 8 ribuan + 7 ratusan + 5 satuan' },
+      { label: 'C', text: '<span class="num">900.000 + 80.000 + 700 + 5</span>' },
+      { label: 'D', text: '9 ratusan ribu + 8 puluhan ribu + 7 ratusan + 5 satuan' }
+    ],
+    correct: ['A', 'B'],
+    explanation: 'Angka 0 berada di puluhan ribu dan puluhan, sehingga tidak perlu ditulis nilainya. Pilihan c dan d salah karena menyebut 8 sebagai puluhan ribu (seharusnya 8 ribuan).'
+  },
+  {
+    id: 24, type: 'pgk', typeLabel: 'Pilihan Ganda Kompleks',
+    question: 'Pak Anton memiliki 4 kebun jeruk dengan hasil panen: Kebun A (<span class="num">234.500</span> buah), Kebun B (<span class="num">243.500</span> buah), Kebun C (<span class="num">234.050</span> buah), dan Kebun D (<span class="num">243.000</span> buah). Pernyataan yang benar adalah... <em>(pilih semua yang benar)</em>',
+    options: [
+      { label: 'A', text: 'Kebun B menghasilkan jeruk paling banyak.' },
+      { label: 'B', text: 'Kebun C menghasilkan jeruk paling sedikit.' },
+      { label: 'C', text: 'Hasil panen Kebun A lebih banyak dari Kebun D.' },
+      { label: 'D', text: 'Urutan dari yang paling banyak: B, D, A, C.' }
+    ],
+    correct: ['A', 'B', 'D'],
+    explanation: 'Urutan dari terbanyak: <span class="num">243.500</span> (B) &gt; <span class="num">243.000</span> (D) &gt; <span class="num">234.500</span> (A) &gt; <span class="num">234.050</span> (C). Pilihan c salah karena A (<span class="num">234.500</span>) &lt; D (<span class="num">243.000</span>).'
+  },
+  {
+    id: 25, type: 'pgk', typeLabel: 'Pilihan Ganda Kompleks',
+    question: 'Mengenai bilangan <span class="num">654.321</span>, manakah pernyataan di bawah ini yang benar? <em>(pilih semua yang benar)</em>',
+    options: [
+      { label: 'A', text: 'Angka 6 memiliki nilai angka <span class="num">600.000</span>.' },
+      { label: 'B', text: 'Angka 5 menempati nilai tempat ribuan.' },
+      { label: 'C', text: 'Angka 4 memiliki nilai angka <span class="num">4.000</span>.' },
+      { label: 'D', text: 'Angka 3 menempati nilai tempat puluhan.' }
+    ],
+    correct: ['A', 'C'],
+    explanation: 'Pada <span class="num">654.321</span>: 6=ratusan ribu (<span class="num">600.000</span>), 5=puluhan ribu (<span class="num">50.000</span>), 4=ribuan (<span class="num">4.000</span>), 3=ratusan (<span class="num">300</span>), 2=puluhan, 1=satuan. Pilihan a dan c benar. Pilihan b salah (5 adalah puluhan ribu). Pilihan d salah (3 adalah ratusan).'
+  },
+  {
+    id: 26, type: 'pgk', typeLabel: 'Pilihan Ganda Kompleks',
+    question: 'Dari penulisan nama bilangan berikut, manakah yang benar? <em>(pilih semua yang benar)</em>',
+    options: [
+      { label: 'A', text: '<span class="num">305.010</span> = Tiga ratus lima ribu sepuluh' },
+      { label: 'B', text: '<span class="num">450.200</span> = Empat ratus lima ribu dua ratus' },
+      { label: 'C', text: '<span class="num">100.001</span> = Seratus ribu satu' },
+      { label: 'D', text: '<span class="num">707.700</span> = Tujuh ratus tujuh ribu tujuh ratus' }
+    ],
+    correct: ['A', 'C', 'D'],
+    explanation: 'Pilihan a, c, dan d benar. Pilihan b salah karena <span class="num">450.200</span> dibaca <strong>empat ratus lima puluh ribu dua ratus</strong> (ada "lima puluh").'
+  },
+  {
+    id: 27, type: 'pgk', typeLabel: 'Pilihan Ganda Kompleks',
+    question: 'Tiga video edukasi di YouTube memiliki jumlah penonton: Video K ditonton <span class="num">405.000</span> kali, Video L ditonton <span class="num">450.000</span> kali, dan Video M ditonton <span class="num">400.500</span> kali. Pernyataan yang benar adalah... <em>(pilih semua yang benar)</em>',
+    options: [
+      { label: 'A', text: 'Video K lebih populer (lebih banyak ditonton) daripada Video L.' },
+      { label: 'B', text: 'Video L adalah video yang paling populer.' },
+      { label: 'C', text: 'Video M adalah video yang paling sedikit ditonton.' },
+      { label: 'D', text: 'Urutan dari yang paling sedikit ditonton: M, K, L.' }
+    ],
+    correct: ['B', 'C', 'D'],
+    explanation: 'Urutan: <span class="num">400.500</span> (M) &lt; <span class="num">405.000</span> (K) &lt; <span class="num">450.000</span> (L). Pilihan b, c, dan d benar. Pilihan a salah karena K &lt; L.'
+  },
+  {
+    id: 28, type: 'pgk', typeLabel: 'Pilihan Ganda Kompleks',
+    question: 'Diberikan angka-angka: <span class="num">1, 3, 5, 7, 9, 0</span>. Jika angka-angka tersebut disusun menjadi bilangan 6 angka yang tidak boleh ada angka berulang, pernyataan yang benar adalah... <em>(pilih semua yang benar)</em>',
+    options: [
+      { label: 'A', text: 'Bilangan terbesar yang dapat dibuat adalah <span class="num">975.310</span>.' },
+      { label: 'B', text: 'Bilangan terkecil yang dapat dibuat (angka pertama tidak boleh 0) adalah <span class="num">103.579</span>.' },
+      { label: 'C', text: 'Bilangan terbesar yang dapat dibuat adalah <span class="num">975.301</span>.' },
+      { label: 'D', text: 'Bilangan terkecil yang dapat dibuat adalah <span class="num">013.579</span>.' }
+    ],
+    correct: ['A', 'B'],
+    explanation: 'Terbesar: urutkan dari angka terbesar ke terkecil → <span class="num">975.310</span>. Terkecil (6 angka valid): angka pertama terkecil selain 0 (yaitu 1), diikuti 0, lalu sisanya dari terkecil → <span class="num">103.579</span>.'
+  },
+  {
+    id: 29, type: 'pgk', typeLabel: 'Pilihan Ganda Kompleks',
+    question: 'Ibu ingin membeli alat tulis untuk disumbangkan dengan dana <span class="num">Rp500.000</span>. Toko X memberikan total harga <span class="num">Rp489.500</span>, Toko Y <span class="num">Rp498.000</span>, dan Toko Z <span class="num">Rp501.000</span>. Pernyataan yang tepat adalah... <em>(pilih semua yang benar)</em>',
+    options: [
+      { label: 'A', text: 'Ibu dapat membeli di Toko Z karena dananya cukup.' },
+      { label: 'B', text: 'Ibu memiliki sisa dana jika membeli di Toko X.' },
+      { label: 'C', text: 'Toko Y lebih murah daripada Toko X.' },
+      { label: 'D', text: 'Toko X memberikan harga paling murah di antara ketiganya.' }
+    ],
+    correct: ['B', 'D'],
+    explanation: 'Harga Toko X (<span class="num">489.500</span>) &lt; Toko Y (<span class="num">498.000</span>) &lt; Toko Z (<span class="num">501.000</span>). Dana <span class="num">500.000</span> cukup untuk X dan Y. Pernyataan b dan d benar. Pilihan a salah (Z &gt; 500.000). Pilihan c salah (Y &gt; X).'
+  },
+  {
+    id: 30, type: 'pgk', typeLabel: 'Pilihan Ganda Kompleks',
+    question: 'Tiga maskapai penerbangan mencatat total jarak tempuh minggu ini: Maskapai P (<span class="num">889.000 km</span>), Maskapai Q (<span class="num">898.000 km</span>), dan Maskapai R (<span class="num">889.500 km</span>). Pernyataan yang benar adalah... <em>(pilih semua yang benar)</em>',
+    options: [
+      { label: 'A', text: 'Maskapai Q menempuh jarak paling jauh.' },
+      { label: 'B', text: 'Maskapai P menempuh jarak lebih jauh daripada Maskapai R.' },
+      { label: 'C', text: 'Urutan dari jarak terdekat: P, R, Q.' },
+      { label: 'D', text: 'Jarak tempuh Maskapai R lebih jauh dari Maskapai P.' }
+    ],
+    correct: ['A', 'C', 'D'],
+    explanation: 'Urutan dari terdekat: <span class="num">889.000</span> (P) &lt; <span class="num">889.500</span> (R) &lt; <span class="num">898.000</span> (Q). Pernyataan a, c, dan d benar. Pilihan b salah karena P &lt; R.'
+  }
+];
+
+// ============================================================
+// STATE MANAGEMENT
+// ============================================================
+let currentQuestionIndex = 0;
+let studentName = '';
+let userAnswers = {};
+let questionTimes = {};
+let checkedQuestions = {};
+let stopwatchInterval = null;
+let stopwatchStart = null;
+let currentStopwatchTime = 0;
+let stopwatchRunning = false;
+
+// ============================================================
+// STOPWATCH FUNCTIONS
+// ============================================================
+function startStopwatch() {
+  stopStopwatch();
+  stopwatchStart = Date.now();
+  stopwatchRunning = true;
+  stopwatchInterval = setInterval(() => {
+    currentStopwatchTime = (Date.now() - stopwatchStart) / 1000;
+    updateStopwatchDisplay();
+  }, 100);
+}
+
+function stopStopwatch() {
+  if (stopwatchInterval) {
+    clearInterval(stopwatchInterval);
+    stopwatchInterval = null;
+  }
+  stopwatchRunning = false;
+}
+
+function resetStopwatch() {
+  stopStopwatch();
+  currentStopwatchTime = 0;
+  updateStopwatchDisplay();
+}
+
+function formatTime(seconds) {
+  if (seconds < 60) return seconds.toFixed(1) + 's';
+  const mins = Math.floor(seconds / 60);
+  const secs = (seconds % 60).toFixed(1);
+  return mins + 'm ' + secs + 's';
+}
+
+function updateStopwatchDisplay() {
+  const sw = document.getElementById('stopwatchDisplay');
+  if (!sw) return;
+  sw.textContent = formatTime(currentStopwatchTime);
+  const swContainer = document.getElementById('stopwatch');
+  if (!swContainer) return;
+  if (stopwatchRunning) {
+    swContainer.classList.add('running');
+    swContainer.classList.remove('stopped');
+  } else if (checkedQuestions[questions[currentQuestionIndex].id]) {
+    swContainer.classList.add('stopped');
+    swContainer.classList.remove('running');
+  } else {
+    swContainer.classList.remove('running', 'stopped');
+  }
+}
+
+// ============================================================
+// SLIDE NAVIGATION
+// ============================================================
+function showSlide(slideId) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.getElementById(slideId).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================================================
+// QUIZ FUNCTIONS
+// ============================================================
+function startQuiz() {
+  const nameInput = document.getElementById('studentName');
+  const name = nameInput.value.trim();
+  if (!name) {
+    alert('💖 Tulis namamu dulu yuk sebelum mulai belajar!');
+    nameInput.focus();
+    return;
+  }
+  studentName = name;
+  currentQuestionIndex = 0;
+  userAnswers = {};
+  questionTimes = {};
+  checkedQuestions = {};
+  showSlide('slide-question');
+  loadQuestion(0);
+}
+
+function loadQuestion(index) {
+  currentQuestionIndex = index;
+  const q = questions[index];
+
+  document.getElementById('progressText').textContent = `Soal ${index + 1} dari ${questions.length}`;
+  document.getElementById('progressFill').style.width = ((index + 1) / questions.length * 100) + '%';
+
+  const typeClass = q.type === 'pg' ? 'type-pg' : q.type === 'bs' ? 'type-bs' : 'type-pgk';
+  const typeIcon = q.type === 'pg' ? 'fa-circle-dot' : q.type === 'bs' ? 'fa-check-circle' : 'fa-list-ul';
+
+  let optionsHTML = '';
+  q.options.forEach(opt => {
+    optionsHTML += `
+      <div class="option" data-label="${opt.label}" onclick="selectOption(${q.id}, '${opt.label}')">
+        <div class="option-label">${opt.label}</div>
+        <div class="option-text">${opt.text}</div>
+      </div>
+    `;
+  });
+
+  const isMultiSelect = q.type === 'pgk';
+  const multiHint = isMultiSelect ? '<div style="font-size:13px; color:var(--purple-deep); margin-bottom:14px; font-weight:600;"><i class="fas fa-info-circle"></i> Pilih semua jawaban yang benar (boleh lebih dari satu)</div>' : '';
+
+  document.getElementById('questionContent').innerHTML = `
+    <div class="question-header">
+      <div class="question-meta">
+        <div class="question-number">Soal ${q.id}</div>
+        <div class="type-badge ${typeClass}"><i class="fas ${typeIcon}"></i> ${q.typeLabel}</div>
+      </div>
+      <div class="stopwatch" id="stopwatch">
+        <i class="fas fa-stopwatch"></i>
+        <span id="stopwatchDisplay">0.0s</span>
+      </div>
+    </div>
+
+    <div class="question-text">${q.question}</div>
+    ${multiHint}
+    <div class="options-list" id="optionsList">${optionsHTML}</div>
+
+    <div class="action-buttons">
+      <button class="btn btn-primary" id="checkBtn" onclick="checkAnswer()">
+        <i class="fas fa-circle-check"></i>
+        <span>Cek Jawaban</span>
+      </button>
+      <button class="btn btn-secondary" id="explanationBtn" onclick="toggleExplanation()">
+        <i class="fas fa-lightbulb"></i>
+        <span>Lihat Pembahasan</span>
+      </button>
+    </div>
+
+    <div class="feedback" id="feedback"></div>
+    <div class="explanation" id="explanation">
+      <div class="explanation-title"><i class="fas fa-book-open"></i> Pembahasan</div>
+      <div class="explanation-text">${q.explanation}</div>
+    </div>
+  `;
+
+  resetStopwatch();
+  if (!checkedQuestions[q.id]) {
+    startStopwatch();
+  } else {
+    currentStopwatchTime = questionTimes[q.id] || 0;
+    updateStopwatchDisplay();
+    restoreAnswerState(q.id);
+  }
+
+  document.getElementById('prevBtn').disabled = (index === 0);
+  document.getElementById('nextBtn').innerHTML = (index === questions.length - 1)
+    ? '<span>Selesai</span><i class="fas fa-flag-checkered"></i>'
+    : '<span>Selanjutnya</span><i class="fas fa-arrow-right"></i>';
+}
+
+function selectOption(qid, label) {
+  const q = questions.find(x => x.id === qid);
+  if (checkedQuestions[qid]) return;
+
+  if (q.type === 'pgk') {
+    if (!userAnswers[qid]) userAnswers[qid] = [];
+    const idx = userAnswers[qid].indexOf(label);
+    if (idx > -1) {
+      userAnswers[qid].splice(idx, 1);
+    } else {
+      userAnswers[qid].push(label);
+    }
+  } else {
+    userAnswers[qid] = label;
+  }
+  renderSelection(qid);
+}
+
+function renderSelection(qid) {
+  const q = questions.find(x => x.id === qid);
+  const options = document.querySelectorAll('#optionsList .option');
+  options.forEach(opt => {
+    const label = opt.dataset.label;
+    if (q.type === 'pgk') {
+      if (userAnswers[qid] && userAnswers[qid].includes(label)) {
+        opt.classList.add('selected');
+      } else {
+        opt.classList.remove('selected');
+      }
+    } else {
+      if (userAnswers[qid] === label) {
+        opt.classList.add('selected');
+      } else {
+        opt.classList.remove('selected');
+      }
+    }
+  });
+}
+
+function restoreAnswerState(qid) {
+  renderSelection(qid);
+  showFeedbackAndCorrect(qid);
+}
+
+function checkAnswer() {
+  const q = questions[currentQuestionIndex];
+  if (checkedQuestions[q.id]) return;
+
+  const userAns = userAnswers[q.id];
+  if (!userAns || (Array.isArray(userAns) && userAns.length === 0)) {
+    alert('💖 Pilih jawaban dulu yuk sebelum dicek!');
+    return;
+  }
+
+  stopStopwatch();
+  questionTimes[q.id] = currentStopwatchTime;
+  checkedQuestions[q.id] = true;
+
+  showFeedbackAndCorrect(q.id);
+  updateStopwatchDisplay();
+}
+
+function showFeedbackAndCorrect(qid) {
+  const q = questions.find(x => x.id === qid);
+  const userAns = userAnswers[qid];
+  let isCorrect = false;
+
+  if (q.type === 'pgk') {
+    const correctSet = [...q.correct].sort();
+    const userSet = [...(userAns || [])].sort();
+    isCorrect = JSON.stringify(correctSet) === JSON.stringify(userSet);
+  } else {
+    isCorrect = userAns === q.correct;
+  }
+
+  const options = document.querySelectorAll('#optionsList .option');
+  options.forEach(opt => {
+    const label = opt.dataset.label;
+    opt.classList.add('disabled');
+    opt.classList.remove('selected');
+
+    if (Array.isArray(q.correct)) {
+      if (q.correct.includes(label)) {
+        opt.classList.add('correct');
+      }
+    } else {
+      if (label === q.correct) {
+        opt.classList.add('correct');
+      }
+    }
+
+    if (q.type === 'pgk') {
+      if (userAns && userAns.includes(label) && !q.correct.includes(label)) {
+        opt.classList.add('wrong');
+      }
+    } else {
+      if (userAns === label && label !== q.correct) {
+        opt.classList.add('wrong');
+      }
+    }
+  });
+
+  const feedback = document.getElementById('feedback');
+  if (isCorrect) {
+    feedback.className = 'feedback show correct';
+    feedback.innerHTML = `<i class="fas fa-star"></i> <strong>Hebat!</strong> Jawabanmu benar! 💕`;
+  } else {
+    feedback.className = 'feedback show wrong';
+    const correctText = Array.isArray(q.correct) ? q.correct.join(', ') : q.correct;
+    feedback.innerHTML = `<i class="fas fa-heart"></i> <strong>Belum tepat.</strong> Jawaban yang benar: <strong>${correctText}</strong>. Pelajari pembahasannya ya! 💪`;
+  }
+
+  const checkBtn = document.getElementById('checkBtn');
+  if (checkBtn) {
+    checkBtn.disabled = true;
+    checkBtn.innerHTML = '<i class="fas fa-check"></i><span>Sudah Dicek</span>';
+  }
+}
+
+function toggleExplanation() {
+  const expl = document.getElementById('explanation');
+  expl.classList.toggle('show');
+}
+
+function prevQuestion() {
+  if (currentQuestionIndex > 0) {
+    loadQuestion(currentQuestionIndex - 1);
+  }
+}
+
+function nextQuestion() {
+  if (currentQuestionIndex < questions.length - 1) {
+    loadQuestion(currentQuestionIndex + 1);
+  } else {
+    finishQuiz();
+  }
+}
+
+function finishQuiz() {
+  stopStopwatch();
+  showStats();
+  showSlide('slide-stats');
+  launchConfetti();
+}
+
+// ============================================================
+// STATISTICS
+// ============================================================
+function showStats() {
+  document.getElementById('statsName').textContent = studentName;
+
+  let correctCount = 0;
+  let wrongCount = 0;
+  let unansweredCount = 0;
+  let totalTime = 0;
+  let answeredCount = 0;
+
+  questions.forEach(q => {
+    const userAns = userAnswers[q.id];
+    const wasChecked = checkedQuestions[q.id];
+    let isCorrect = false;
+
+    if (wasChecked && userAns && (!Array.isArray(userAns) || userAns.length > 0)) {
+      if (q.type === 'pgk') {
+        const correctSet = [...q.correct].sort();
+        const userSet = [...userAns].sort();
+        isCorrect = JSON.stringify(correctSet) === JSON.stringify(userSet);
+      } else {
+        isCorrect = userAns === q.correct;
+      }
+      if (isCorrect) correctCount++;
+      else wrongCount++;
+      answeredCount++;
+      totalTime += questionTimes[q.id] || 0;
+    } else {
+      unansweredCount++;
+    }
+  });
+
+  const totalAnswered = correctCount + wrongCount;
+  const accuracy = totalAnswered > 0 ? Math.round((correctCount / totalAnswered) * 100) : 0;
+  const avgTime = totalAnswered > 0 ? (totalTime / totalAnswered) : 0;
+
+  document.getElementById('statCorrect').textContent = correctCount;
+  document.getElementById('statWrong').textContent = wrongCount + unansweredCount;
+  document.getElementById('statAccuracy').textContent = accuracy + '%';
+  document.getElementById('statAvgTime').textContent = formatTime(avgTime);
+
+  let detailHTML = `
+    <div class="detail-stat-row header">
+      <div style="text-align:center;">Soal</div>
+      <div>Deskripsi</div>
+      <div style="text-align:center;">Waktu</div>
+      <div style="text-align:center;">Status</div>
+    </div>
+  `;
+  questions.forEach(q => {
+    const wasChecked = checkedQuestions[q.id];
+    const userAns = userAnswers[q.id];
+    let isCorrect = false;
+    let statusClass = 'unanswered';
+    let statusText = 'Belum Dijawab';
+    let iconHTML = '<i class="fas fa-minus"></i>';
+
+    if (wasChecked && userAns && (!Array.isArray(userAns) || userAns.length > 0)) {
+      if (q.type === 'pgk') {
+        const correctSet = [...q.correct].sort();
+        const userSet = [...userAns].sort();
+        isCorrect = JSON.stringify(correctSet) === JSON.stringify(userSet);
+      } else {
+        isCorrect = userAns === q.correct;
+      }
+      if (isCorrect) {
+        statusClass = 'correct';
+        statusText = 'Benar';
+        iconHTML = '<i class="fas fa-check"></i>';
+      } else {
+        statusClass = 'wrong';
+        statusText = 'Salah';
+        iconHTML = '<i class="fas fa-times"></i>';
+      }
+    }
+
+    const time = wasChecked && questionTimes[q.id] ? formatTime(questionTimes[q.id]) : '-';
+    const shortQ = q.question.replace(/<[^>]+>/g, '').substring(0, 60) + '...';
+
+    detailHTML += `
+      <div class="detail-stat-row">
+        <div style="text-align:center;"><div class="status-icon ${statusClass}">${iconHTML}</div></div>
+        <div class="detail-q-text">Soal ${q.id}: ${shortQ}</div>
+        <div class="detail-time">${time}</div>
+        <div class="detail-status">${statusText}</div>
+      </div>
+    `;
+  });
+  document.getElementById('detailStats').innerHTML = detailHTML;
+}
+
+// ============================================================
+// REFLECTION
+// ============================================================
+function showReflection() {
+  document.getElementById('thankName').textContent = studentName;
+
+  let correctCount = 0;
+  let totalAnswered = 0;
+  questions.forEach(q => {
+    const wasChecked = checkedQuestions[q.id];
+    const userAns = userAnswers[q.id];
+    if (wasChecked && userAns && (!Array.isArray(userAns) || userAns.length > 0)) {
+      let isCorrect = false;
+      if (q.type === 'pgk') {
+        const correctSet = [...q.correct].sort();
+        const userSet = [...userAns].sort();
+        isCorrect = JSON.stringify(correctSet) === JSON.stringify(userSet);
+      } else {
+        isCorrect = userAns === q.correct;
+      }
+      if (isCorrect) correctCount++;
+      totalAnswered++;
+    }
+  });
+
+  const accuracy = totalAnswered > 0 ? Math.round((correctCount / totalAnswered) * 100) : 0;
+
+  let reflections = [];
+  if (accuracy >= 80) {
+    reflections.push('Kamu sudah sangat mahir dalam bilangan cacah hingga <span class="num" style="background:white;color:var(--pink-deep);">1.000.000</span>! 🌟');
+    reflections.push('Pemahamanmu tentang nilai tempat dan dekomposisi bilangan sangat baik.');
+    reflections.push('Coba tingkatkan kecepatan mengerjakan agar lebih efisien.');
+  } else if (accuracy >= 60) {
+    reflections.push('Pemahaman dasar kamu sudah bagus! Tinggal sedikit lagi menuju sempurna. 💪');
+    reflections.push('Perhatikan lagi materi tentang <strong>nilai tempat</strong> dan <strong>dekomposisi bilangan</strong>.');
+    reflections.push('Latihan lagi soal-soal pembanding dan pengurutan bilangan ya.');
+  } else {
+    reflections.push('Jangan menyerah! Setiap ahli pernah menjadi pemula. 💕');
+    reflections.push('Pelajari lagi konsep <strong>nilai tempat</strong> dengan teliti.');
+    reflections.push('Coba tulis bilangan di kertas dan baca pelan-pelan untuk membantu pemahaman.');
+    reflections.push('Mintalah bantuan guru atau teman untuk materi yang masih membingungkan.');
+  }
+  reflections.push('Ingat: <strong>belajar dari kesalahan</strong> adalah kunci keberhasilan! 🌸');
+
+  const listHTML = reflections.map(r => `<li>${r}</li>`).join('');
+  document.getElementById('reflectionList').innerHTML = listHTML;
+
+  showSlide('slide-thankyou');
+  launchConfetti();
+}
+
+// ============================================================
+// RESET
+// ============================================================
+function restartAll() {
+  studentName = '';
+  currentQuestionIndex = 0;
+  userAnswers = {};
+  questionTimes = {};
+  checkedQuestions = {};
+  stopStopwatch();
+  document.getElementById('studentName').value = '';
+  showSlide('slide-welcome');
+}
+
+function goToQuestion(idx) {
+  showSlide('slide-question');
+  loadQuestion(idx || 0);
+}
+
+// ============================================================
+// GAME MEMORY - Bilangan Cacah
+// ============================================================
+
+// Pasangan bilangan: lambang <-> nama
+const memoryPairs = [
+  { number: '345.712', name: 'Tiga ratus empat puluh lima ribu tujuh ratus dua belas' },
+  { number: '876.500', name: 'Delapan ratus tujuh puluh enam ribu lima ratus' },
+  { number: '156.420', name: 'Seratus lima puluh enam ribu empat ratus dua puluh' },
+  { number: '408.305', name: 'Empat ratus delapan ribu tiga ratus lima' },
+  { number: '750.000', name: 'Tujuh ratus lima puluh ribu' },
+  { number: '909.009', name: 'Sembilan ratus sembilan ribu sembilan' },
+  { number: '520.407', name: 'Lima ratus dua puluh ribu empat ratus tujuh' },
+  { number: '654.321', name: 'Enam ratus lima puluh empat ribu tiga ratus dua puluh satu' },
+  { number: '112.050', name: 'Seratus dua belas ribu lima puluh' },
+  { number: '708.040', name: 'Tujuh ratus delapan ribu empat puluh' }
+];
+
+let gameLevel = 'easy';
+let gameCards = [];
+let gameFlippedCards = [];
+let gameMatchedPairs = 0;
+let gameTotalPairs = 0;
+let gameMoves = 0;
+let gameStartTime = null;
+let gameTimerInterval = null;
+let gameElapsed = 0;
+let gameLocked = false;
+let isMemorizePhase = false;
+let memorizeTimer = null;
+
+function goToGame() {
+  showSlide('slide-game');
+  backToGameStart();
+}
+
+function backToGameStart() {
+  document.getElementById('gameStartScreen').style.display = 'block';
+  document.getElementById('gamePlayScreen').style.display = 'none';
+  document.getElementById('gameWinScreen').style.display = 'none';
+  stopGameTimer();
+  if (memorizeTimer) {
+    clearInterval(memorizeTimer);
+    memorizeTimer = null;
+  }
+}
+
+function backToThankYou() {
+  stopGameTimer();
+  if (memorizeTimer) {
+    clearInterval(memorizeTimer);
+    memorizeTimer = null;
+  }
+  showSlide('slide-thankyou');
+}
+
+function startGame(level) {
+  gameLevel = level;
+  const pairCount = level === 'easy' ? 6 : level === 'medium' ? 8 : 10;
+  
+  // Acak dan ambil pasangan sesuai jumlah
+  const shuffledPairs = [...memoryPairs].sort(() => Math.random() - 0.5).slice(0, pairCount);
+  
+  // Buat kartu (masing-masing pasangan jadi 2 kartu: number & name)
+  gameCards = [];
+  shuffledPairs.forEach((pair, idx) => {
+    gameCards.push({ id: idx, type: 'number', value: pair.number, pairId: idx });
+    gameCards.push({ id: idx + 100, type: 'name', value: pair.name, pairId: idx });
+  });
+  
+  // Acak kartu
+  gameCards = gameCards.sort(() => Math.random() - 0.5);
+  
+  gameFlippedCards = [];
+  gameMatchedPairs = 0;
+  gameTotalPairs = pairCount;
+  gameMoves = 0;
+  gameElapsed = 0;
+  gameLocked = true; // Dikunci saat fase menghafal
+  isMemorizePhase = true;
+  
+  // Render kartu
+  const grid = document.getElementById('memoryGrid');
+  grid.className = 'memory-grid size-' + level;
+  grid.innerHTML = '';
+  
+  gameCards.forEach((card, idx) => {
+    const cardEl = document.createElement('div');
+    cardEl.className = 'mem-card flipped'; // Langsung flipped untuk fase menghafal
+    cardEl.dataset.idx = idx;
+    cardEl.dataset.pairid = card.pairId;
+    cardEl.dataset.type = card.type;
+    cardEl.innerHTML = `
+      <div class="mem-card-face mem-card-front">🌸</div>
+      <div class="mem-card-face mem-card-back ${card.type === 'number' ? 'type-number' : ''}">${card.value}</div>
+    `;
+    cardEl.addEventListener('click', () => flipCard(idx));
+    grid.appendChild(cardEl);
+  });
+  
+  // Update UI
+  document.getElementById('gameMoves').textContent = '0';
+  document.getElementById('gameMatches').textContent = '0';
+  document.getElementById('gameTotalPairs').textContent = pairCount;
+  document.getElementById('gameTimer').textContent = '0.0s';
+  
+  // Tampilkan layar permainan
+  document.getElementById('gameStartScreen').style.display = 'none';
+  document.getElementById('gamePlayScreen').style.display = 'block';
+  document.getElementById('gameWinScreen').style.display = 'none';
+  
+  // Tampilkan countdown menghafal
+  const banner = document.getElementById('memorizeBanner');
+  const countdownEl = document.getElementById('memorizeCountdown');
+  banner.style.display = 'block';
+  
+  let timeLeft = 10;
+  countdownEl.textContent = timeLeft;
+  
+  memorizeTimer = setInterval(() => {
+    timeLeft--;
+    countdownEl.textContent = timeLeft;
+    
+    if (timeLeft <= 0) {
+      clearInterval(memorizeTimer);
+      memorizeTimer = null;
+      banner.style.display = 'none';
+      
+      // Tutup semua kartu
+      document.querySelectorAll('.mem-card').forEach(c => {
+        if (!c.classList.contains('matched')) {
+          c.classList.remove('flipped');
+        }
+      });
+      
+      // Mulai permainan
+      gameLocked = false;
+      isMemorizePhase = false;
+      startGameTimer();
+    }
+  }, 1000);
+}
+
+function flipCard(idx) {
+  if (gameLocked || isMemorizePhase) return;
+  const cardEl = document.querySelector(`.mem-card[data-idx="${idx}"]`);
+  if (!cardEl) return;
+  if (cardEl.classList.contains('flipped') || cardEl.classList.contains('matched')) return;
+  if (gameFlippedCards.length >= 2) return;
+  
+  cardEl.classList.add('flipped');
+  gameFlippedCards.push({ idx, el: cardEl, pairId: gameCards[idx].pairId, type: gameCards[idx].type });
+  
+  if (gameFlippedCards.length === 2) {
+    gameMoves++;
+    document.getElementById('gameMoves').textContent = gameMoves;
+    
+    const [c1, c2] = gameFlippedCards;
+    
+    // Cek apakah cocok (pairId sama DAN type berbeda - satu number satu name)
+    if (c1.pairId === c2.pairId && c1.type !== c2.type) {
+      // Cocok!
+      gameLocked = true;
+      setTimeout(() => {
+        c1.el.classList.add('matched');
+        c2.el.classList.add('matched');
+        c1.el.classList.remove('flipped');
+        c2.el.classList.remove('flipped');
+        gameMatchedPairs++;
+        document.getElementById('gameMatches').textContent = gameMatchedPairs;
+        gameFlippedCards = [];
+        gameLocked = false;
+        
+        if (gameMatchedPairs === gameTotalPairs) {
+          winGame();
+        }
+      }, 500);
+    } else {
+      // Tidak cocok
+      gameLocked = true;
+      c1.el.classList.add('wrong');
+      c2.el.classList.add('wrong');
+      setTimeout(() => {
+        c1.el.classList.remove('flipped', 'wrong');
+        c2.el.classList.remove('flipped', 'wrong');
+        gameFlippedCards = [];
+        gameLocked = false;
+      }, 900);
+    }
+  }
+}
+
+function startGameTimer() {
+  stopGameTimer();
+  gameStartTime = Date.now();
+  gameTimerInterval = setInterval(() => {
+    gameElapsed = (Date.now() - gameStartTime) / 1000;
+    document.getElementById('gameTimer').textContent = formatTime(gameElapsed);
+  }, 100);
+}
+
+function stopGameTimer() {
+  if (gameTimerInterval) {
+    clearInterval(gameTimerInterval);
+    gameTimerInterval = null;
+  }
+}
+
+function resetGame() {
+  startGame(gameLevel);
+}
+
+function winGame() {
+  stopGameTimer();
+  
+  // Hitung skor & bintang
+  // Skor maksimal 1000, dikurangi berdasarkan waktu dan langkah
+  const optimalMoves = gameTotalPairs; // Langkah minimal = jumlah pasangan
+  const moveEfficiency = Math.min(1, optimalMoves / gameMoves);
+  const timeBonus = Math.max(0, 1 - gameElapsed / (gameTotalPairs * 15)); // 15 detik per pasangan ideal
+  const score = Math.round((moveEfficiency * 0.6 + timeBonus * 0.4) * 1000);
+  
+  let stars = 1;
+  if (score >= 700) stars = 3;
+  else if (score >= 450) stars = 2;
+  
+  // Tampilkan bintang
+  let starsHTML = '';
+  for (let i = 0; i < 3; i++) {
+    starsHTML += `<span class="win-star">${i < stars ? '⭐' : '☆'}</span>`;
+  }
+  document.getElementById('winStars').innerHTML = starsHTML;
+  
+  document.getElementById('winTime').textContent = formatTime(gameElapsed);
+  document.getElementById('winMoves').textContent = gameMoves;
+  document.getElementById('winScore').textContent = score;
+  
+  // Pesan sesuai bintang
+  let message = '';
+  if (stars === 3) {
+    message = `🌟 Luar biasa, ${studentName || 'Champ'}! Kamu mengingat semua pasangan bilangan dengan sangat cepat dan tepat! Daya ingatmu luar biasa! 💕`;
+  } else if (stars === 2) {
+    message = `🌸 Bagus sekali, ${studentName || 'Champ'}! Kamu cukup baik dalam mengingat pasangan bilangan. Berlatih lagi untuk dapat 3 bintang ya! 💪`;
+  } else {
+    message = `💖 Tetap semangat, ${studentName || 'Champ'}! Bermain lagi akan melatih daya ingatmu. Kamu pasti bisa lebih cepat next time! 🌈`;
+  }
+  document.getElementById('winMessage').textContent = message;
+  
+  // Tampilkan win screen
+  setTimeout(() => {
+    document.getElementById('gamePlayScreen').style.display = 'none';
+    document.getElementById('gameWinScreen').style.display = 'block';
+    launchConfetti();
+  }, 600);
+}
+
+// ============================================================
+// CONFETTI
+// ============================================================
+function launchConfetti() {
+  const colors = ['#FF6B9D', '#A66CFF', '#FFD166', '#6FCBA8', '#E84A8A', '#C8B6FF', '#FFC2D1'];
+  for (let i = 0; i < 80; i++) {
+    setTimeout(() => {
+      const confetti = document.createElement('div');
+      confetti.className = 'confetti';
+      confetti.style.left = Math.random() * 100 + 'vw';
+      confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+      confetti.style.animationDelay = Math.random() * 0.5 + 's';
+      if (Math.random() > 0.5) confetti.style.borderRadius = '50%';
+      document.body.appendChild(confetti);
+      setTimeout(() => confetti.remove(), 4000);
+    }, i * 30);
+  }
+}
+
+// ============================================================
+// DECORATIONS (floating hearts)
+// ============================================================
+function createDecorations() {
+  const decoEmojis = ['💖', '🌸', '✨', '🎀', '💕', '🦋', '⭐', '🌺'];
+  const container = document.getElementById('decorations');
+  for (let i = 0; i < 15; i++) {
+    const d = document.createElement('div');
+    d.className = 'deco';
+    d.textContent = decoEmojis[Math.floor(Math.random() * decoEmojis.length)];
+    d.style.left = Math.random() * 100 + 'vw';
+    d.style.animationDuration = (10 + Math.random() * 15) + 's';
+    d.style.animationDelay = (Math.random() * 15) + 's';
+    d.style.fontSize = (16 + Math.random() * 16) + 'px';
+    container.appendChild(d);
+  }
+}
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  createDecorations();
+  document.getElementById('studentName').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') startQuiz();
+  });
+});
+</script>
+</body>
+</html>
