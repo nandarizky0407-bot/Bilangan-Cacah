@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<!-- Salinan benar HARUS berakhir dengan </html> -->
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnostik Lesson 1 · Bilangan Cacah sampai Ratusan Ribu · Kelas 6</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FAF4E6;--card:#FFFDF6;--ink:#2B2620;--soft:#7A6F5E;--line:#E6DBC4;--acc:#E4572E;--deep:#B23A18;--green:#2E9E6B;--gdeep:#1F6E4A;--yel:#F5B301;--teal:#1E7A6F;--red:#C43E2F}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+body{font-family:'Plus Jakarta Sans','Segoe UI',Arial,sans-serif;color:var(--ink);font-size:16.5px;line-height:1.65;background:var(--paper);background-image:radial-gradient(rgba(43,38,32,.06) 1.1px,transparent 1.1px);background-size:22px 22px}
+h1,h2,h3,h4{font-family:'Baloo 2','Segoe UI',Arial,sans-serif;line-height:1.15}
+b{font-weight:800}
+#topbar{position:fixed;top:0;left:0;right:0;height:58px;z-index:50;display:flex;align-items:center;gap:14px;padding:0 18px;background:rgba(250,244,230,.95);border-bottom:2px solid var(--ink)}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Baloo 2';font-weight:800}
+.logo{width:32px;height:32px;background:var(--ink);color:var(--paper);border-radius:9px;display:flex;align-items:center;justify-content:center;transform:rotate(-4deg)}
+#chap{margin-left:auto;font-size:.82rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.06em}
+#count{font-weight:800;font-family:Consolas,monospace;font-size:.85rem;background:var(--card);border:2px solid var(--ink);border-radius:9px;padding:3px 9px}
+#tocBtn{width:40px;height:40px;border-radius:11px;border:2px solid var(--ink);background:var(--yel);cursor:pointer;font-size:1.2rem;box-shadow:3px 3px 0 var(--ink)}
+#progress{position:fixed;top:58px;left:0;right:0;height:5px;background:var(--line);z-index:49}
+#progIn{height:100%;background:var(--acc);width:0;transition:width .4s}
+#stage{max-width:1120px;margin:0 auto;padding:92px 22px 120px}
+#navbot{position:fixed;bottom:18px;right:22px;z-index:40;display:flex;gap:10px}
+.navbtn{width:50px;height:50px;border-radius:15px;border:2px solid var(--ink);background:var(--card);cursor:pointer;font-size:1.1rem;box-shadow:3px 3px 0 var(--ink)}
+.navbtn:hover:not(:disabled){background:var(--yel)}
+.navbtn:disabled{opacity:.35;cursor:default}
+.card{background:var(--card);border:2px solid var(--ink);border-radius:16px;padding:20px 22px;box-shadow:6px 6px 0 rgba(43,38,32,.14)}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-size:.78rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);margin-bottom:8px}
+.kicker::before{content:"";width:26px;height:3px;background:var(--acc);border-radius:2px}
+.shead h2{font-size:clamp(1.7rem,3.4vw,2.3rem);font-weight:800}
+.lead{font-size:1.04rem;color:#4d443a;max-width:76ch;margin:10px 0 16px}
+.subh{font-size:1.22rem;margin:22px 0 8px}
+.hand{font-family:'Caveat',cursive;font-size:1.4rem;color:var(--deep)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer;border:2px solid var(--ink);border-radius:12px;background:var(--card);box-shadow:3px 3px 0 var(--ink);color:var(--ink)}
+.btn:hover:not(:disabled){transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.btn:active:not(:disabled){transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn:disabled{opacity:.45;cursor:default}
+.btn-acc{background:var(--acc);color:#fff}
+.btn-ink{background:var(--ink);color:#FFF3E0}
+.btn.big{padding:14px 24px;font-size:1.08rem}
+a.btn{text-decoration:none}
+.rowbtns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.chip{display:inline-flex;align-items:center;gap:7px;border:2px solid var(--ink);border-radius:999px;padding:5px 13px;font-weight:700;font-size:.9rem;background:var(--card)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chips .chip{cursor:pointer;background:#fff}
+.chips .chip:hover{background:var(--yel)}
+.tipbox{display:flex;gap:10px;background:#FFF6DB;border:2px dashed var(--yel);border-radius:12px;padding:11px 14px;margin-top:14px;font-size:.95rem}
+.tip-green{background:#E9F5EE;border-color:var(--green)}
+.tico{font-size:1.2rem}
+.tag{display:inline-block;padding:1px 9px;border-radius:8px;border:2px solid var(--ink);font-weight:800;font-size:.85em}
+.tg-y{background:var(--yel)} .tg-g{background:#BFE8D2}
+.cols2{display:grid;grid-template-columns:1fr 1.15fr;gap:20px;align-items:start}
+input,select{font:inherit;padding:10px 14px;border:2px solid var(--ink);border-radius:11px;background:#fff;color:var(--ink);max-width:100%}
+input:focus,select:focus{outline:3px solid rgba(228,87,46,.35)}
+.err{color:var(--red);font-weight:700;margin:8px 0 4px}
+.shake{animation:shk .45s}
+@keyframes shk{20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.pop{animation:pop .4s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes pop{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:none}}
+.cover{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center;min-height:calc(100vh - 220px)}
+.cover h1{font-size:clamp(2.2rem,4.6vw,3.4rem);margin:10px 0 14px}
+.mark{background:var(--yel);padding:0 .18em;border-radius:.28em;box-shadow:3px 3px 0 var(--ink);display:inline-block;transform:rotate(-1.4deg)}
+.badges{display:flex;flex-wrap:wrap;gap:9px;margin:16px 0 10px}
+.namegrid{display:flex;flex-direction:column;gap:12px}
+.nameitem{display:flex;align-items:center;gap:12px}
+.numbadge{width:38px;height:38px;flex:none;border-radius:12px;background:var(--acc);color:#fff;font-family:'Baloo 2';font-weight:800;font-size:1.2rem;display:flex;align-items:center;justify-content:center;border:2px solid var(--ink)}
+.stamp{margin-top:18px;display:inline-block;background:var(--ink);color:var(--paper);font-family:'Baloo 2';font-weight:800;padding:12px 20px;border-radius:14px;transform:rotate(-2.5deg)}
+.stamp small{display:block;font-family:'Caveat',cursive;color:var(--yel);font-size:1.05rem}
+.tickets{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:14px 0}
+.ticket{display:flex;align-items:center;gap:13px;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:13px 16px;box-shadow:5px 5px 0 rgba(43,38,32,.13)}
+.ticket:nth-child(odd){transform:rotate(-1.1deg)}.ticket:nth-child(even){transform:rotate(1deg)}
+.ticket .tic{width:44px;height:44px;flex:none;border-radius:12px;background:#FFF1CF;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:1.3rem}
+.ticket b{font-family:'Baloo 2';font-size:1.3rem;display:block;line-height:1.1}
+.tsub{font-size:.86rem;color:var(--soft)}
+.askbox{border-left:8px solid var(--yel);margin:6px 0}
+.route{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:12px 0}
+.rnode{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--ink);background:var(--card);border-radius:999px;padding:7px 15px;font:inherit;font-weight:700;cursor:pointer}
+.rnode:hover{background:#FFF1CF}
+.rnode.on{background:var(--ink);color:var(--paper)}
+.rline{width:22px;height:3px;background:var(--ink);opacity:.25}
+.rinfo{min-height:96px}
+.tuj{display:flex;gap:13px;padding:11px 6px;border-bottom:1.5px dashed var(--line);cursor:pointer;align-items:flex-start}
+.tuj:last-of-type{border-bottom:none}
+.tuj input{display:none}
+.cbx{width:27px;height:27px;flex:none;border:2px solid var(--ink);border-radius:9px;background:#fff;display:flex;align-items:center;justify-content:center;color:transparent;margin-top:2px}
+.tuj input:checked+.cbx{background:var(--green);color:#fff}
+.tuj input:checked~.ttext{color:var(--soft)}
+.tujfoot{display:flex;align-items:center;gap:14px;margin-top:16px;font-weight:700}
+#tujCount{font-family:'Baloo 2';font-size:1.2rem;background:var(--yel);border:2px solid var(--ink);border-radius:9px;padding:2px 11px}
+.bar{flex:1;height:12px;border:2px solid var(--ink);border-radius:99px;background:#fff;overflow:hidden}
+.bar div{height:100%;background:var(--green);width:0;transition:width .4s}
+.bigread{font-family:'Baloo 2';font-weight:800;font-size:clamp(1.9rem,4vw,2.7rem);text-align:center;margin:8px 0 2px}
+.wordread{text-align:center;font-size:1.08rem;min-height:50px;color:var(--deep);font-weight:600}
+.w-rb{background:var(--yel);border-radius:10px;padding:0 8px}
+.w-sa{background:#BFE8D2;border-radius:10px;padding:0 8px}
+.dotsep{color:var(--acc)}
+.exrow{text-align:center;margin:12px 0}
+.exnum{display:inline-block;font-family:'Baloo 2';font-weight:800;font-size:2rem;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:6px 22px}
+.ptgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.ptcol{display:flex;flex-direction:column;gap:6px;align-items:center;position:relative}
+.pth{font-size:.68rem;font-weight:800;text-align:center;background:#F1E7D2;border:2px solid var(--ink);border-radius:9px;padding:4px 2px;width:100%}
+.pth small{display:block;font-family:Consolas,monospace;font-weight:400;font-size:.6rem;color:var(--soft)}
+.ptcol.kelrb .pth{background:var(--yel)}
+.ptcol.kelrb::before{content:"";position:absolute;left:-6px;top:-6px;bottom:-6px;width:3px;background:repeating-linear-gradient(var(--ink) 0 5px,transparent 5px 10px);opacity:.4}
+.ptcell{width:100%;height:58px;border:2px solid var(--ink);border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-weight:800;font-size:1.9rem}
+.ptcol select{width:100%;height:58px;border:2px solid var(--ink);border-radius:12px;font-family:'Baloo 2';font-weight:800;font-size:1.6rem;text-align:center;padding:0}
+.pmb{display:flex;gap:6px;width:100%}
+.pmb button{flex:1;height:30px;border:2px solid var(--ink);border-radius:8px;background:var(--card);cursor:pointer;font-weight:800}
+.pmb button:hover{background:var(--yel)}
+.ptresult{text-align:center;margin:16px 0 10px}
+.ptresult b{font-family:'Baloo 2';font-size:1.6rem;color:var(--deep)}
+.ptvals{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.ptvals .chip{font-family:Consolas,monospace;font-size:.78rem;background:#fff}
+.dnum{text-align:center;font-family:'Baloo 2';font-weight:800;font-size:2.2rem;margin:6px 0}
+.dparts{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;min-height:86px;margin-top:10px}
+.dpart{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:10px 16px;text-align:center;box-shadow:4px 4px 0 rgba(43,38,32,.15)}
+.dpart b{font-family:'Baloo 2';font-size:1.25rem;display:block}
+.dpart span{font-size:.7rem;font-weight:700;color:var(--soft);text-transform:uppercase}
+.dplus{font-family:'Baloo 2';font-size:1.4rem;color:var(--acc)}
+.dlong{margin-top:14px;text-align:center;background:#FFF6DB;border:2px dashed var(--yel);border-radius:12px;padding:10px 14px;font-family:Consolas,monospace;font-size:.9rem}
+.vsgrid{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin-top:8px}
+.vnum{background:#fff;border:2px solid var(--ink);border-radius:16px;text-align:center;padding:16px 8px;font-family:'Baloo 2';font-weight:800;font-size:clamp(1.3rem,3vw,2rem)}
+.gwrap{display:flex;flex-direction:column;align-items:center;gap:6px;transition:transform .45s}
+.gwrap.flip{transform:scaleX(-1)}
+.gator{width:132px;display:block}
+#jawT,#jawB{transform-box:view-box;transform-origin:18px 48px;transition:transform .4s cubic-bezier(.34,1.4,.64,1)}
+.gator.open #jawT{transform:rotate(-24deg)}
+.gator.open #jawB{transform:rotate(24deg)}
+.gsym{font-family:'Baloo 2';font-weight:800;font-size:1.6rem;background:var(--ink);color:var(--paper);border-radius:10px;padding:0 14px}
+.gwrap.flip .gsym{transform:scaleX(-1)}
+.vres{text-align:center;margin-top:14px;font-size:1rem;background:#F5EEDD;border:2px dashed var(--line);border-radius:12px;padding:10px 14px}
+.owrap{display:flex;gap:14px;flex-wrap:wrap;margin:12px 0;min-height:74px}
+.ocard{width:134px;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:16px 8px;text-align:center;font-family:'Baloo 2';font-weight:800;font-size:1.25rem}
+.onote{min-height:30px;font-weight:700;color:var(--gdeep)}
+.track{position:relative;height:104px;margin:30px 6px 10px}
+.track .tl{position:absolute;bottom:0;transform:translateX(-50%);text-align:center;font-family:Consolas,monospace;font-size:.68rem;color:var(--soft)}
+.track .tl i{display:block;width:2.5px;height:14px;background:var(--ink);opacity:.5;margin:0 auto 3px;font-style:normal}
+.track .tl.maj i{height:24px;opacity:.9}
+.rz{position:absolute;bottom:16px;left:50%;width:2px;height:30px;background:repeating-linear-gradient(var(--red) 0 5px,transparent 5px 9px)}
+.rmark{position:absolute;bottom:16px;width:5px;height:40px;background:var(--acc);border-radius:3px;transform:translateX(-50%);transition:left .6s cubic-bezier(.34,1.4,.64,1)}
+.rmark span{position:absolute;bottom:46px;left:50%;transform:translateX(-50%);white-space:nowrap;background:var(--ink);color:var(--paper);font-weight:800;font-size:.8rem;padding:3px 10px;border-radius:8px}
+.rinfo2{margin-top:8px;min-height:30px}
+.rout{margin-top:10px;background:#E9F5EE;border:2px solid var(--green);border-radius:12px;padding:10px 14px;min-height:52px}
+.cal{display:flex;flex-direction:column;gap:7px;font-family:Consolas,monospace}
+.crow{display:grid;grid-template-columns:36px repeat(6,48px);gap:6px;justify-content:center}
+.cc{height:52px;border:2px solid var(--line);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.35rem;font-weight:700;background:#fff;transition:.25s}
+.cc.on{border-color:var(--ink);background:#FFF1CF;transform:scale(1.06)}
+.cc.empty{border-style:dashed;color:#c9bda4}
+.cend{display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-size:1.6rem;font-weight:800}
+.ccarry .cc{height:28px;font-size:.95rem;color:var(--deep);border-color:transparent;background:transparent}
+.crowres{margin-top:5px}
+.crowres .cc{border-color:var(--ink);background:var(--card);font-weight:800}
+.steplog{background:#F6EFDD;border:2px dashed var(--line);border-radius:12px;padding:10px 15px;font-size:.92rem;margin-top:14px;min-height:70px;max-height:190px;overflow:auto}
+.steplog .ln{padding:2px 0;border-bottom:1.5px dotted var(--line)}
+.steplog .ln:last-child{border:none}
+.agrid{display:grid;grid-template-columns:64px repeat(3,1fr);gap:9px;margin-top:12px}
+.ah{display:flex;align-items:center;justify-content:center;background:var(--yel);border:2px solid var(--ink);border-radius:10px;font-weight:800;padding:5px 2px}
+.ah.acl{background:#BFE8D2}
+.acell{border:2px solid var(--ink);border-radius:12px;background:#fff;cursor:pointer;padding:10px 4px;text-align:center;font:inherit}
+.acell:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink)}
+.acell .as{display:block;font-size:.74rem;color:var(--soft);font-weight:700}
+.acell b{font-family:'Baloo 2';font-size:1.12rem}
+.acell.done{background:#E9F5EE;border-color:var(--green)}
+.apanel{margin-top:14px;background:#F6EFDD;border:2px dashed var(--line);border-radius:12px;padding:10px 15px;min-height:64px;font-size:.92rem}
+.atotal{margin-top:10px;text-align:center;font-family:'Baloo 2';font-weight:800;font-size:1.35rem;min-height:36px;color:var(--deep)}
+.divrow{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;font-family:Consolas,monospace;font-size:1.45rem;font-weight:700;margin:10px 0}
+.dop{color:var(--acc)} .ddv{color:var(--teal)}
+.dqd{display:inline-flex;width:44px;height:54px;border:2px solid var(--ink);border-radius:11px;align-items:center;justify-content:center;background:#fff}
+.dqd.on{background:#FFF1CF;transform:scale(1.08)}
+.dqd.unk{border-style:dashed;color:#c9bda4}
+.dwork{background:#F6EFDD;border:2px dashed var(--line);border-radius:12px;padding:10px 15px;margin-top:12px;min-height:100px}
+.dwork .ln{border-bottom:1.5px dotted var(--line);padding:3px 0}
+.dcheck{text-align:center;margin-top:10px;color:var(--gdeep);font-weight:700;min-height:26px}
+/* ====== GAYA BARU: PERSAMAAN (Materi 14) ====== */
+.eqrow{display:flex;gap:18px;align-items:center;justify-content:center;flex-wrap:wrap}
+.eqbal{width:290px;max-width:100%;flex:none}
+#beamG{transform-box:view-box;transform-origin:150px 66px;transition:transform .55s cubic-bezier(.34,1.4,.64,1)}
+.eqTiltL #beamG{transform:rotate(-6deg)}
+.eqTiltR #beamG{transform:rotate(6deg)}
+.unk{display:inline-block;min-width:46px;padding:0 12px;border:3px dashed var(--acc);border-radius:12px;color:var(--acc-deep);background:#FFF6F2;text-align:center}
+.eqMsg{text-align:center;margin-top:12px;font-weight:700;min-height:30px}
+.eqMsg.g{color:var(--gdeep)} .eqMsg.b{color:var(--red)}
+.mixexpr{text-align:center;font-family:'Baloo 2';font-weight:800;font-size:clamp(1.4rem,3.2vw,2.1rem);background:#fff;border:2px solid var(--ink);border-radius:16px;padding:16px 12px;margin:10px 0}
+.tk-b{color:var(--deep)} .tk-m{color:var(--teal)} .tk-a{color:var(--acc)}
+.mixsteps{min-height:120px}
+.mixsteps .ln{background:#F6EFDD;border:1.5px solid var(--line);border-radius:11px;padding:8px 14px;margin-bottom:8px}
+.mixdone{text-align:center;font-family:'Baloo 2';font-size:1.45rem;font-weight:800;color:var(--gdeep);min-height:34px}
+.ordbox{display:flex;gap:9px;flex-wrap:wrap;margin:4px 0 10px}
+.ordbox .chip{background:var(--yel)}
+.ordbox .chip:nth-child(2){background:#BFE8D2}.ordbox .chip:nth-child(3){background:#FFD9CC}
+.stext{font-size:1.05rem;line-height:2}
+.snum{font-weight:800;border-bottom:3px dashed var(--acc);padding:0 3px}
+.stext.hl .snum{background:#FFE9A8;border-radius:6px}
+.srow{display:flex;gap:11px;margin-top:12px;align-items:flex-start;animation:pop .35s both}
+.stag{flex:none;width:96px;text-align:center;background:var(--ink);color:#FFF3E0;border-radius:9px;padding:4px 6px;font-weight:800;font-size:.8rem;margin-top:2px}
+.sans{margin-top:14px;background:#E9F5EE;border:2px solid var(--green);border-radius:12px;padding:10px 15px;font-weight:700}
+.myclue{list-style:none;display:flex;flex-direction:column;gap:9px;margin:12px 0}
+.myclue li{background:#fff;border:2px solid var(--ink);border-radius:12px;padding:9px 14px;animation:pop .4s both}
+.guessrow{display:flex;gap:10px;flex-wrap:wrap}
+.guessrow input{flex:1;min-width:180px}
+.mans{text-align:center;margin-top:14px;font-family:'Baloo 2';font-weight:800;font-size:1.6rem;color:var(--gdeep);min-height:40px}
+.prgrid{display:grid;grid-template-columns:1.25fr .75fr;gap:20px;align-items:start;margin-bottom:18px}
+.prlist{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.prlist button{width:100%;display:flex;align-items:center;gap:10px;border:2px solid var(--ink);background:#fff;border-radius:11px;padding:8px 11px;font:inherit;font-weight:700;cursor:pointer;text-align:left;font-size:.92rem}
+.prlist button:hover{background:#FFF1CF}
+.prlist .tnum{font-family:'Baloo 2';width:26px;height:26px;flex:none;border-radius:8px;background:var(--yel);border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:.8rem}
+.prlist .tl2{flex:1}
+.boardrow{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1.5px dashed var(--line)}
+.boardrow:last-child{border:none}
+.avatar{width:34px;height:34px;flex:none;border-radius:50%;background:var(--acc);color:#fff;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-weight:800;font-size:.95rem}
+.av-s{width:26px;height:26px;font-size:.78rem}
+.bname{font-weight:700;flex:1}
+.bscore{font-family:Consolas,monospace;font-weight:700;background:#FFF1CF;border:2px solid var(--ink);border-radius:8px;padding:1px 9px;font-size:.82rem}
+.ordrow{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0}
+.orditem{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:9px 16px;font-weight:800}
+.onum{width:30px;height:30px;border-radius:50%;background:var(--acc);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';border:2px solid var(--ink)}
+.ordmap{color:var(--soft);font-size:.9rem;margin-bottom:12px}
+.qhead{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.qcount{font-family:'Baloo 2';font-weight:800;font-size:1.15rem}
+.lv{padding:3px 12px;border:2px solid var(--ink);border-radius:999px;font-weight:800;font-size:.78rem}
+.lv-Mudah{background:#DFF3E7}.lv-Sedang{background:#FFEFBF}.lv-HOTS{background:#FBDDD6}
+.turnpill{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#FFF3E0;border-radius:999px;padding:5px 15px 5px 6px;font-weight:800}
+.turnpill .avatar{background:var(--yel);color:var(--ink)}
+.qgrid{display:grid;grid-template-columns:1.5fr .8fr;gap:20px;align-items:start}
+.qq{font-size:1.12rem;margin-bottom:16px}
+.qopts{display:grid;gap:10px}
+.qopt{display:flex;align-items:center;gap:13px;width:100%;border:2px solid var(--ink);background:#fff;border-radius:13px;padding:11px 14px;font:inherit;font-weight:600;cursor:pointer;text-align:left}
+.qopt:hover:not(:disabled){transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--ink)}
+.qletter{width:31px;height:31px;flex:none;border:2px solid var(--ink);border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2';font-weight:800}
+.qopt.ok{background:#DFF3E7;border-color:var(--green)} .qopt.ok .qletter{background:var(--green);color:#fff}
+.qopt.bad{background:#FBE0DC;border-color:var(--red)} .qopt.bad .qletter{background:var(--red);color:#fff}
+.qopt.dim{opacity:.5}
+.qfeed{margin-top:14px;border-radius:12px;padding:11px 15px;font-size:.95rem;animation:pop .35s both}
+.qfeed.g{background:#DFF3E7;border:2px solid var(--green)} .qfeed.b{background:#FBE0DC;border:2px solid var(--red)}
+.qfeed .exp{display:block;margin-top:5px;color:#5d5346}
+.resrow{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1.5px dashed var(--line)}
+.resrow:last-child{border:none}
+.resrow .bar{max-width:220px}
+.rs{font-family:Consolas,monospace;font-weight:700}
+.hint{color:var(--soft);background:var(--card);border:2px dashed var(--line);border-radius:14px;padding:22px;text-align:center}
+.ringkas{display:flex;flex-direction:column;gap:12px;margin-top:14px}
+.rk{display:flex;gap:14px;background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:13px 16px}
+.rk:nth-child(odd){transform:rotate(-.4deg)}.rk:nth-child(even){transform:rotate(.4deg)}
+.rk .ric{width:42px;height:42px;flex:none;border-radius:12px;background:#FFF1CF;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+.rk p{font-size:.92rem;color:#5d5346}
+.refltabs{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}
+.rtab{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--ink);background:#fff;border-radius:999px;padding:7px 16px;font:inherit;font-weight:800;cursor:pointer}
+.rtab.on{background:var(--ink);color:#FFF3E0}
+.doneTick{display:none;color:#8FE3B4}
+.rtab.saved .doneTick{display:inline}
+.reflq{margin:12px 0 4px;font-weight:700}
+.stars{display:flex;gap:6px;margin:8px 0 4px}
+.stars button{background:none;border:none;cursor:pointer;color:#D8CBAE;font-size:2rem;padding:0 4px}
+.stars button.on{color:var(--yel)}
+.gcard{text-align:center;padding:34px 24px}
+.bigico{width:76px;height:76px;margin:0 auto 16px;border-radius:22px;background:var(--yel);border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:2.2rem;transform:rotate(-3deg)}
+.linksmall{margin-top:14px;font-family:Consolas,monospace;font-size:.78rem;color:var(--soft);word-break:break-all}
+.thanksbig{text-align:center;padding:50px 20px}
+.thanksbig h2{font-size:clamp(2.2rem,6vw,3.8rem)}
+.names{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:22px 0}
+.names .chip{background:var(--yel);font-family:'Baloo 2';padding:8px 18px}
+#toc{position:fixed;top:0;bottom:0;left:0;width:340px;max-width:88vw;background:var(--card);border-right:2px solid var(--ink);z-index:60;transform:translateX(-105%);transition:transform .35s;display:flex;flex-direction:column}
+#toc.open{transform:none}
+#toc header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:2px solid var(--ink)}
+#tocClose{width:34px;height:34px;border-radius:9px;border:2px solid var(--ink);background:var(--yel);cursor:pointer}
+#tocList{overflow-y:auto;padding:10px 14px 20px;flex:1}
+#tocList button{width:100%;display:flex;gap:10px;align-items:center;border:none;background:none;font:inherit;font-weight:600;cursor:pointer;text-align:left;padding:7px 9px;border-radius:10px}
+#tocList button:hover{background:#F5EEDD}
+#tocList button.act{background:var(--ink);color:#FFF3E0}
+#tocList .tnum{font-family:Consolas,monospace;font-size:.7rem;width:26px;color:var(--soft)}
+#backdrop{position:fixed;inset:0;background:rgba(43,38,32,.35);z-index:55;opacity:0;pointer-events:none;transition:opacity .3s}
+#backdrop.on{opacity:1;pointer-events:auto}
+#toasts{position:fixed;bottom:88px;right:22px;z-index:70;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+.toast{background:var(--ink);color:#FFF3E0;font-weight:700;padding:12px 18px;border-radius:13px;max-width:340px;animation:pop .35s both;transition:.4s}
+.toast.out{opacity:0;transform:translateY(8px)}
+#errbar{display:none;position:fixed;left:12px;bottom:12px;z-index:99;background:var(--red);color:#fff;padding:10px 14px;border-radius:10px;font-size:.8rem;max-width:75vw;font-family:Consolas,monospace}
+@media (max-width:900px){
+ .cols2,.cover,.qgrid,.prgrid,.tickets{grid-template-columns:1fr}
+ .prlist{grid-template-columns:1fr}
+ .crow{grid-template-columns:30px repeat(6,40px);gap:4px}
+ .cc{height:44px;font-size:1.1rem}
+ #chap{display:none}
+}
+</style>
+</head>
+<body>
+
+<header id="topbar">
+  <div class="brand"><span class="logo">6</span><span>Matematika · Diagnostik L1</span></div>
+  <span id="chap"></span>
+  <span id="count"></span>
+  <button id="tocBtn" title="Daftar slide">☰</button>
+</header>
+<div id="progress"><div id="progIn"></div></div>
+
+<main id="stage">
+
+<!-- ============ 0 COVER ============ -->
+<section class="slide" data-g="Pembuka" data-t="Cover &amp; Nama Siswa">
+  <div class="cover">
+    <div>
+      <div class="kicker">Asesmen Diagnostik · Lesson 1 · Kurikulum Merdeka</div>
+      <h1>Bilangan Cacah sampai <span class="mark">Ratusan Ribu</span></h1>
+      <p class="lead">Petualangan matematika kelas 6 dimulai dari sini: membaca, menulis, membedah, dan mengoperasikan bilangan besar — dikerjakan bersama bertiga, diuji lewat latihan, lalu ditutup dengan permainan.</p>
+      <div class="badges"><span class="chip">👥 3 siswa</span><span class="chip">📖 14 materi</span><span class="chip">🎯 140 soal latihan</span><span class="chip">🎮 Ular tangga</span></div>
+      <div class="hand">"Matematika itu seperti permainan — kalau tahu aturannya, dia menyenangkan!"</div>
+    </div>
+    <div class="card" id="coverCard">
+      <h3>✏️ Tulis nama kalian bertiga</h3>
+      <div class="namegrid">
+        <label class="nameitem"><span class="numbadge">1</span><input id="nm1" maxlength="18" placeholder="Nama siswa 1"></label>
+        <label class="nameitem"><span class="numbadge">2</span><input id="nm2" maxlength="18" placeholder="Nama siswa 2"></label>
+        <label class="nameitem"><span class="numbadge">3</span><input id="nm3" maxlength="18" placeholder="Nama siswa 3"></label>
+      </div>
+      <div id="coverErr" class="err" hidden>Ketiga nama harus diisi dulu, ya.</div>
+      <div class="rowbtns"><button class="btn btn-acc big" id="goBtn">🚀 Mulai Belajar</button></div>
+      <div class="stamp">999.999<small>bilangan terbesar kita hari ini!</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 1 APERSEPSI ============ -->
+<section class="slide" data-g="Apersepsi" data-t="Mengapa Materi Ini Penting">
+  <div class="shead"><div class="kicker">Apersepsi</div><h2>Bilangan besar ada di mana-mana</h2><div class="squig">〰️〰️〰️</div></div>
+  <p class="lead">Hampir setiap hari kita bertemu bilangan yang panjang. Jika salah membaca atau menghitungnya, dampaknya nyata — uang kurang, jadwal meleset, atau data keliru.</p>
+  <div class="tickets">
+    <div class="ticket"><span class="tic">🏟️</span><div><b>88.082</b><span class="tsub">kursi Stadion Utama Gelora Bung Karno</span></div></div>
+    <div class="ticket"><span class="tic">▶️</span><div><b>254.731</b><span class="tsub">penonton sebuah video belajar</span></div></div>
+    <div class="ticket"><span class="tic">🗺️</span><div><b>780 km</b><span class="tsub">jarak Jakarta–Surabaya yang ditempuh mobil</span></div></div>
+    <div class="ticket"><span class="tic">💰</span><div><b>Rp4.799.000</b><span class="tsub">harga sebuah sepeda listrik</span></div></div>
+  </div>
+  <div class="card askbox"><span class="hand">Pertanyaan pemanasan:</span>
+    <p>"Kalau angka <b>254.731</b> keliru dibaca menjadi 25.473, informasi apa yang ikut menjadi salah?" — diskusikan sebentar dengan teman sebangkumu.</p></div>
+  <h3 class="subh">🛤️ Gerbang menuju materi kelas 6</h3>
+  <p class="lead">Bab ini adalah <b>pintu gerbang</b> semua materi kelas 6. Klik setiap perhentian pada jalur di bawah untuk melihat alasannya.</p>
+  <div class="route" id="route">
+    <button class="rnode on" data-i="0">🔢 Bilangan Cacah (hari ini)</button><span class="rline"></span>
+    <button class="rnode" data-i="1">🧩 KPK &amp; FPB</button><span class="rline"></span>
+    <button class="rnode" data-i="2">🍰 Pecahan, Desimal &amp; Persen</button><span class="rline"></span>
+    <button class="rnode" data-i="3">📏 Pengukuran &amp; Bangun Ruang</button><span class="rline"></span>
+    <button class="rnode" data-i="4">📊 Pengolahan Data</button>
+  </div>
+  <div class="card rinfo" id="routeInfo"></div>
+</section>
+
+<!-- ============ 2 TUJUAN ============ -->
+<section class="slide" data-g="Tujuan" data-t="Tujuan Pembelajaran">
+  <div class="shead"><div class="kicker">Tujuan Pembelajaran</div><h2>Setelah lesson ini, kamu mampu ...</h2><div class="squig">〰️〰️〰️</div></div>
+  <p class="lead">Baca pelan-pelan, lalu centang setiap tujuan setelah kamu merasa <b>sudah menguasainya</b> saat latihan nanti.</p>
+  <div class="card"><div id="tujList">
+    <label class="tuj"><input type="checkbox"><span class="cbx">✓</span><span class="ttext">Membaca dan menulis <b>nama serta lambang</b> bilangan cacah sampai ratusan ribu.</span></label>
+    <label class="tuj"><input type="checkbox"><span class="cbx">✓</span><span class="ttext">Menentukan <b>nilai tempat</b> dan menguraikan bilangan (dekomposisi).</span></label>
+    <label class="tuj"><input type="checkbox"><span class="cbx">✓</span><span class="ttext"><b>Membandingkan dan mengurutkan</b> bilangan dengan tepat.</span></label>
+    <label class="tuj"><input type="checkbox"><span class="cbx">✓</span><span class="ttext"><b>Membulatkan</b> bilangan ke ribuan atau puluhan ribu terdekat.</span></label>
+    <label class="tuj"><input type="checkbox"><span class="cbx">✓</span><span class="ttext">Menyelesaikan <b>operasi hitung</b> (+, −, ×, ÷), operasi campuran, soal cerita, serta <b>menemukan bilangan yang belum diketahui</b> pada persamaan sederhana.</span></label>
+  </div>
+  <div class="tujfoot"><span id="tujCount">0/5</span> tujuan tercentang<div class="bar"><div id="tujBar"></div></div></div></div>
+</section>
+
+<!-- ============ 3 M1 NAMA ============ -->
+<section class="slide" id="s-m1" data-g="Materi" data-t="1 · Nama Bilangan">
+  <div class="shead"><div class="kicker">Materi 1 · Nama Bilangan</div><h2>Membaca bilangan besar dengan benar</h2><div class="squig">〰️〰️〰️</div></div>
+  <div class="cols2">
+    <div class="card"><h3>Cara membacanya</h3>
+      <p>Ubah dulu bilangan menjadi kelompok <b>tiga digit dari kanan</b>: kelompok <span class="tag tg-y">ribuan</span> dan kelompok <span class="tag tg-g">satuan</span>. Baca kelompok ribuan, sebut kata "<b>ribu</b>", lalu baca kelompok satuan.</p>
+      <div class="exrow"><div class="exnum">342<span class="dotsep">.</span>567</div></div>
+      <p style="text-align:center" class="hand">"tiga ratus empat puluh dua ribu" + "lima ratus enam puluh tujuh"</p>
+      <div class="tipbox"><span class="tico">💡</span><div>Angka 1 di awal kelompok dibaca <b>se</b>: 1.000 = <b>seribu</b>. Angka nol di tengah <b>tidak dibaca</b>: 300.050 = "tiga ratus ribu lima puluh".</div></div></div>
+    <div class="card"><h3>🎤 Mesin Baca Bilangan</h3>
+      <div class="nbDisp bigread"></div><div class="nbWords wordread"></div>
+      <div class="rowbtns" style="justify-content:center"><button class="btn nbRand">🔀 Bilangan acak</button></div>
+      <p style="margin-top:12px;font-size:.9rem;color:var(--soft)">Atau coba contoh ini:</p>
+      <div class="chips nbChips">
+        <span class="chip" data-n="100000">100.000</span><span class="chip" data-n="250000">250.000</span>
+        <span class="chip" data-n="1500">1.500</span><span class="chip" data-n="304030">304.030</span>
+        <span class="chip" data-n="407009">407.009</span><span class="chip" data-n="999999">999.999</span>
+      </div></div>
+  </div>
+</section>
+
+<!-- ============ 4 M2 LAMBANG ============ -->
+<section class="slide" id="s-m2" data-g="Materi" data-t="2 · Lambang Bilangan">
+  <div class="shead"><div class="kicker">Materi 2 · Lambang Bilangan</div><h2>Dari kata-kata menjadi angka</h2><div class="squig">〰️〰️〰️</div></div>
+  <div class="cols2">
+    <div class="card"><h3>Aturan menulisnya</h3>
+      <p>Dengarkan kata "<b>ribu</b>" pada nama bilangan. Semua yang berada <b>sebelum</b> kata ribu ditulis lebih dulu, beri <b>titik</b> pemisah ribuan, lalu lengkapi dengan <b>tiga digit</b> satuan.</p>
+      <p style="margin-top:10px">Contoh: "dua puluh lima ribu empat ratus" → 25<span class="dotsep">.</span>400. Jika bagian satuan kosong, tulis <b>nol</b> hingga lengkap tiga digit: "tiga ratus ribu" → 300<span class="dotsep">.</span>000.</p>
+      <div class="tipbox"><span class="tico">💡</span><div>Jebakan favorit: "lima ratus dua ribu tiga" → 502<span class="dotsep">.</span>003, bukan 52.300. Posisi nol harus tetap dijaga!</div></div></div>
+    <div class="card"><h3>✏️ Mesin Tulis Bilangan</h3>
+      <p style="font-size:.9rem;color:var(--soft)">Putar digit pada setiap nilai tempat, lalu lihat lambang dan namanya.</p>
+      <div class="ptgrid lbGrid" style="margin-top:10px"></div>
+      <div class="lbNum bigread"></div><div class="lbWords wordread"></div>
+      <div class="lbNote" style="text-align:center;color:var(--deep);font-weight:700;min-height:26px"></div>
+      <div class="rowbtns" style="justify-content:center"><button class="btn lbRand">🔀 Acak digit</button></div></div>
+  </div>
+</section>
+
+<!-- ============ 5 M3 NILAI TEMPAT ============ -->
+<section class="slide" id="s-m3" data-g="Materi" data-t="3 · Nilai Tempat">
+  <div class="shead"><div class="kicker">Materi 3 · Nilai Tempat</div><h2>Setiap digit punya "harga" berbeda</h2><div class="squig">〰️〰️〰️</div></div>
+  <div class="cols2">
+    <div class="card"><h3>Inti konsepnya</h3>
+      <p>Angka yang sama bisa bernilai sangat berbeda, tergantung <b>tempatnya berdiri</b>. Setiap langkah ke kiri, nilai menjadi <b>10× lebih besar</b>.</p>
+      <p style="margin-top:10px"><b>Nilai sebuah digit = digit × nilai tempatnya.</b></p>
+      <div class="tipbox"><span class="tico">💡</span><div>Enam nilai tempat kita: <b>satuan → puluhan → ratusan → ribuan → puluhan ribu → ratusan ribu</b>. Perhatikan garis putus-putus: kolom di kirinya adalah kelas ribuan.</div></div>
+      <div class="tipbox tip-green"><span class="tico">⬆️</span><div>Tantangan: naikkan satu kolom pada mesin di samping dan rasakan betapa cepat bilangannya membesar!</div></div></div>
+    <div class="card"><h3>▦ Mesin Nilai Tempat</h3>
+      <div class="ptgrid ptGrid" style="margin-top:10px"></div>
+      <div class="ptresult">Bilangan kita: <b class="ptNum"></b></div>
+      <div class="ptvals"></div>
+      <div class="rowbtns" style="justify-content:center"><button class="btn ptRand">🔀 Bilangan acak</button></div></div>
+  </div>
+</section>
+
+<!-- ============ 6 M4 DEKOMPOSISI ============ -->
+<section class="slide" id="s-m4" data-g="Materi" data-t="4 · Dekomposisi">
+  <div class="shead"><div class="kicker">Materi 4 · Dekomposisi</div><h2>Membongkar bilangan menjadi potongan-potongannya</h2><div class="squig">〰️〰️〰️</div></div>
+  <div class="cols2">
+    <div class="card"><h3>Apa itu dekomposisi?</h3>
+      <p>Dekomposisi = <b>menguraikan</b> bilangan menjadi jumlah nilai tempat pembentuknya. 342.567 dibangun dari 300.000, 40.000, 2.000, 500, 60, dan 7.</p>
+      <p style="margin-top:10px">Dekomposisi membantumu menghitung dengan <b>number sense</b>, misalnya 342.567 + 10.000 cukup dengan "menambah satu potong puluhan ribu".</p>
+      <div class="tipbox"><span class="tico">💡</span><div>Bentuk panjang menghubungkan dekomposisi dengan perkalian: 300.000 = 3 × 100.000. Inilah jembatan menuju aljabar.</div></div></div>
+    <div class="card"><h3>✂️ Mesin Pecah Bilangan</h3>
+      <div class="dcNum dnum"></div>
+      <div class="dparts dcParts"></div>
+      <div class="dcLong"></div>
+      <div class="rowbtns" style="justify-content:center"><button class="btn btn-acc dcBtn">🧩 Pecah!</button><button class="btn dcNew">🔀 Bilangan lain</button></div></div>
+  </div>
+</section>
+
+<!-- ============ 7 M5 MEMBANDINGKAN ============ -->
+<section class="slide" id="s-m5" data-g="Materi" data-t="5 · Membandingkan Bilangan">
+  <div class="shead"><div class="kicker">Materi 5 · Membandingkan Bilangan</div><h2>Siapa yang lebih besar? Tanya si aligator!</h2><div class="squig">〰️〰️〰️</div></div>
+  <p class="lead">Aligator selalu membuka mulutnya ke arah bilangan yang <b>lebih besar</b>. Rahasianya: bandingkan digit <b>dari kiri ke kanan</b>, berhenti di digit pertama yang berbeda.</p>
+  <div class="card"><div class="vsgrid">
+    <div class="vnum cmpA"></div>
+    <div class="gwrap">
+      <svg class="gator" id="gator" viewBox="0 0 150 92">
+        <g id="jawT"><path d="M18 48 C24 18 62 6 112 14 C122 16 120 24 112 25 L92 27 L102 32 L76 36 L82 41 L18 48 Z" fill="#3BAE7E" stroke="#1F3D2F" stroke-width="2.5" stroke-linejoin="round"/><path d="M42 34 l10 6 -13 4 z" fill="#fff" stroke="#1F3D2F" stroke-width="1.4"/><path d="M64 30 l10 6 -13 4 z" fill="#fff" stroke="#1F3D2F" stroke-width="1.4"/><path d="M86 27 l10 6 -13 4 z" fill="#fff" stroke="#1F3D2F" stroke-width="1.4"/><circle cx="32" cy="24" r="7" fill="#FFFDF6" stroke="#1F3D2F" stroke-width="2"/><circle cx="34" cy="25" r="2.5" fill="#1F3D2F"/></g>
+        <g id="jawB"><path d="M18 48 C24 78 62 90 112 82 C122 80 120 72 112 71 L92 69 L102 64 L76 60 L82 55 L18 48 Z" fill="#2E9E6B" stroke="#1F3D2F" stroke-width="2.5" stroke-linejoin="round"/><path d="M42 62 l10 -6 -13 -4 z" fill="#fff" stroke="#1F3D2F" stroke-width="1.4"/><path d="M64 66 l10 -6 -13 -4 z" fill="#fff" stroke="#1F3D2F" stroke-width="1.4"/><path d="M86 69 l10 -6 -13 -4 z" fill="#fff" stroke="#1F3D2F" stroke-width="1.4"/></g>
+      </svg>
+      <div class="gsym" id="gSym">&gt;</div>
+    </div>
+    <div class="vnum cmpB"></div>
+  </div><div class="vres cmpRes"></div>
+  <div class="rowbtns" style="justify-content:center"><button class="btn btn-acc cmpNew">🔀 Pasangan baru</button></div></div>
+</section>
+
+<!-- ============ 8 M6 MENGURUTKAN ============ -->
+<section class="slide" id="s-m6" data-g="Materi" data-t="6 · Mengurutkan Bilangan">
+  <div class="shead"><div class="kicker">Materi 6 · Mengurutkan Bilangan</div><h2>Barisakan mereka dari terkecil atau terbesar</h2><div class="squig">〰️〰️〰️</div></div>
+  <p class="lead">Mengurutkan = membandingkan berkali-kali. Triknya: lihat <b>jumlah digit</b> dulu, lalu bandingkan digit dari kiri untuk yang jumlah digitnya sama.</p>
+  <div class="card"><div class="owrap oWrap"></div>
+    <div class="onote oNote"></div>
+    <div class="rowbtns"><button class="btn btn-acc oAsc">⬆️ Urut naik</button><button class="btn oDesc">⬇️ Urut turun</button><button class="btn oNew">🔀 Kartu baru</button></div></div>
+</section>
+
+<!-- ============ 9 M7 MEMBULATKAN ============ -->
+<section class="slide" id="s-m7" data-g="Materi" data-t="7 · Membulatkan Bilangan">
+  <div class="shead"><div class="kicker">Materi 7 · Membulatkan Bilangan</div><h2>Memperkirakan: ke titik terdekat!</h2><div class="squig">〰️〰️〰️</div></div>
+  <div class="cols2">
+    <div class="card"><h3>Aturan pembulatan</h3>
+      <p>Untuk membulatkan ke <b>ribuan terdekat</b>: lihat digit <b>ratusannya</b>. Jika ≥ 5 → <b>naikkan</b>; jika &lt; 5 → <b>biarkan</b>.</p>
+      <p style="margin-top:10px">Aturan yang sama berlaku untuk ratusan, puluhan ribu, hingga ratusan ribu: selalu intip <b>satu digit di kanan</b> tempat pembulatan.</p>
+      <div class="tipbox"><span class="tico">💡</span><div>Mengapa perlu? Dalam melapor ("sekitar 200.000 pengunjung"), angka bulat lebih mudah dipahami daripada angka presisi.</div></div>
+      <div class="tipbox tip-green"><span class="tico">🎯</span><div>Geser bilangan pada garis di samping, lalu tekan "Bulatkan!" dan lihat penandanya melompat ke titik terdekat.</div></div></div>
+    <div class="card"><h3>🎯 Garis Bilangan Pembulatan</h3>
+      <div class="track rTrack"></div>
+      <input type="range" class="rSlide" min="0" max="1000" step="50" value="200" style="width:100%">
+      <div class="rinfo2 rInfo"></div>
+      <div class="rout rOut"></div>
+      <div class="rowbtns"><button class="btn btn-acc rDo">🎯 Bulatkan!</button><button class="btn rNew">🔀 Bilangan baru</button></div></div>
+  </div>
+</section>
+
+<!-- ============ 10 M8 PENJUMLAHAN ============ -->
+<section class="slide" id="s-m8" data-g="Materi" data-t="8 · Penjumlahan">
+  <div class="shead"><div class="kicker">Materi 8 · Penjumlahan</div><h2>Susun pendek: jurus menyimpan</h2><div class="squig">〰️〰️〰️</div></div>
+  <div class="cols2">
+    <div class="card"><h3>Aturan mainnya</h3>
+      <p>Susun kedua bilangan sehingga <b>nilai tempatnya sejajar</b>. Mulai menjumlah dari <b>satuan</b>. Jika hasil satu kolom melebihi 9, tulis digit terakhirnya dan <b>simpan 1</b> ke kolom di kirinya.</p>
+      <div class="tipbox"><span class="tico">💡</span><div>Jangan pernah menjumlahkan kolom yang tidak sejajar — nilai tempat adalah hukumnya!</div></div>
+      <div class="tipbox tip-green"><span class="tico">👣</span><div>Tekan tombol "Langkah" berulang kali dan amati kerja setiap kolom dari kanan ke kiri.</div></div></div>
+    <div class="card"><div class="cal calBox"></div><div class="steplog calLog"></div>
+      <div class="rowbtns" style="justify-content:center"><button class="btn btn-acc calNext">👣 Langkah</button><button class="btn calNew">🔀 Soal baru</button></div></div>
+  </div>
+</section>
+
+<!-- ============ 11 M9 PENGURANGAN ============ -->
+<section class="slide" id="s-m9" data-g="Materi" data-t="9 · Pengurangan">
+  <div class="shead"><div class="kicker">Materi 9 · Pengurangan</div><h2>Susun pendek: jurus meminjam</h2><div class="squig">〰️〰️〰️</div></div>
+  <div class="cols2">
+    <div class="card"><h3>Aturan mainnya</h3>
+      <p>Susun dengan nilai tempat sejajar (bilangan besar di atas). Mulai dari <b>satuan</b>. Jika angka atas <b>lebih kecil</b> dari angka bawah, <b>pinjam 10</b> dari kolom kiri — kolom kirinya berkurang satu, kolom kita bertambah sepuluh.</p>
+      <div class="tipbox"><span class="tico">💡</span><div>Setelah selesai, uji jawabanmu: hasil kurang + pengurang harus mengembalikan bilangan awal.</div></div>
+      <div class="tipbox tip-green"><span class="tico">👣</span><div>Tekan "Langkah" perlahan dan perhatikan proses meminjam.</div></div></div>
+    <div class="card"><div class="cal calBox"></div><div class="steplog calLog"></div>
+      <div class="rowbtns" style="justify-content:center"><button class="btn btn-acc calNext">👣 Langkah</button><button class="btn calNew">🔀 Soal baru</button></div></div>
+  </div>
+</section>
+
+<!-- ============ 12 M10 PERKALIAN ============ -->
+<section class="slide" id="s-m10" data-g="Materi" data-t="10 · Perkalian">
+  <div class="shead"><div class="kicker">Materi 10 · Perkalian</div><h2>Area model: memecah perkalian besar</h2><div class="squig">〰️〰️〰️</div></div>
+  <div class="cols2">
+    <div class="card"><h3>Mengapa dipecah?</h3>
+      <p>Mengalikan bilangan besar langsung terasa berat. Area model memecahnya menjadi perkalian-perkalian kecil yang mudah, lalu <b>menjumlahkan hasil parsiannya</b>.</p>
+      <p style="margin-top:10px">Contoh: 24 × 123 → pikirkan (20 + 4) × (100 + 20 + 3). Setiap kotak pada papan di samping adalah satu perkalian kecil.</p>
+      <div class="tipbox"><span class="tico">💡</span><div>Inilah dasar perkalian bersusun. Pahami maknanya, bukan hanya caranya!</div></div></div>
+    <div class="card"><h3>🧮 Papan Area Model</h3>
+      <div class="amHead" style="text-align:center;font-family:'Baloo 2';font-weight:800;font-size:1.5rem;margin:6px 0"></div>
+      <div class="agrid amGrid"></div>
+      <div class="apanel amPanel"></div>
+      <div class="atotal amTotal"></div>
+      <div class="rowbtns" style="justify-content:center"><button class="btn amAll">✅ Jumlahkan semua</button><button class="btn amNew">🔀 Contoh baru</button></div></div>
+  </div>
+</section>
+
+<!-- ============ 13 M11 PEMBAGIAN ============ -->
+<section class="slide" id="s-m11" data-g="Materi" data-t="11 · Pembagian">
+  <div class="shead"><div class="kicker">Materi 11 · Pembagian</div><h2>Pembagian bersusun: digit demi digit</h2><div class="squig">〰️〰️〰️</div></div>
+  <div class="cols2">
+    <div class="card"><h3>Caranya</h3>
+      <p>Mulai dari digit <b>paling kiri</b> dari bilangan yang dibagi. Bagi, tulis hasilnya, hitung sisanya, lalu <b>turunkan</b> digit berikutnya dan ulangi.</p>
+      <p style="margin-top:10px">Pembagian adalah kebalikan perkalian — kamu selalu bisa <b>mengujinya</b>: hasil bagi × pembagi harus mengembalikan bilangan awal.</p>
+      <div class="tipbox"><span class="tico">💡</span><div>Jika suatu saat sisa lebih besar atau sama dengan pembagi, berarti hasil bagi langkah itu kurang besar — naikkan satu.</div></div></div>
+    <div class="card"><h3>➗ Mesin Pembagian Bersusun</h3>
+      <div class="divrow dvRow"></div>
+      <div class="dwork dvWork"></div>
+      <div class="dcheck dvCheck"></div>
+      <div class="rowbtns" style="justify-content:center"><button class="btn btn-acc dvNext">👣 Langkah</button><button class="btn dvNew">🔀 Soal baru</button></div></div>
+  </div>
+</section>
+
+<!-- ============ 14 M12 CAMPURAN ============ -->
+<section class="slide" id="s-m12" data-g="Materi" data-t="12 · Operasi Hitung Campuran">
+  <div class="shead"><div class="kicker">Materi 12 · Operasi Hitung Campuran</div><h2>Urutan pengerjaan adalah segalanya</h2><div class="squig">〰️〰️〰️</div></div>
+  <div class="ordbox"><span class="chip">1 · Tanda kurung</span><span class="chip">2 · Kali &amp; bagi (kiri → kanan)</span><span class="chip">3 · Tambah &amp; kurang (kiri → kanan)</span></div>
+  <p class="lead">Mengubah urutan pengerjaan akan mengubah hasil — itulah mengapa aturan ini wajib dipahami. Tekan tombol langkah untuk melihat ekspresi terurai tahap demi tahap.</p>
+  <div class="card"><div class="mixexpr mxExpr"></div>
+    <div class="mixsteps mxSteps"></div>
+    <div class="mixdone mxDone"></div>
+    <div class="rowbtns" style="justify-content:center"><button class="btn btn-acc mxNext">👣 Langkah</button><button class="btn mxNew">🔀 Contoh baru</button></div></div>
+</section>
+
+<!-- ============ 15 M13 SOAL CERITA ============ -->
+<section class="slide" id="s-m13" data-g="Materi" data-t="13 · Soal Cerita">
+  <div class="shead"><div class="kicker">Materi 13 · Soal Cerita Operasi Hitung</div><h2>Dari cerita menuju hitungan</h2><div class="squig">〰️〰️〰️</div></div>
+  <p class="lead">Soal cerita adalah matematika yang menyamar. Buka samarannya dengan langkah: <b>Cerita → Ditanya → Rencana → Hitung → Jawab</b>.</p>
+  <div class="card"><div class="stext scText"></div>
+    <div class="scRows"></div>
+    <div class="rowbtns" style="justify-content:center"><button class="btn btn-acc scNext">👣 Tahap berikutnya</button><button class="btn scNew">🔀 Cerita baru</button></div></div>
+</section>
+
+<!-- ============ 16 M14 MENEMUKAN BILANGAN (DIUBAH: PERSAMAAN SEDERHANA) ============ -->
+<section class="slide" id="s-m14" data-g="Materi" data-t="14 · Menemukan Bilangan">
+  <div class="shead"><div class="kicker">Materi 14 · Menemukan Bilangan</div><h2>Persamaan sederhana: mencari bilangan yang belum diketahui</h2><div class="squig">〰️〰️〰️</div></div>
+  <p class="lead">Persamaan seperti <b>2 + n = 5</b> ibarat timbangan yang seimbang: nilai ruas kiri harus sama dengan ruas kanan. Tugasmu menemukan nilai <b>n</b> — bilangan yang belum diketahui — yang menjaga keseimbangan itu.</p>
+  <div class="cols2">
+    <div class="card"><h3>Kunci: operasi kebalikan</h3>
+      <p>Untuk "membebaskan" n, lakukan operasi <b>berkebalikan pada kedua ruas secara bersamaan</b> — timbangan tetap seimbang karena kedua ruas diperlakukan sama:</p>
+      <div class="tipbox"><span class="tico">🔑</span><div>
+        <b>n + 5 = 12</b> → n = 12 − 5 = 7 <i>(kebalikan tambah = kurang)</i><br>
+        <b>n − 5 = 12</b> → n = 12 + 5 = 17 <i>(kebalikan kurang = tambah)</i><br>
+        <b>3 × n = 12</b> → n = 12 ÷ 3 = 4 <i>(kebalikan kali = bagi)</i><br>
+        <b>n ÷ 3 = 12</b> → n = 12 × 3 = 36 <i>(kebalikan bagi = kali)</i>
+      </div></div>
+      <div class="tipbox tip-green"><span class="tico">✅</span><div>Selalu <b>uji jawabanmu</b>: ganti n dengan hasilnya, lalu hitung. Jika ruas kiri = ruas kanan, jawabanmu pasti benar!</div></div>
+      <div class="tipbox"><span class="tico">⚖️</span><div>Pada mesin di samping, tebakan yang salah membuat timbangan <b>miring</b> — sisi yang lebih berat turun. Manfaatkan itu untuk memperbaiki tebakanmu!</div></div>
+    </div>
+    <div class="card"><h3>⚖️ Mesin Timbangan Persamaan</h3>
+      <div class="eqrow">
+        <svg class="eqbal" id="eqBal" viewBox="0 0 300 150" aria-hidden="true">
+          <rect x="145" y="70" width="10" height="54" rx="4" fill="#B23A18"/>
+          <ellipse cx="150" cy="128" rx="34" ry="9" fill="#B23A18"/>
+          <g id="beamG">
+            <rect x="30" y="62" width="240" height="8" rx="4" fill="#2B2620"/>
+            <line x1="40" y1="70" x2="40" y2="92" stroke="#2B2620" stroke-width="3"/>
+            <line x1="260" y1="70" x2="260" y2="92" stroke="#2B2620" stroke-width="3"/>
+            <path d="M16 92 A24 12 0 0 0 64 92 Z" fill="#F5B301" stroke="#2B2620" stroke-width="2.5"/>
+            <path d="M236 92 A24 12 0 0 0 284 92 Z" fill="#F5B301" stroke="#2B2620" stroke-width="2.5"/>
+            <text id="panL" x="40" y="87" text-anchor="middle" font-size="11.5" font-weight="800" fill="#2B2620" font-family="Consolas,monospace"></text>
+            <text id="panR" x="260" y="87" text-anchor="middle" font-size="11.5" font-weight="800" fill="#2B2620" font-family="Consolas,monospace"></text>
+          </g>
+          <circle cx="150" cy="66" r="7" fill="#E4572E" stroke="#2B2620" stroke-width="2.5"/>
+        </svg>
+        <div style="flex:1;min-width:230px">
+          <div class="eqExpr mixexpr" style="margin-top:0"></div>
+          <div class="mixsteps eqSteps" style="min-height:80px"></div>
+        </div>
+      </div>
+      <div class="eqMsg"></div>
+      <div class="guessrow"><input class="eqGuess" placeholder="Nilai n = ?  contoh: 55000">
+        <button class="btn btn-acc eqCheck">⚖️ Periksa</button></div>
+      <div class="rowbtns" style="justify-content:center">
+        <button class="btn btn-acc eqNext">👣 Langkah</button>
+        <button class="btn eqNew">🔀 Persamaan baru</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 17 LATIHAN ============ -->
+<section class="slide" id="s-lat" data-g="Latihan" data-t="Pusat Latihan 10 Soal">
+  <div class="shead"><div class="kicker">Latihan</div><h2>Sekarang giliran kalian bertiga!</h2><div class="squig">〰️〰️〰️</div></div>
+  <p class="lead">Setiap materi berisi <b>10 soal pilihan ganda</b>: 3 mudah, 4 sedang, 3 HOTS. Sebelum mulai, <b>acak urutan siswa</b> — soal nomor 1 dijawab siswa pertama, nomor 2 siswa kedua, nomor 3 siswa ketiga, lalu berulang lagi. Jawab benar = poin untuk giliranmu!</p>
+  <div class="prgrid">
+    <div class="card"><h3>📋 Pilih materi latihan</h3><ol class="prlist" id="prList"></ol></div>
+    <div class="prside">
+      <div class="card"><h3>🏆 Papan skor sesi</h3><div id="prBoard"></div></div>
+      <div class="card tipbox"><span class="tico">ℹ️</span><div>Soal dibuat baru setiap kali latihan dimulai. Materi yang selesai ditandai centang.</div></div>
+    </div>
+  </div>
+  <div id="prWrap"><div class="hint">Pilih salah satu dari 14 materi di atas untuk memulai.</div></div>
+</section>
+
+<!-- ============ 18 ULAR TANGGA ============ -->
+<section class="slide" data-g="Penutup" data-t="Bermain Ular Tangga">
+  <div class="shead"><div class="kicker">Saatnya Bermain</div><h2>Ular tangga, siapa berani?</h2><div class="squig">〰️〰️〰️</div></div>
+  <div class="card gcard"><div class="bigico">🎲</div>
+    <h2 style="font-size:1.7rem">Kecermatan &amp; ketangkasan kalian bertiga diuji!</h2>
+    <p class="lead" style="margin:12px auto 20px;max-width:60ch;text-align:center">Setelah latihan tuntas, saatnya menggedor papan permainan. Buka tautan berikut dan buktikan bahwa kecakapan bilangan kalian sudah makin terasah.</p>
+    <a class="btn btn-ink big" href="https://nandarizky0407-bot.github.io/Bilangan-Cacah/ulartanggabilratusanribu.html" target="_blank" rel="noopener">🎮 Buka Permainan Ular Tangga</a>
+    <div class="linksmall">https://nandarizky0407-bot.github.io/KPK-DAN-FPB/ulartanggaKPKFPB.html</div></div>
+</section>
+
+<!-- ============ 19 KESIMPULAN ============ -->
+<section class="slide" data-g="Penutup" data-t="Kesimpulan">
+  <div class="shead"><div class="kicker">Kesimpulan</div><h2>Enam bekal yang kita bawa pulang hari ini</h2><div class="squig">〰️〰️〰️</div></div>
+  <div class="ringkas">
+    <div class="rk"><span class="ric">📖</span><div><b>Nama &amp; lambang bilangan</b><p>Kelompokkan tiga digit dari kanan, baca kelompok ribuan lalu satuan. Pemisah ribuan ditulis dengan titik: 123.456.</p></div></div>
+    <div class="rk"><span class="ric">🧮</span><div><b>Nilai tempat &amp; dekomposisi</b><p>Nilai digit = digit × nilai tempatnya. Setiap langkah ke kiri bernilai 10× lebih besar.</p></div></div>
+    <div class="rk"><span class="ric">⚖️</span><div><b>Membandingkan &amp; mengurutkan</b><p>Bandingkan digit dari kiri ke kanan sampai menemukan yang berbeda; di situlah penentunya.</p></div></div>
+    <div class="rk"><span class="ric">🎯</span><div><b>Membulatkan bilangan</b><p>Lihat digit di kanan tempat pembulatan: ≥ 5 naik, &lt; 5 tetap.</p></div></div>
+    <div class="rk"><span class="ric">➗</span><div><b>Operasi hitung</b><p>Susun pendek untuk + dan − (simpan &amp; pinjam), area model untuk ×, pembagian bertahap untuk ÷.</p></div></div>
+    <div class="rk"><span class="ric">📝</span><div><b>Campuran, cerita &amp; persamaan</b><p>Urutan pengerjaan: kurung → kali/bagi → tambah/kurang. Untuk mencari n pada persamaan, gunakan <b>operasi kebalikan</b> lalu uji jawaban dengan substitusi.</p></div></div>
+  </div>
+  <div class="rowbtns">
+    <button class="btn" id="ksBack">↺ Ulangi materi</button>
+    <button class="btn btn-acc" id="ksNext">Lanjut ke refleksi →</button>
+  </div>
+</section>
+
+<!-- ============ 20 REFLEKSI ============ -->
+<section class="slide" data-g="Penutup" data-t="Refleksi">
+  <div class="shead"><div class="kicker">Refleksi</div><h2>Ceritakan pengalamanmu hari ini</h2><div class="squig">〰️〰️〰️</div></div>
+  <p class="lead">Satu per satu, buka tab namamu, tulis refleksi jujur, dan beri bintang pemahaman.</p>
+  <div class="card"><div class="refltabs" id="rfTabs"></div><div id="rfBody"></div></div>
+</section>
+
+<!-- ============ 21 TERIMA KASIH ============ -->
+<section class="slide" data-g="Penutup" data-t="Thank You for Today">
+  <div class="thanksbig">
+    <div class="kicker" style="justify-content:center">Sampai jumpa di lesson berikutnya</div>
+    <h2>Terima kasih untuk hari ini! 🌟</h2>
+    <div class="names thanksNames">
+      <span class="chip">Siswa 1</span><span class="chip">Siswa 2</span><span class="chip">Siswa 3</span>
+    </div>
+    <p class="lead" style="margin:0 auto 22px;text-align:center">Kalian telah membaca, membedah, dan mengoperasikan bilangan sampai ratusan ribu. Lesson selanjutnya menanti: <b>KPK &amp; FPB</b>. Istirahat yang cukup, dan teruslah bertanya "mengapa".</p>
+    <button class="btn btn-ink big" id="thRestart">↺ Mulai lagi dari awal</button>
+  </div>
+</section>
+
+</main>
+
+<nav id="navbot">
+  <button class="navbtn" id="prevBtn" title="Sebelumnya">◀</button>
+  <button class="navbtn" id="nextBtn" title="Berikutnya">▶</button>
+</nav>
+
+<div id="backdrop"></div>
+<aside id="toc">
+  <header><b>Daftar Slide</b><button id="tocClose">✕</button></header>
+  <div id="tocList"></div>
+</aside>
+<div id="toasts"></div>
+<div id="errbar"></div>
+
+<!-- ================= BLOK SKRIP 1 — INTI ================= -->
+<script>
+window.onerror=function(m,u,l){var b=document.getElementById('errbar');if(b){b.style.display='block';b.textContent='Kesalahan skrip: '+m+' (baris '+l+')';}};
+function $(s,r){return (r||document).querySelector(s);}
+function $$(s,r){return [].slice.call((r||document).querySelectorAll(s));}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+var STU=['','',''];
+function nm(i){return STU[i]?STU[i]:('Siswa '+(i+1));}
+function toast(msg){var t=document.createElement('div');t.className='toast';t.innerHTML=msg;$('#toasts').appendChild(t);
+  setTimeout(function(){t.classList.add('out');},2500);setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},3000);}
+
+var SL=$$('#stage > section'),CUR=0,TOT=SL.length;
+function show(i){
+  CUR=Math.max(0,Math.min(TOT-1,i));
+  for(var j=0;j<TOT;j++){SL[j].style.display=(j===CUR)?'':'none';}
+  $('#chap').textContent=SL[CUR].getAttribute('data-g')||'';
+  $('#count').textContent=(CUR+1)+' / '+TOT;
+  $('#progIn').style.width=(TOT>1?(CUR/(TOT-1)*100):0)+'%';
+  $('#prevBtn').disabled=(CUR===0);
+  $('#nextBtn').disabled=(CUR===TOT-1);
+  buildTOC();
+  window.scrollTo(0,0);
+}
+function buildTOC(){
+  var h='';
+  for(var i=0;i<TOT;i++){
+    h+='<button data-i="'+i+'" class="'+(i===CUR?'act':'')+'"><span class="tnum">'+('0'+(i+1)).slice(-2)+'</span>'+SL[i].getAttribute('data-t')+'</button>';
+  }
+  $('#tocList').innerHTML=h;
+  $$('#tocList button').forEach(function(b){b.onclick=function(){closeTOC();show(+b.getAttribute('data-i'));};});
+}
+function openTOC(){$('#toc').classList.add('open');$('#backdrop').classList.add('on');}
+function closeTOC(){$('#toc').classList.remove('open');$('#backdrop').classList.remove('on');}
+
+ $('#tocBtn').onclick=openTOC;
+ $('#tocClose').onclick=closeTOC;
+ $('#backdrop').onclick=closeTOC;
+ $('#prevBtn').onclick=function(){show(CUR-1);};
+ $('#nextBtn').onclick=function(){show(CUR+1);};
+document.addEventListener('keydown',function(e){
+  var t=(e.target&&e.target.tagName)||'';
+  if(t==='INPUT'||t==='TEXTAREA'||t==='SELECT')return;
+  if(e.key==='ArrowRight')show(CUR+1);
+  if(e.key==='ArrowLeft')show(CUR-1);
+  if(e.key==='Escape')closeTOC();
+});
+
+ $('#goBtn').onclick=function(){
+  var v=[$('#nm1').value.trim(),$('#nm2').value.trim(),$('#nm3').value.trim()];
+  if(!v[0]||!v[1]||!v[2]){
+    $('#coverErr').hidden=false;
+    var c=$('#coverCard');c.classList.remove('shake');void c.offsetWidth;c.classList.add('shake');
+    return;
+  }
+  STU=v;
+  toast('Selamat datang, <b>'+esc(v[0])+', '+esc(v[1])+', &amp; '+esc(v[2])+'</b>!');
+  if(window.refreshNames)window.refreshNames();
+  show(1);
+};
+
+var ROUTE=[
+ 'Fondasi semuanya: membaca, menulis, membandingkan, dan mengoperasikan bilangan sampai ratusan ribu. Seluruh bab kelas 6 berdiri di atas kecakapan ini.',
+ 'Menentukan kelipatan persekutuan dan faktor menuntut kalian lancar membagi serta membandingkan bilangan besar.',
+ 'Nilai tempat adalah kunci memahami hubungan pecahan-desimal, misalnya 0,25 = 25/100 = 25%.',
+ 'Mengonversi satuan (km → m) dan membulatkan hasil pengukuran memakai bilangan besar.',
+ 'Diagram dan tabel di kelas 6 sering memuat data puluhan hingga ratusan ribu — harus bisa dibaca dan dihitung.'];
+function showRoute(i){
+  $$('#route .rnode').forEach(function(b,j){b.classList.toggle('on',j===i);});
+  var judul=$$('#route .rnode')[i].textContent.replace(/^\S+\s/,'');
+  $('#routeInfo').innerHTML='<span class="hand">Perhentian '+(i+1)+'</span><b>'+esc(judul)+'</b> — '+ROUTE[i]+(i===0?' <span class="hand">← kita di sini hari ini!</span>':'');
+}
+ $$('#route .rnode').forEach(function(b){b.onclick=function(){showRoute(+b.getAttribute('data-i'));};});
+showRoute(0);
+
+ $$('#tujList input').forEach(function(c){
+  c.onchange=function(){
+    var n=$$('#tujList input:checked').length;
+    $('#tujCount').textContent=n+'/5';
+    $('#tujBar').style.width=(n*20)+'%';
+    if(n===5)toast('Lima lima! Kamu siap penuh untuk lesson ini.');
+  };
+});
+
+ $('#ksBack').onclick=function(){show(3);};
+ $('#ksNext').onclick=function(){show(20);};
+ $('#thRestart').onclick=function(){show(0);};
+
+show(0);
+</script>
+
+<!-- ============ BLOK SKRIP 2 — MESIN + SOAL ============ -->
+<script>
+function ri(a,b){return a+Math.floor(Math.random()*(b-a+1));}
+function sh(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function fmt(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.');}
+function p3(x){return ('00'+x).slice(-3);}
+function pad6(n){var s=String(n);while(s.length<6)s='0'+s;return s.split('').map(Number);}
+var NK=['satuan','puluhan','ratusan','ribuan','puluhan ribu','ratusan ribu'];
+var NKP=['Satuan','Puluhan','Ratusan','Ribuan','Puluhan Ribu','Ratusan Ribu'];
+function safe(nama,fn){try{fn();}catch(e){var b=$('#errbar');if(b){b.style.display='block';b.textContent='Modul '+nama+' gagal: '+e.message;}}}
+
+/* pembacaan bilangan (sudah diperbaiki: puluh vs belas) */
+function words3(n){
+  var u=['','satu','dua','tiga','empat','lima','enam','tujuh','delapan','sembilan'];
+  var r=Math.floor(n/100),rest=n%100,s='';
+  if(r===1)s='seratus';else if(r>1)s=u[r]+' ratus';
+  if(rest===0)return s;
+  if(rest===10)return s?s+' sepuluh':'sepuluh';
+  if(rest===11)return s?s+' sebelas':'sebelas';
+  if(rest<20)return s?s+' '+u[rest%10]+' belas':(u[rest%10]+' belas');
+  var t=u[Math.floor(rest/10)]+' puluh';
+  if(rest%10)t+=' '+u[rest%10];
+  return s?s+' '+t:t;
+}
+function words(n){
+  if(n===0)return 'nol';
+  var rb=Math.floor(n/1000),sa=n%1000,s='';
+  if(rb===1)s='seribu';else if(rb>1)s=words3(rb)+' ribu';
+  if(sa)s+=(s?' ':'')+words3(sa);
+  return s;
+}
+function ds(n){
+  var out=[],m=100000,e=5;
+  while(m>=1){var d=Math.floor(n/m)%10;if(d)out.push(fmt(d*m));m=Math.floor(m/10);e--;}
+  return out.join(' + ');
+}
+function numWith(d,p){
+  var s='',i,x;
+  for(i=5;i>=0;i--){
+    if(i===p)x=d;
+    else if(i===5){do{x=ri(1,9);}while(x===d);}
+    else{do{x=ri(0,9);}while(x===d);}
+    s+=x;
+  }
+  return +s;
+}
+function cmpExplain(a,b){
+  if(a===b)return 'Semua digitnya sama, jadi kedua bilangan <b>sama besar</b>.';
+  var A=pad6(a),B=pad6(b);
+  for(var i=0;i<6;i++){if(A[i]!==B[i]){
+    var pre=(i>0)?('Kolom di depannya sama, lalu di <b>'+NK[5-i]+'</b>: '):('Langsung di <b>'+NK[5-i]+'</b>: ');
+    return pre+A[i]+' '+(A[i]>B[i]?'&gt;':'&lt;')+' '+B[i]+' → <b>'+fmt(a)+'</b> '+(a>b?'lebih besar':'lebih kecil')+'.';
+  }}
+  return '';
+}
+function flip(wrap,mut){
+  var before={};
+  $$('.ocard',wrap).forEach(function(el){before[el.textContent]=el.getBoundingClientRect().left;});
+  mut();
+  $$('.ocard',wrap).forEach(function(el){
+    var dx=(before[el.textContent]||0)-el.getBoundingClientRect().left;
+    if(dx){el.style.transition='none';el.style.transform='translateX('+dx+'px)';
+      requestAnimationFrame(function(){requestAnimationFrame(function(){el.style.transition='transform .55s cubic-bezier(.2,.8,.2,1)';el.style.transform='';});});}
+  });
+}
+
+/* ============ MESIN MATERI ============ */
+safe('M1',function(){
+  var sec=$('#s-m1');
+  function show(n){
+    var rb=Math.floor(n/1000),sa=n%1000,h='';
+    if(rb)h+='<span class="w-rb">'+fmt(rb)+'</span><span class="dotsep">.</span>';
+    h+='<span class="w-sa">'+(rb?p3(sa):String(sa))+'</span>';
+    $('.nbDisp',sec).innerHTML=h;
+    $('.nbWords',sec).textContent='dibaca:  "'+words(n)+'"';
+  }
+  $('.nbRand',sec).onclick=function(){show(ri(1,999)*1000+ri(0,999));};
+  $$('.nbChips .chip',sec).forEach(function(c){c.onclick=function(){show(+c.getAttribute('data-n'));};});
+  show(342567);
+});
+safe('M2',function(){
+  var sec=$('#s-m2'),d=[1,2,3,4,5,6];
+  function show(){
+    var n=0,i;for(i=0;i<6;i++)n=n*10+d[i];
+    $('.lbNum',sec).innerHTML='<span class="w-rb">'+d.slice(0,3).join('')+'</span><span class="dotsep">.</span><span class="w-sa">'+d.slice(3).join('')+'</span>';
+    $('.lbWords',sec).textContent='dibaca:  "'+words(n)+'"';
+    $('.lbNote',sec).textContent=(d[0]===0&&n>0)?'Digit pertama 0 → sebenarnya kurang dari 100.000.':'';
+  }
+  function drawSel(){
+    var h='';
+    for(var i=0;i<6;i++){
+      h+='<div class="ptcol'+(i<3?' kelrb':'')+'"><div class="pth">'+NKP[5-i]+'<small>×'+fmt(Math.pow(10,5-i))+'</small></div><select data-i="'+i+'">';
+      for(var x=0;x<=9;x++)h+='<option value="'+x+'"'+(x===d[i]?' selected':'')+'>'+x+'</option>';
+      h+='</select></div>';
+    }
+    $('.lbGrid',sec).innerHTML=h;
+    $$('.lbGrid select',sec).forEach(function(s){s.onchange=function(){d[+s.getAttribute('data-i')]=+s.value;show();};});
+  }
+  $('.lbRand',sec).onclick=function(){d[0]=ri(1,9);for(var i=1;i<6;i++)d[i]=ri(0,9);drawSel();show();};
+  drawSel();show();
+});
+safe('M3',function(){
+  var sec=$('#s-m3'),d=[3,4,2,5,6,7];
+  function draw(){
+    var n=0,i;for(i=0;i<6;i++)n+=d[i]*Math.pow(10,5-i);
+    var h='';
+    for(i=0;i<6;i++){
+      h+='<div class="ptcol'+(i<3?' kelrb':'')+'"><div class="pth">'+NKP[5-i]+'<small>×'+fmt(Math.pow(10,5-i))+'</small></div>'
+        +'<div class="ptcell">'+d[i]+'</div>'
+        +'<div class="pmb"><button data-i="'+i+'" data-d="-1">−</button><button data-i="'+i+'" data-d="1">+</button></div></div>';
+    }
+    $('.ptGrid',sec).innerHTML=h;
+    $('.ptNum',sec).textContent=fmt(n);
+    var v='';for(i=0;i<6;i++){if(d[i])v+='<span class="chip">'+d[i]+' × '+fmt(Math.pow(10,5-i))+' = '+fmt(d[i]*Math.pow(10,5-i))+'</span>';}
+    $('.ptvals',sec).innerHTML=v;
+    $$('.ptGrid .pmb button',sec).forEach(function(b){b.onclick=function(){
+      var i=+b.getAttribute('data-i');d[i]=Math.min(9,Math.max(0,d[i]+(+b.getAttribute('data-d'))));draw();};});
+  }
+  $('.ptRand',sec).onclick=function(){d[0]=ri(1,9);for(var i=1;i<6;i++)d[i]=ri(0,9);draw();};
+  draw();
+});
+safe('M4',function(){
+  var sec=$('#s-m4'),n=342567,open=false;
+  function reset(){
+    $('.dcParts',sec).innerHTML='<span style="color:var(--soft)">Tekan tombol "Pecah!" untuk membongkar bilangan ini.</span>';
+    $('.dcLong',sec).innerHTML='';open=false;$('.dcBtn',sec).textContent='🧩 Pecah!';
+  }
+  function pecah(){
+    var out=[],m=100000,e=5;
+    while(m>=1){var dg=Math.floor(n/m)%10;if(dg)out.push({v:dg*m,e:e});m=Math.floor(m/10);e--;}
+    var h='';
+    out.forEach(function(x,i){
+      if(i)h+='<div class="dplus">+</div>';
+      h+='<div class="dpart pop" style="animation-delay:'+(i*0.08)+'s"><b>'+fmt(x.v)+'</b><span>'+NK[x.e]+'</span></div>';
+    });
+    $('.dcParts',sec).innerHTML=h;
+    $('.dcLong',sec).innerHTML='<div class="dlong">'+fmt(n)+' = '+out.map(function(x){return (x.v/Math.pow(10,x.e))+' × '+fmt(Math.pow(10,x.e));}).join(' + ')+'</div>';
+    open=true;$('.dcBtn',sec).textContent='🙈 Tutup';
+  }
+  $('.dcBtn',sec).onclick=function(){if(open)reset();else pecah();};
+  $('.dcNew',sec).onclick=function(){n=ri(100,900)*1000+ri(1,999);$('.dcNum',sec).textContent=fmt(n);reset();};
+  $('.dcNum',sec).textContent=fmt(n);reset();
+});
+safe('M5',function(){
+  var sec=$('#s-m5');
+  function show(){
+    var a,b;
+    if(Math.random()<0.12){a=b=ri(100000,999999);}else{a=ri(100000,999999);b=ri(100000,999999);}
+    $('.cmpA',sec).textContent=fmt(a);$('.cmpB',sec).textContent=fmt(b);
+    var g=$('#gator'),w=$('.gwrap',sec),sy=$('#gSym');
+    if(a===b){g.classList.remove('open');sy.innerHTML='=';w.classList.remove('flip');}
+    else{g.classList.add('open');sy.innerHTML=(a>b?'&gt;':'&lt;');w.classList.toggle('flip',a<b);}
+    $('.cmpRes',sec).innerHTML=cmpExplain(a,b);
+  }
+  $('.cmpNew',sec).onclick=show;show();
+});
+safe('M6',function(){
+  var sec=$('#s-m6'),cards=[];
+  function draw(){$('.oWrap',sec).innerHTML=cards.map(function(n){return '<div class="ocard">'+fmt(n)+'</div>';}).join('');}
+  function newData(){
+    cards=[];
+    while(cards.length<4){var x=ri(100,900)*1000+ri(0,999);if(cards.indexOf(x)<0)cards.push(x);}
+    cards=sh(cards);draw();
+    $('.oNote',sec).textContent='Tekan tombol di bawah — kartu akan berpindah dengan sendirinya.';
+  }
+  function order(asc){
+    var sorted=cards.slice().sort(function(a,b){return asc?a-b:b-a;});
+    flip($('.oWrap',sec),function(){
+      sorted.forEach(function(v){
+        var el=null;
+        $$('.ocard',sec).forEach(function(c){if(c.textContent===fmt(v))el=c;});
+        if(el)$('.oWrap',sec).appendChild(el);
+      });
+    });
+    cards=sorted;
+    $('.oNote',sec).textContent=asc?'Urut naik: terkecil di kiri → terbesar di kanan.':'Urut turun: terbesar di kiri → terkecil di kanan.';
+  }
+  $('.oAsc',sec).onclick=function(){order(true);};
+  $('.oDesc',sec).onclick=function(){order(false);};
+  $('.oNew',sec).onclick=newData;
+  newData();
+});
+safe('M7',function(){
+  var sec=$('#s-m7'),base=ri(120,869)*1000;
+  function upd(){
+    var off=+$('.rSlide',sec).value,m=$('.rmark',sec);
+    if(m){m.style.left=(off/10)+'%';$('.rmark span',sec).textContent=fmt(base+off);}
+    $('.rInfo',sec).innerHTML='Bilangan: <b>'+fmt(base+off)+'</b> · jarak ke '+fmt(base)+' = <b>'+off+'</b> · jarak ke '+fmt(base+1000)+' = <b>'+(1000-off)+'</b>';
+    $('.rOut',sec).textContent='Tekan "Bulatkan!" untuk melompat ke ribuan terdekat.';
+  }
+  function draw(){
+    var h='',t;
+    for(t=0;t<=1000;t+=100)h+='<div class="tl'+(t%500===0?' maj':'')+'" style="left:'+(t/10)+'%"><i></i>'+fmt(base+t)+'</div>';
+    h+='<div class="rz"></div><div class="rmark" style="left:20%"><span></span></div>';
+    $('.rTrack',sec).innerHTML=h;
+    $('.rSlide',sec).value=200;upd();
+  }
+  $('.rSlide',sec).oninput=upd;
+  $('.rDo',sec).onclick=function(){
+    var off=+$('.rSlide',sec).value,target=(off>=500)?1000:0;
+    $('.rmark',sec).style.left=(target/10)+'%';
+    $('.rmark span',sec).textContent=fmt(base+target);
+    $('.rOut',sec).innerHTML=fmt(base+off)+' → ratusannya <b>'+Math.floor(off/100)+'</b> '+(off>=500?'(≥ 5 → <b>naik</b>)':'(&lt; 5 → <b>tetap</b>)')+' → dibulatkan menjadi <b>'+fmt(base+target)+'</b>.';
+  };
+  $('.rNew',sec).onclick=function(){base=ri(120,869)*1000;draw();};
+  draw();
+});
+function initCal(sec,isAdd){
+  var a,b,step,rec,carry,aw;
+  function newData(){
+    if(isAdd){a=ri(100,499)*1000+ri(100,999);b=ri(100,499)*1000+ri(100,999);}
+    else{a=ri(500,999)*1000+ri(100,999);b=ri(100,499)*1000+ri(100,999);}
+    step=-1;rec={};carry=[0,0,0,0,0,0];aw=pad6(a);
+    $('.calLog',sec).innerHTML='<div class="ln">Tekan <b>"Langkah"</b> — kita mulai dari satuan.</div>';
+    $('.calNext',sec).disabled=false;draw();
+  }
+  function cell(v,cls){return '<div class="cc '+(cls||'')+'">'+v+'</div>';}
+  function draw(){
+    var B=pad6(b),h='<div class="crow ccarry"><span class="cend"></span>',c;
+    for(c=0;c<6;c++)h+=cell(carry[c]||'','');
+    h+='</div><div class="crow"><span class="cend"></span>';
+    for(c=0;c<6;c++)h+=cell(aw[c],(step>=0&&5-step===c)?'on':'');
+    h+='</div><div class="crow"><span class="cend">'+(isAdd?'+':'−')+'</span>';
+    for(c=0;c<6;c++)h+=cell(B[c],'');
+    h+='</div><div class="crow crowres"><span class="cend"></span>';
+    for(c=0;c<6;c++)h+=cell((c in rec)?rec[c]:'·',(c in rec)?'':'empty');
+    $('.calBox',sec).innerHTML=h+'</div>';
+  }
+  function next(){
+    step++;
+    var log=$('.calLog',sec);
+    if(step>=6){
+      log.innerHTML+='<div class="ln">✅ Selesai! '+fmt(a)+(isAdd?' + ':' − ')+fmt(b)+' = <b>'+fmt(isAdd?a+b:a-b)+'</b>.</div>';
+      $('.calNext',sec).disabled=true;draw();return;
+    }
+    var p=5-step,B=pad6(b),line;
+    if(isAdd){
+      var cin=carry[p],s=aw[p]+B[p]+cin,dig=s%10,co=(s>=10)?1:0;
+      rec[p]=dig;if(p-1>=0)carry[p-1]=co;
+      line='Kolom <b>'+NK[p]+'</b>: '+aw[p]+' + '+B[p]+(cin?' + simpanan 1':'')+' = '+s+' → tulis <b>'+dig+'</b>'+(co?' dan <b>simpan 1</b>.':'.');
+    }else{
+      if(aw[p]<B[p]){
+        var j=p-1;while(j>=0&&aw[j]===0)j--;
+        aw[j]--;for(var k=j+1;k<p;k++)aw[k]=9;
+        var before=aw[p];aw[p]+=10;rec[p]=aw[p]-B[p];
+        line='Kolom <b>'+NK[p]+'</b>: '+before+' − '+B[p]+' belum bisa → <b>pinjam 1 dari '+NK[j]+'</b> → '+(before+10)+' − '+B[p]+' = <b>'+rec[p]+'</b>.';
+      }else{rec[p]=aw[p]-B[p];line='Kolom <b>'+NK[p]+'</b>: '+aw[p]+' − '+B[p]+' = <b>'+rec[p]+'</b>.';}
+    }
+    log.innerHTML+='<div class="ln">'+line+'</div>';
+    log.scrollTop=log.scrollHeight;
+    draw();
+  }
+  $('.calNext',sec).onclick=next;
+  $('.calNew',sec).onclick=newData;
+  newData();
+}
+safe('M8',function(){initCal($('#s-m8'),true);});
+safe('M9',function(){initCal($('#s-m9'),false);});
+safe('M10',function(){
+  var sec=$('#s-m10'),A,pA,pB,B,done;
+  function newEx(){
+    A=ri(21,49);pA=[Math.floor(A/10)*10,A%10];
+    B=ri(2,9)*100+ri(1,9)*10+ri(1,9);
+    pB=[Math.floor(B/100)*100,Math.floor((B%100)/10)*10,B%10];
+    done={};draw();
+  }
+  function countDone(){var k=0,x;for(x in done)if(done[x])k++;return k;}
+  function draw(){
+    $('.amHead',sec).textContent=A+' × '+fmt(B);
+    var h='<div></div>';
+    pB.forEach(function(c){h+='<div class="ah">'+fmt(c)+'</div>';});
+    pA.forEach(function(r){
+      h+='<div class="ah acl">'+fmt(r)+'</div>';
+      pB.forEach(function(c){
+        var key=r+'_'+c;
+        h+='<button class="acell'+(done[key]?' done':'')+'" data-key="'+key+'"><span class="as">'+fmt(r)+' × '+fmt(c)+'</span><b>'+fmt(r*c)+'</b></button>';
+      });
+    });
+    $('.amGrid',sec).innerHTML=h;
+    var list=[];
+    pA.forEach(function(r){pB.forEach(function(c){if(done[r+'_'+c])list.push(fmt(r)+' × '+fmt(c)+' = '+fmt(r*c));});});
+    $('.amPanel',sec).innerHTML=list.length?('Hasil parsian:<br>'+list.join('<br>')):'Klik setiap kotak untuk melihat hasil parsiannya.';
+    $('.amTotal',sec).textContent=(countDone()===6)?(A+' × '+fmt(B)+' = '+fmt(A*B)):'';
+    $$('.acell',sec).forEach(function(btn){btn.onclick=function(){done[btn.getAttribute('data-key')]=1;draw();};});
+  }
+  $('.amAll',sec).onclick=function(){pA.forEach(function(r){pB.forEach(function(c){done[r+'_'+c]=1;});});draw();};
+  $('.amNew',sec).onclick=newEx;
+  newEx();
+});
+safe('M11',function(){
+  var sec=$('#s-m11'),d,q,n,steps,si;
+  function newData(){
+    d=ri(3,6);
+    do{q=ri(21,160)*1000;n=d*q;}while(+String(n)[0]<d);
+    steps=[];
+    var s=String(n),rem=0,i;
+    for(i=0;i<s.length;i++){var cur=rem*10+(+s[i]),qd=Math.floor(cur/d);rem=cur-qd*d;steps.push({cur:cur,qd:qd,rem:rem});}
+    si=-1;draw();
+  }
+  function draw(){
+    $('.dvRow',sec).innerHTML='<span>'+fmt(n)+'</span><span class="dop">:</span><span class="ddv">'+d+'</span><span class="dop">=</span>'
+      +steps.map(function(s,i){return '<span class="dqd'+(i<=si?' on':' unk')+'">'+(i<=si?s.qd:'·')+'</span>';}).join('');
+    var w=$('.dvWork',sec);
+    if(si<0)w.innerHTML='<div class="ln">Tekan "Langkah" — kita mulai dari digit paling kiri.</div>';
+    else w.innerHTML=steps.slice(0,si+1).map(function(s,i){return '<div class="ln">Langkah '+(i+1)+': kerjakan <b>'+fmt(s.cur)+' ÷ '+d+'</b> = <b>'+s.qd+'</b>, sisa <b>'+s.rem+'</b>'+(i<steps.length-1?', lalu turunkan digit berikutnya.':'.')+'</div>';}).join('');
+    $('.dvCheck',sec).textContent=(si>=steps.length-1)?('Uji: '+d+' × '+fmt(q)+' = '+fmt(n)+' ✓'):('Sisa sementara: '+(si>=0?steps[si].rem:'—'));
+    $('.dvNext',sec).disabled=(si>=steps.length-1);
+  }
+  $('.dvNext',sec).onclick=function(){if(si<steps.length-1){si++;draw();}};
+  $('.dvNew',sec).onclick=newData;
+  newData();
+});
+safe('M12',function(){
+  var sec=$('#s-m12'),M,st;
+  function newEx(){
+    var t=ri(0,2);
+    if(t===0){var a=ri(12,89)*1000,b=ri(2,9)*100,c=ri(2,9),s=a+b*c;
+      M={expr:fmt(a)+' <span class="tk-a">+</span> '+fmt(b)+' <span class="tk-m">×</span> '+c,
+        stages:['Perkalian dan pembagian selalu dikerjakan lebih dulu daripada tambah dan kurang.','Perkalian dulu: '+fmt(b)+' × '+c+' = '+fmt(b*c)+' → ekspresi menjadi '+fmt(a)+' + '+fmt(b*c)+'.','Terakhir, jumlahkan: '+fmt(a)+' + '+fmt(b*c)+' = <b>'+fmt(s)+'</b>.'],done:fmt(s)};}
+    else if(t===1){var c2=ri(2,9),r=ri(12,79)*1000,b2=ri(1,2)*100000,a2=b2+c2*r,d=ri(1,9)*1000;
+      M={expr:'<span class="tk-b">(</span>'+fmt(a2)+' <span class="tk-a">−</span> '+fmt(b2)+'<span class="tk-b">)</span> <span class="tk-m">÷</span> '+c2+' <span class="tk-a">+</span> '+fmt(d),
+        stages:['Tanda kurung selalu paling utama dikerjakan.','Isi kurung: '+fmt(a2)+' − '+fmt(b2)+' = '+fmt(c2*r)+', lalu '+fmt(c2*r)+' ÷ '+c2+' = '+fmt(r)+'.','Terakhir: '+fmt(r)+' + '+fmt(d)+' = <b>'+fmt(r+d)+'</b>.'],done:fmt(r+d)};}
+    else{var a3=ri(2,4)*10,b3=ri(2,9)*1000,c3=ri(1,9)*1000,d3=ri(1,9)*1000,s3=a3*(b3+c3)-d3;
+      M={expr:a3+' <span class="tk-m">×</span> <span class="tk-b">(</span>'+fmt(b3)+' <span class="tk-a">+</span> '+fmt(c3)+'<span class="tk-b">)</span> <span class="tk-a">−</span> '+fmt(d3),
+        stages:['Kerjakan isi kurung lebih dulu.','Isi kurung: '+fmt(b3)+' + '+fmt(c3)+' = '+fmt(b3+c3)+' → '+a3+' × '+fmt(b3+c3)+' = '+fmt(a3*(b3+c3))+'.','Terakhir: '+fmt(a3*(b3+c3))+' − '+fmt(d3)+' = <b>'+fmt(s3)+'</b>.'],done:fmt(s3)};}
+    st=0;draw();
+  }
+  function draw(){
+    $('.mxExpr',sec).innerHTML=M.expr;
+    $('.mxSteps',sec).innerHTML=M.stages.slice(0,st).map(function(s,i){return '<div class="ln"><b>Langkah '+(i+1)+'.</b> '+s+'</div>';}).join('');
+    $('.mxDone',sec).textContent=(st>=3)?('Hasil akhir: '+M.done):'';
+    $('.mxNext',sec).disabled=(st>=3);
+  }
+  $('.mxNext',sec).onclick=function(){if(st<3){st++;draw();}};
+  $('.mxNew',sec).onclick=newEx;
+  newEx();
+});
+safe('M13',function(){
+  var sec=$('#s-m13'),S,st;
+  function newEx(){
+    var t=ri(0,2);
+    if(t===0){var a=ri(12,45)*1000,b=ri(12,45)*1000;
+      S={text:'Perpustakaan sekolah memiliki <span class="snum">'+fmt(a)+'</span> buku cerita dan <span class="snum">'+fmt(b)+'</span> buku pelajaran.',q:'Berapa banyak buku seluruhnya?',plan:'Banyak seluruh = buku cerita + buku pelajaran = '+fmt(a)+' + '+fmt(b),calc:[fmt(a)+' + '+fmt(b)+' = '+fmt(a+b)],ans:'Jumlah seluruh buku adalah '+fmt(a+b)+' buku.'};}
+    else if(t===1){var a2=ri(60,90)*1000,b2=ri(10,25)*1000,c=ri(5,15)*1000;
+      S={text:'Kantin sekolah menyimpan <span class="snum">'+fmt(a2)+'</span> cup. Pagi hari terjual <span class="snum">'+fmt(b2)+'</span> cup. Siangnya datang pesanan baru <span class="snum">'+fmt(c)+'</span> cup.',q:'Berapa banyak cup yang tersimpan sekarang?',plan:'Sisa pagi: '+fmt(a2)+' − '+fmt(b2)+', lalu ditambah pesanan.',calc:[fmt(a2)+' − '+fmt(b2)+' = '+fmt(a2-b2),fmt(a2-b2)+' + '+fmt(c)+' = '+fmt(a2-b2+c)],ans:'Sekarang tersimpan '+fmt(a2-b2+c)+' cup.'};}
+    else{var per=ri(20,50)*1000,k=ri(2,4),sisa=per*k,tas=ri(60,140)*1000,sep=ri(40,110)*1000,total=tas+sep+sisa;
+      S={text:'Ibu berbelanja dengan uang <span class="snum">'+fmt(total)+'</span>. Ia membeli tas <span class="snum">'+fmt(tas)+'</span> dan sepatu <span class="snum">'+fmt(sep)+'</span>. Sisa uangnya dibagi rata kepada <span class="snum">'+k+'</span> anak.',q:'Berapa uang yang diterima setiap anak?',plan:'Sisa = '+fmt(total)+' − '+fmt(tas)+' − '+fmt(sep)+', lalu sisa ÷ '+k,calc:[fmt(total)+' − '+fmt(tas)+' − '+fmt(sep)+' = '+fmt(sisa),fmt(sisa)+' ÷ '+k+' = '+fmt(per)],ans:'Setiap anak menerima '+fmt(per)+'.'};}
+    st=0;draw();
+  }
+  function draw(){
+    var el=$('.scText',sec);
+    el.innerHTML=(st>=1?'<span class="hand">Ceritanya: </span>':'')+S.text;
+    el.classList.toggle('hl',st>=1);
+    var rows='';
+    if(st>=2)rows+='<div class="srow"><span class="stag">Ditanya</span><div>'+S.q+'</div></div>';
+    if(st>=3)rows+='<div class="srow"><span class="stag">Rencana</span><div>'+S.plan+'</div></div>';
+    if(st>=4)rows+='<div class="srow"><span class="stag">Hitung</span><div>'+S.calc.join('<br>')+'</div></div><div class="sans">'+S.ans+'</div>';
+    $('.scRows',sec).innerHTML=rows;
+    var b=$('.scNext',sec);b.disabled=(st>=4);b.textContent=(st>=4)?'✅ Selesai':'👣 Tahap berikutnya';
+  }
+  $('.scNext',sec).onclick=function(){if(st<4){st++;draw();}};
+  $('.scNew',sec).onclick=newEx;
+  newEx();
+});
+/* ====== DIUBAH: M14 = Mesin Timbangan Persamaan (mencari nilai n) ====== */
+safe('M14',function(){
+  var sec=$('#s-m14'),eq,st,solved;
+  function tilt(cls){
+    var bal=$('#eqBal',sec);
+    bal.classList.remove('eqTiltL','eqTiltR');
+    if(cls)bal.classList.add(cls);
+  }
+  function newEq(){
+    var t=ri(0,3),a,b,k,c,n,m;
+    if(t===0){ /* n + a = b */
+      a=ri(5,85)*1000;n=ri(5,95)*1000;b=a+n;
+      eq={disp:'<span class="unk">n</span> + '+fmt(a)+' = '+fmt(b),corr:n,
+        panL:'n + '+fmt(a),panR:fmt(b),
+        left:function(v){return v+a;},
+        steps:['Ruas kiri memuat <b>n</b> dengan operasi <b>penjumlahan</b>.',
+          'Kebalikan penjumlahan adalah <b>pengurangan</b> → kurangi kedua ruas dengan '+fmt(a)+'.',
+          'n = '+fmt(b)+' − '+fmt(a)+' = <b>'+fmt(n)+'</b>.',
+          'Uji: '+fmt(n)+' + '+fmt(a)+' = '+fmt(b)+' ✓ ruas kiri = ruas kanan.']};
+    }else if(t===1){ /* n - a = b */
+      n=ri(100,900)*1000;a=ri(10,90)*1000;b=n-a;
+      eq={disp:'<span class="unk">n</span> − '+fmt(a)+' = '+fmt(b),corr:n,
+        panL:'n − '+fmt(a),panR:fmt(b),
+        left:function(v){return v-a;},
+        steps:['Ruas kiri memuat <b>n</b> dengan operasi <b>pengurangan</b>.',
+          'Kebalikan pengurangan adalah <b>penjumlahan</b> → tambahkan '+fmt(a)+' ke kedua ruas.',
+          'n = '+fmt(b)+' + '+fmt(a)+' = <b>'+fmt(n)+'</b>.',
+          'Uji: '+fmt(n)+' − '+fmt(a)+' = '+fmt(b)+' ✓ seimbang.']};
+    }else if(t===2){ /* k × n = m */
+      k=ri(2,9);n=ri(12,99)*1000;m=k*n;
+      eq={disp:k+' × <span class="unk">n</span> = '+fmt(m),corr:n,
+        panL:k+' × n',panR:fmt(m),
+        left:function(v){return k*v;},
+        steps:['n sedang <b>dikali '+k+'</b> pada ruas kiri.',
+          'Kebalikan perkalian adalah <b>pembagian</b> → bagi kedua ruas dengan '+k+'.',
+          'n = '+fmt(m)+' ÷ '+k+' = <b>'+fmt(n)+'</b>.',
+          'Uji: '+k+' × '+fmt(n)+' = '+fmt(m)+' ✓ seimbang.']};
+    }else{ /* n ÷ k = m */
+      k=ri(2,9);m=ri(20,90)*1000;n=k*m;
+      eq={disp:'<span class="unk">n</span> ÷ '+k+' = '+fmt(m),corr:n,
+        panL:'n ÷ '+k,panR:fmt(m),
+        left:function(v){return Math.floor(v/k);},
+        steps:['n sedang <b>dibagi '+k+'</b> pada ruas kiri.',
+          'Kebalikan pembagian adalah <b>perkalian</b> → kalikan kedua ruas dengan '+k+'.',
+          'n = '+fmt(m)+' × '+k+' = <b>'+fmt(n)+'</b>.',
+          'Uji: '+fmt(n)+' ÷ '+k+' = '+fmt(m)+' ✓ seimbang.']};
+    }
+    st=0;solved=false;
+    tilt(null);
+    $('.eqExpr',sec).innerHTML=eq.disp;
+    $('.eqSteps',sec).innerHTML='';
+    var msg=$('.eqMsg',sec);msg.className='eqMsg';msg.textContent='';
+    $('.eqGuess',sec).value='';$('.eqGuess',sec).disabled=false;
+    $('.eqCheck',sec).disabled=false;
+    $('.eqNext',sec).disabled=false;
+    $('#panL',sec).textContent=eq.panL;
+    $('#panR',sec).textContent=eq.panR;
+  }
+  function drawSteps(){
+    $('.eqSteps',sec).innerHTML=eq.steps.slice(0,st).map(function(s,i){return '<div class="ln"><b>Langkah '+(i+1)+'.</b> '+s+'</div>';}).join('');
+    $('.eqNext',sec).disabled=(st>=eq.steps.length);
+  }
+  function check(){
+    if(solved)return;
+    var v=parseInt($('.eqGuess',sec).value.replace(/[.\s]/g,''),10);
+    var msg=$('.eqMsg',sec);
+    if(isNaN(v)){msg.className='eqMsg b';msg.textContent='Tulis dulu nilai n-nya, ya.';return;}
+    if(v===eq.corr){
+      solved=true;tilt(null);
+      msg.className='eqMsg g';
+      msg.innerHTML='🎉 Tepat! n = <b>'+fmt(eq.corr)+'</b> — timbangan seimbang. '+eq.steps[3];
+      $('.eqGuess',sec).disabled=true;$('.eqCheck',sec).disabled=true;
+      toast('Persamaan terpecahkan: n = '+fmt(eq.corr)+'!');
+    }else{
+      var lv=eq.left(v),rv=eq.left(eq.corr);
+      tilt(lv>rv?'eqTiltL':'eqTiltR');
+      msg.className='eqMsg b';
+      msg.innerHTML='Belum tepat. Jika n = '+fmt(v)+', ruas kiri = <b>'+fmt(lv)+'</b> tetapi ruas kanan = <b>'+fmt(rv)+'</b> — lihat, timbangannya miring! Coba lagi.';
+    }
+  }
+  $('.eqNext',sec).onclick=function(){if(st<eq.steps.length){st++;drawSteps();}};
+  $('.eqNew',sec).onclick=newEq;
+  $('.eqCheck',sec).onclick=check;
+  $('.eqGuess',sec).onkeydown=function(e){if(e.key==='Enter')check();};
+  newEq();
+});
+
+/* ====== PEMBANGUN OPSI (kunci diacak, tidak selalu A) ====== */
+function mc(q,corr,dec,exp,lv){
+  var opts=[corr],i;
+  function add(v){if(typeof v==='number'&&isFinite(v)&&v>0&&v===Math.floor(v)&&v!==corr&&opts.indexOf(v)<0&&opts.length<4)opts.push(v);}
+  for(i=0;i<dec.length;i++)add(dec[i]);
+  var del=[1000,-1000,100,-100,10000,-10000,10,2,-2],di=0;
+  while(opts.length<4&&di<del.length)add(corr+del[di++]);
+  var o=sh(opts);
+  return {level:lv||'Sedang',q:q,opts:o.map(fmt),ans:o.indexOf(corr),exp:exp};
+}
+function mcs(q,corr,dec,exp,lv){
+  var c=String(corr),opts=[c],i;
+  for(i=0;i<dec.length;i++){var v=String(dec[i]);if(v!==c&&opts.indexOf(v)<0&&opts.length<4)opts.push(v);}
+  var o=sh(opts);
+  return {level:lv||'Sedang',q:q,opts:o,ans:o.indexOf(c),exp:exp};
+}
+function mcsym(q,sym,exp,lv){
+  var o=sh(['<','>','=']);
+  return {level:lv||'Mudah',q:q,opts:o,ans:o.indexOf(sym),exp:exp};
+}
+function byLevel(o){var ord={Mudah:0,Sedang:1,HOTS:2};return o.sort(function(a,b){return ord[a.level]-ord[b.level];});}
+function swap(a,i,j){var b=a.slice(),t=b[i];b[i]=b[j];b[j]=t;return b;}
+function seqQ(q,tok,sep,exp,lv){
+  function j(a){return a.join(sep);}
+  var corr=j(tok),d=[],seen={};
+  function add(a){var s=j(a);if(s!==corr&&!seen[s]&&d.length<3){seen[s]=1;d.push(s);}}
+  add(swap(tok,0,1));add(swap(tok,tok.length-2,tok.length-1));add(tok.slice().reverse());add(tok.slice(1).concat(tok.slice(0,1)));
+  return mcs(q,corr,d,exp,lv);
+}
+
+/* ====== GENERATOR 140 SOAL ====== */
+var GEN={
+nama:function(){var o=[],i,n;
+  for(i=0;i<3;i++){n=ri(2,8)*100000+ri(1,9)*1000+ri(1,9)*100+ri(1,9);
+    o.push(mcs('Bagaimana cara membaca bilangan <b>'+fmt(n)+'</b>?',words(n),[words(n+1000),words(n+10000),words(n-1000)],'Kelompokkan tiga digit dari kanan, baca kelompok ribuan + kata "ribu", lalu kelompok satuan: "'+words(n)+'".','Mudah'));}
+  for(i=0;i<4;i++){n=ri(11,99)*1000+ri(1,9)*100+ri(1,9);
+    o.push(mcs('Cara membaca bilangan <b>'+fmt(n)+'</b> yang benar adalah ...',words(n),[words(n+1000),words(n+100),words(n-1000)],'Baca bagian ribuan terlebih dahulu, lalu bagian satuan: "'+words(n)+'".','Sedang'));}
+  for(i=0;i<3;i++){var a=ri(2,9),b=ri(1,9),c=ri(1,9);n=a*100000+b*1000+c*10;
+    o.push(mcs('Bilangan <b>'+fmt(n)+'</b> dibaca ...',words(n),[words(a*100000+b*100+c*10),words(a*100000+b*1000+c*100),words(a*10000+b*1000+c*10)],'Angka nol pada tempat ratusan dan satuan tidak dibaca: '+fmt(n)+' → "'+words(n)+'".','HOTS'));}
+  return byLevel(o);},
+lambang:function(){var o=[],i,n;
+  for(i=0;i<3;i++){n=ri(12,89)*1000+ri(1,9)*100;
+    o.push(mc('"<b>'+words(n)+'</b>" ditulis dengan lambang angka ...',n,[n+1000,n-1000,n+10000,n+100],'"'+words(n)+'" → tulis bagian ribuan, beri titik, lalu lengkapi tiga digit satuan: '+fmt(n)+'.','Mudah'));}
+  for(i=0;i<4;i++){n=ri(11,99)*1000+ri(1,9)*100+ri(1,9);
+    o.push(mc('"<b>'+words(n)+'</b>" ditulis dengan lambang angka ...',n,[n+100,n+1000,n-100,n+10000],'Tulis bagian ribuan, beri titik pemisah, lalu lengkapi tiga digit satuan: '+fmt(n)+'.','Sedang'));}
+  for(i=0;i<3;i++){var a=ri(2,9),b=ri(1,9),c=ri(1,9);n=a*100000+b*100+c;
+    o.push(mc('"<b>'+words(n)+'</b>" ditulis dengan lambang angka ...',n,[a*100000+b*1000+c,a*100000+b*100+c*10,a*10000+b*100+c],'Hati-hati posisi nol: "'+b+' ratus" menempati tempat ratusan → '+fmt(n)+', bukan '+fmt(a*100000+b*1000+c)+'.','HOTS'));}
+  return byLevel(o);},
+tempat:function(){var o=[],i;
+  for(i=0;i<3;i++){var n=ri(10000,99999),p=ri(0,3),d=Math.floor(n/Math.pow(10,p))%10;
+    var pool=sh(NKP.filter(function(x){return x!==NKP[p];})).slice(0,3);
+    o.push(mcs('Pada bilangan <b>'+fmt(n)+'</b>, angka <b>'+d+'</b> menempati nilai tempat ...',NKP[p],pool,'Hitung dari kanan: satuan, puluhan, ratusan, ribuan. Angka '+d+' ada di tempat <b>'+NK[p]+'</b>.','Mudah'));}
+  for(i=0;i<4;i++){var n2=ri(100000,999999),p2=ri(1,5),t=Math.pow(10,p2),d2=Math.floor(n2/t)%10,v=d2*t;
+    o.push(mc('Nilai dari angka <b>'+d2+'</b> pada bilangan <b>'+fmt(n2)+'</b> adalah ...',v,[v/10,v*10,d2,v+t],'Nilai angka = angka × nilai tempatnya = '+d2+' × '+fmt(t)+' = '+fmt(v)+'.','Sedang'));}
+  for(i=0;i<3;i++){var dg=ri(1,9),gap=ri(1,3),pB=ri(0,5-gap),pA=pB+gap;
+    var A=numWith(dg,pA),B=numWith(dg,pB),corr=Math.pow(10,gap);
+    var pw=[1,10,100,1000,10000].filter(function(x){return x!==corr;});
+    o.push(mc('Nilai angka <b>'+dg+'</b> pada bilangan <b>'+fmt(A)+'</b> adalah ... kali nilai angka '+dg+' pada bilangan <b>'+fmt(B)+'</b>.',corr,pw,'Di '+fmt(A)+', angka '+dg+' bernilai '+fmt(dg*Math.pow(10,pA))+'; di '+fmt(B)+' bernilai '+fmt(dg*Math.pow(10,pB))+'; selisih '+gap+' langkah nilai tempat → '+fmt(corr)+' kali.','HOTS'));}
+  return byLevel(o);},
+dekomposisi:function(){var o=[],i,n;
+  for(i=0;i<3;i++){var p=ri(2,9),q=ri(1,9);n=p*10000+q*1000;
+    var corr=fmt(p*10000)+' + '+fmt(q*1000);
+    o.push(mcs('<b>'+fmt(n)+'</b> = ...',corr,[fmt((p+1)*10000)+' + '+fmt(q*1000),fmt(p*10000)+' + '+fmt((q+1)*1000),fmt(p*10000)+' + '+fmt(q*1000+q*100)],'Uraikan menurut nilai tempat: '+p+' puluhan ribu dan '+q+' ribuan → '+corr+'.','Mudah'));}
+  for(i=0;i<4;i++){n=ri(100000,998999);
+    var alt=(n+100000<=999999)?n+100000:n-100000;
+    o.push(mcs('Bentuk dekomposisi <b>'+fmt(n)+'</b> yang benar adalah ...',ds(n),[ds(n+1000),ds(alt),ds(n+100)],'Uraikan setiap digit menurut nilai tempatnya: '+ds(n)+'.','Sedang'));}
+  for(i=0;i<3;i++){n=ri(100000,999999);
+    var parts=[],m=100000,e=5;
+    while(m>=1){var dg2=Math.floor(n/m)%10;if(dg2)parts.push({d:dg2,e:e});m=Math.floor(m/10);e--;}
+    var j=0;for(var k=0;k<parts.length;k++)if(parts[k].e>0){j=k;break;}
+    function lng(idx,shift){return parts.map(function(x,ix){return ix===idx?(x.d+' × '+fmt(Math.pow(10,x.e+shift))):(x.d+' × '+fmt(Math.pow(10,x.e)));}).join(' + ');}
+    var corr2=parts.map(function(x){return x.d+' × '+fmt(Math.pow(10,x.e));}).join(' + ');
+    o.push(mcs('Bentuk panjang (berdasarkan nilai tempat) dari <b>'+fmt(n)+'</b> adalah ...',corr2,[lng(j,1),lng(j,-1),ds(n)],'Setiap digit dikalikan nilai tempatnya: '+corr2+'.','HOTS'));}
+  return byLevel(o);},
+banding:function(){var o=[],i,a,b;
+  for(i=0;i<3;i++){a=ri(10000,99999);b=ri(10000,99999);while(b===a)b=ri(10000,99999);
+    o.push(mcsym('Tanda perbandingan yang tepat: <b>'+fmt(a)+' ⬜ '+fmt(b)+'</b>',a>b?'>':'<','Bandingkan dari kiri; digit pertama yang berbeda menentukan: '+fmt(a)+' '+(a>b?'&gt;':'&lt;')+' '+fmt(b)+'.','Mudah'));}
+  for(i=0;i<4;i++){var base=ri(120,889)*1000;a=base+ri(1,4)*100+ri(1,9);b=base+ri(5,9)*100+ri(1,9);
+    if(Math.random()<0.5){var t=a;a=b;b=t;}
+    o.push(mcsym('Tanda perbandingan yang tepat: <b>'+fmt(a)+' ⬜ '+fmt(b)+'</b>',a>b?'>':'<','Keduanya di kelompok '+fmt(base)+'-an; bandingkan ratusannya untuk menentukan.','Sedang'));}
+  for(i=0;i<3;i++){var digs=sh([9,7,5,3,0]),seen={},arr=[],g=0;
+    while(arr.length<4&&g++<300){var dd=sh(digs);if(dd[0]!==0){var num=+dd.join('');if(!seen[num]){seen[num]=1;arr.push(num);}}}
+    var big=Math.max.apply(null,arr),small=Math.min.apply(null,arr),want=Math.random()<0.5,corr=want?big:small;
+    o.push(mc('Dari bilangan '+arr.map(fmt).join(', ')+' — manakah yang <b>'+(want?'paling besar':'paling kecil')+'</b>?',corr,arr.filter(function(x){return x!==corr;}),'Semua memakai digit yang sama; bandingkan dari depan: digit '+(want?'terbesar':'terkecil')+' di posisi depan menghasilkan bilangan '+(want?'terbesar':'terkecil')+'.','HOTS'));}
+  return byLevel(o);},
+urut:function(){var o=[],i;
+  for(i=0;i<3;i++){var arr=[],x;
+    while(arr.length<3){x=ri(100,900)*1000+ri(0,999);if(arr.indexOf(x)<0)arr.push(x);}
+    arr=sh(arr);var s=arr.slice().sort(function(p,q){return p-q;});
+    o.push(seqQ('Urutan <b>naik</b> (kecil → besar) dari '+arr.map(fmt).join(', ')+' adalah ...',s.map(fmt),' , ','Bandingkan mulai dari digit terkiri (nilai tempat terbesar).','Mudah'));}
+  for(i=0;i<4;i++){var arr2=[],y;
+    while(arr2.length<4){y=ri(100,900)*1000+ri(0,999);if(arr2.indexOf(y)<0)arr2.push(y);}
+    arr2=sh(arr2);var s2=arr2.slice().sort(function(p,q){return q-p;});
+    o.push(seqQ('Urutan <b>turun</b> (besar → kecil) dari '+arr2.map(fmt).join(', ')+' adalah ...',s2.map(fmt),' > ','Untuk urutan turun, letakkan bilangan terbesar di depan.','Sedang'));}
+  for(i=0;i<3;i++){var digs2=sh([9,7,5,3,1,0]),seen2={},arr3=[],g2=0;
+    while(arr3.length<4&&g2++<500){var dd2=sh(digs2);if(dd2[0]!==0){var num=+dd2.join('');if(!seen2[num]){seen2[num]=1;arr3.push(num);}}}
+    var s3=arr3.slice().sort(function(p,q){return p-q;});
+    o.push(seqQ('Keempat bilangan ini memakai digit yang sama: '+arr3.map(fmt).join(', ')+'. Urutan <b>naik</b> yang benar adalah ...',s3.map(fmt),' , ','Digit sama → bandingkan dari depan: angka kecil di depan menghasilkan bilangan lebih kecil.','HOTS'));}
+  return byLevel(o);},
+bulat:function(){var o=[],i;
+  for(i=0;i<3;i++){var n=ri(11,98)*1000+ri(1,999),c=Math.round(n/1000)*1000;
+    o.push(mc('<b>'+fmt(n)+'</b> dibulatkan ke ribuan terdekat menjadi ...',c,[c+1000,c-1000,Math.floor(n/1000)*100],'Lihat angka ratusannya: '+Math.floor((n%1000)/100)+'. Karena '+(Math.floor((n%1000)/100)>=5?'≥ 5, naikkan':'&lt; 5, biarkan')+' → '+fmt(c)+'.','Mudah'));}
+  for(i=0;i<4;i++){var n2=ri(100,949)*1000+ri(0,999),t=Math.random()<0.5?1000:10000,c2=Math.round(n2/t)*t;
+    o.push(mc('<b>'+fmt(n2)+'</b> dibulatkan ke '+(t===1000?'ribuan':'puluhan ribu')+' terdekat menjadi ...',c2,[c2+t,c2-t,Math.floor(n2/t)*t],'Lihat satu digit di kanan tempat pembulatan, lalu putuskan naik atau tetap → '+fmt(c2)+'.','Sedang'));}
+  for(i=0;i<3;i++){var H=ri(20,90)*1000,corr=H+ri(-499,499);
+    o.push(mc('Hasil pembulatan suatu bilangan ke ribuan terdekat adalah <b>'+fmt(H)+'</b>. Bilangan yang <b>mungkin</b> adalah ...',corr,[H-500-ri(1,399),H+500+ri(1,399),H-1000+ri(1,99)],'Bilangan yang dibulatkan ke '+fmt(H)+' pasti berada di antara '+fmt(H-500)+' dan '+fmt(H+499)+'.','HOTS'));}
+  return byLevel(o);},
+tambah:function(){var o=[],i;
+  for(i=0;i<3;i++){var a=ri(12,79)*1000,b=ri(2,9)*1000,s=a+b;
+    o.push(mc(fmt(a)+' + '+fmt(b)+' = ...',s,[s+1000,s-1000,s+10000],'Jumlahkan ribuannya: '+Math.floor(a/1000)+' ribu + '+Math.floor(b/1000)+' ribu = '+Math.floor(s/1000)+' ribu.','Mudah'));}
+  for(i=0;i<4;i++){var a2=ri(100,499)*1000+ri(100,999),b2=ri(100,499)*1000+ri(100,999),s2=a2+b2;
+    o.push(mc(fmt(a2)+' + '+fmt(b2)+' = ...',s2,[s2+1000,s2-1000,s2+10000,s2-100],'Susun pendek, mulai dari satuan, dan jangan lupa menyimpan.','Sedang'));}
+  for(i=0;i<3;i++){var a3=ri(20,70)*1000+ri(100,900),b3=ri(10,25)*1000+ri(100,900),t=a3+b3;
+    o.push(mc('<b>'+fmt(a3)+' + ⬜ = '+fmt(t)+'</b>. Bilangan pengganti kotak adalah ...',b3,[b3+1000,b3-1000,b3+100],'Kotak = '+fmt(t)+' − '+fmt(a3)+' = '+fmt(b3)+'. Penjumlahan dan pengurangan saling berkebalikan.','HOTS'));}
+  return byLevel(o);},
+kurang:function(){var o=[],i;
+  for(i=0;i<3;i++){var a=ri(20,80)*1000,b=ri(2,15)*1000,d=a-b;
+    o.push(mc(fmt(a)+' − '+fmt(b)+' = ...',d,[d+1000,d-1000,a+b],'Ribuan: '+Math.floor(a/1000)+' ribu − '+Math.floor(b/1000)+' ribu = '+Math.floor(d/1000)+' ribu.','Mudah'));}
+  for(i=0;i<4;i++){var a2=ri(500,900)*1000+ri(100,999),b2=ri(100,499)*1000+ri(100,999),d2=a2-b2;
+    o.push(mc(fmt(a2)+' − '+fmt(b2)+' = ...',d2,[d2+1000,d2-1000,a2+b2,d2+100],'Susun pendek dan lakukan meminjam bila perlu.','Sedang'));}
+  for(i=0;i<3;i++){var c=ri(20,60)*1000+ri(100,900),b3=ri(5,15)*1000+ri(100,900),x=c+b3;
+    if(Math.random()<0.5)o.push(mc('<b>⬜ − '+fmt(b3)+' = '+fmt(c)+'</b>. Bilangan yang tepat untuk kotak adalah ...',x,[x+1000,x-1000,c-b3],'Kotak = selisih + pengurang = '+fmt(c)+' + '+fmt(b3)+' = '+fmt(x)+'.','HOTS'));
+    else o.push(mc('<b>'+fmt(x)+' − ⬜ = '+fmt(c)+'</b>. Bilangan yang tepat untuk kotak adalah ...',b3,[b3+1000,b3-1000,x+c],'Kotak = bilangan awal − selisih = '+fmt(x)+' − '+fmt(c)+' = '+fmt(b3)+'.','HOTS'));}
+  return byLevel(o);},
+kali:function(){var o=[],i;
+  for(i=0;i<3;i++){var a=ri(2,9)*100,b=ri(2,9)*10,s=a*b;
+    o.push(mc(fmt(a)+' × '+fmt(b)+' = ...',s,[(a/10)*b,a*(b/10),s*10,s/10],a/100+' ratus × '+b/10+' puluhan: '+a/100+' × '+b/10+' = '+((a/100)*(b/10))+', lalu pasangkan dua nol → '+fmt(s)+'.','Mudah'));}
+  for(i=0;i<4;i++){var a2=ri(12,39),b2=ri(2,9)*100,s2=a2*b2;
+    o.push(mc(a2+' × '+fmt(b2)+' = ...',s2,[a2*(b2/100),a2*(b2*10),s2+100],a2+' × '+fmt(b2)+' = '+a2+' × '+(b2/100)+' ratus = '+fmt(a2*(b2/100))+', lalu × 100 = '+fmt(s2)+'.','Sedang'));}
+  for(i=0;i<3;i++){var r=ri(12,39),per=ri(2,19)*1000,s3=r*per;
+    o.push(mc('Sebuah stadion memiliki <b>'+r+'</b> blok tribun. Setiap blok berisi <b>'+fmt(per)+'</b> kursi. Banyak kursi seluruhnya adalah ...',s3,[s3+per,s3-per,s3+1000],'Total = '+r+' × '+fmt(per)+' = '+fmt(s3)+' kursi.','HOTS'));}
+  return byLevel(o);},
+bagi:function(){var o=[],i;
+  for(i=0;i<3;i++){var q=ri(2,9)*1000,d=ri(2,9),n=q*d;
+    o.push(mc(fmt(n)+' ÷ '+d+' = ...',q,[q+1000,q-1000,q/10],'Pikirkan '+Math.floor(n/1000)+' ribu ÷ '+d+' = '+Math.floor(q/1000)+' ribu.','Mudah'));}
+  for(i=0;i<4;i++){var q2=ri(12,89)*1000,d2=ri(2,9),n2=q2*d2;
+    o.push(mc(fmt(n2)+' ÷ '+d2+' = ...',q2,[q2+100,q2-100,q2+1000],'Uji dengan perkalian: '+fmt(q2)+' × '+d2+' = '+fmt(n2)+'. Pembagian adalah kebalikan perkalian.','Sedang'));}
+  for(i=0;i<3;i++){var q3=ri(2,9)*1000,d1=ri(2,5),d3=ri(2,5);while(d3===d1)d3=ri(2,5);
+    var n3=q3*d1*d3;
+    o.push(mc('Hasil dari <b>'+fmt(n3)+' ÷ '+d1+' ÷ '+d3+'</b> adalah ...',q3,[q3*d1,q3*d3,q3+100],'Kerjakan dari kiri: '+fmt(n3)+' ÷ '+d1+' = '+fmt(q3*d1)+', lalu ÷ '+d3+' = '+fmt(q3)+'.','HOTS'));}
+  return byLevel(o);},
+campuran:function(){var o=[],i;
+  for(i=0;i<3;i++){var a=ri(12,89)*1000,b=ri(2,9)*100,c=ri(2,9),s=a+b*c;
+    o.push(mc(fmt(a)+' + '+fmt(b)+' × '+c+' = ...',s,[(a+b)*c,b*c,s+1000],'Kerjakan perkalian dulu: '+fmt(b)+' × '+c+' = '+fmt(b*c)+'. Lalu '+fmt(a)+' + '+fmt(b*c)+' = '+fmt(s)+'.','Mudah'));}
+  for(i=0;i<4;i++){var c2=ri(2,9),r=ri(12,79)*1000,b2=ri(1,2)*100000,a2=b2+c2*r,d=ri(1,9)*1000,s2=r+d;
+    o.push(mc('('+fmt(a2)+' − '+fmt(b2)+') ÷ '+c2+' + '+fmt(d)+' = ...',s2,[r,r+d*10,r-d],'Kurung dulu: '+fmt(a2)+' − '+fmt(b2)+' = '+fmt(c2*r)+'. Bagi: '+fmt(c2*r)+' ÷ '+c2+' = '+fmt(r)+'. Terakhir + '+fmt(d)+' = '+fmt(s2)+'.','Sedang'));}
+  for(i=0;i<3;i++){var a3=ri(2,4)*10,b3=ri(2,9)*1000,c3=ri(1,9)*1000,d3=ri(1,9)*1000,s3=a3*(b3+c3)-d3;
+    o.push(mc(a3+' × ('+fmt(b3)+' + '+fmt(c3)+') − '+fmt(d3)+' = ...',s3,[a3*b3+c3-d3,s3+1000,a3*(b3+c3)+d3],'Kurung dulu: '+fmt(b3+c3)+'. Lalu '+a3+' × '+fmt(b3+c3)+' = '+fmt(a3*(b3+c3))+'. Terakhir − '+fmt(d3)+' = '+fmt(s3)+'.','HOTS'));}
+  return byLevel(o);},
+cerita:function(){var o=[],i;
+  for(i=0;i<3;i++){var a=ri(12,45)*1000,b=ri(12,45)*1000,s=a+b;
+    o.push(mc('Perpustakaan memiliki <b>'+fmt(a)+'</b> buku cerita dan <b>'+fmt(b)+'</b> buku pelajaran. Jumlah seluruh buku adalah ...',s,[s+1000,Math.abs(a-b),s-1000],'Ditanya jumlah → '+fmt(a)+' + '+fmt(b)+' = '+fmt(s)+' buku.','Mudah'));}
+  for(i=0;i<4;i++){var a2=ri(60,90)*1000,b2=ri(10,25)*1000,c=ri(5,15)*1000,s2=a2-b2+c;
+    o.push(mc('Kantin sekolah punya <b>'+fmt(a2)+'</b> cup. Pagi terjual <b>'+fmt(b2)+'</b> cup, lalu datang pesanan <b>'+fmt(c)+'</b> cup. Banyak cup sekarang adalah ...',s2,[a2+b2-c,a2-b2-c,a2+b2+c],'Langkah 1: '+fmt(a2)+' − '+fmt(b2)+' = '+fmt(a2-b2)+'. Langkah 2: + '+fmt(c)+' = '+fmt(s2)+'.','Sedang'));}
+  for(i=0;i<3;i++){var per=ri(20,50)*1000,k=ri(2,4),sisa=per*k,tas=ri(60,140)*1000,sep=ri(40,110)*1000,total=tas+sep+sisa;
+    o.push(mc('Ibu membawa uang <b>'+fmt(total)+'</b>. Ia membeli tas <b>'+fmt(tas)+'</b> dan sepatu <b>'+fmt(sep)+'</b>. Sisa uang dibagi rata kepada <b>'+k+'</b> anak. Setiap anak menerima ...',per,[sisa,total-tas,per+1000],'Sisa = '+fmt(total)+' − '+fmt(tas)+' − '+fmt(sep)+' = '+fmt(sisa)+'. Dibagi '+k+': '+fmt(sisa)+' ÷ '+k+' = '+fmt(per)+'.','HOTS'));}
+  return byLevel(o);},
+/* ====== DIUBAH: temukan bilangan = persamaan sederhana (mencari n) ====== */
+temukan:function(){var o=[],i;
+  /* Mudah: persamaan bilangan kecil */
+  for(i=0;i<3;i++){
+    var t=ri(0,3),a,b2,k,m,c,n,corr,q,dec,exp;
+    if(t===0){a=ri(2,9);n=ri(2,15);b2=a+n;corr=n;
+      q='<b>n + '+a+' = '+b2+'</b>. Nilai n adalah ...';
+      dec=[b2,a,b2+a];
+      exp='n = '+b2+' − '+a+' = '+n+'. Uji: '+n+' + '+a+' = '+b2+' ✓';}
+    else if(t===1){b2=ri(12,20);c=ri(2,9);n=b2-c;corr=n;
+      q='<b>'+b2+' − n = '+c+'</b>. Nilai n adalah ...';
+      dec=[b2+c,c,b2];
+      exp='n = '+b2+' − '+c+' = '+n+'. Uji: '+b2+' − '+n+' = '+c+' ✓';}
+    else if(t===2){k=ri(2,9);n=ri(2,9);m=k*n;corr=n;
+      q='<b>'+k+' × n = '+m+'</b>. Nilai n adalah ...';
+      dec=[m,k,m+k];
+      exp='n = '+m+' ÷ '+k+' = '+n+'. Uji: '+k+' × '+n+' = '+m+' ✓';}
+    else{k=ri(2,9);n=ri(2,9);m=n*k;corr=n;
+      q='<b>n ÷ '+k+' = '+m+'</b>. Nilai n adalah ...';
+      dec=[m,k,m*k];
+      exp='n = '+m+' × '+k+' = '+n+'. Uji: '+n+' ÷ '+k+' = '+m+' ✓';}
+    o.push(mc(q,corr,dec,exp,'Mudah'));
+  }
+  /* Sedang: persamaan berskala ribuan */
+  for(i=0;i<4;i++){
+    var t2=ri(0,3),a2,n2,b3,k2,m2,corr2,q2,dec2,exp2;
+    if(t2===0){a2=ri(10,85)*1000;n2=ri(10,95)*1000;b3=a2+n2;corr2=n2;
+      q2='<b>n + '+fmt(a2)+' = '+fmt(b3)+'</b>. Nilai n adalah ...';
+      dec2=[b3,a2,b3+a2];
+      exp2='n = '+fmt(b3)+' − '+fmt(a2)+' = '+fmt(n2)+'. Uji: '+fmt(n2)+' + '+fmt(a2)+' = '+fmt(b3)+' ✓';}
+    else if(t2===1){n2=ri(100,900)*1000;a2=ri(10,90)*1000;b3=n2-a2;corr2=n2;
+      q2='<b>n − '+fmt(a2)+' = '+fmt(b3)+'</b>. Nilai n adalah ...';
+      dec2=[b3,a2,b3+a2];
+      exp2='n = '+fmt(b3)+' + '+fmt(a2)+' = '+fmt(n2)+'. Uji: '+fmt(n2)+' − '+fmt(a2)+' = '+fmt(b3)+' ✓';}
+    else if(t2===2){k2=ri(2,9);n2=ri(12,99)*1000;m2=k2*n2;corr2=n2;
+      q2='<b>'+k2+' × n = '+fmt(m2)+'</b>. Nilai n adalah ...';
+      dec2=[m2,k2,m2+1000];
+      exp2='n = '+fmt(m2)+' ÷ '+k2+' = '+fmt(n2)+'. Uji: '+k2+' × '+fmt(n2)+' = '+fmt(m2)+' ✓';}
+    else{k2=ri(2,9);m2=ri(20,90)*1000;n2=k2*m2;corr2=n2;
+      q2='<b>n ÷ '+k2+' = '+fmt(m2)+'</b>. Nilai n adalah ...';
+      dec2=[m2,k2,m2+k2];
+      exp2='n = '+fmt(m2)+' × '+k2+' = '+fmt(n2)+'. Uji: '+fmt(n2)+' ÷ '+k2+' = '+fmt(m2)+' ✓';}
+    o.push(mc(q2,corr2,dec2,exp2,'Sedang'));
+  }
+  /* HOTS: persamaan dua langkah */
+  for(i=0;i<3;i++){
+    var t3=ri(0,2),k3,n3,c3,m3,corr3,q3,dec3,exp3;
+    if(t3===0){k3=ri(2,9);n3=ri(2,9)*10000;c3=ri(1,9)*100;m3=k3*n3+c3;corr3=n3;
+      q3='<b>'+k3+' × n + '+fmt(c3)+' = '+fmt(m3)+'</b>. Nilai n adalah ...';
+      dec3=[m3-c3,Math.round(m3/k3),m3];
+      exp3='Kurangi kedua ruas dengan '+fmt(c3)+': '+k3+' × n = '+fmt(m3-c3)+'. Lalu bagi '+k3+': n = '+fmt(m3-c3)+' ÷ '+k3+' = '+fmt(n3)+'. Uji: '+k3+' × '+fmt(n3)+' + '+fmt(c3)+' = '+fmt(m3)+' ✓';}
+    else if(t3===1){k3=ri(2,5);m3=ri(2,9)*10000;c3=ri(1,9)*1000;n3=k3*m3-c3;corr3=n3;
+      q3='<b>(n + '+fmt(c3)+') ÷ '+k3+' = '+fmt(m3)+'</b>. Nilai n adalah ...';
+      dec3=[k3*m3,k3*m3+c3,m3];
+      exp3='Kalikan kedua ruas dengan '+k3+': n + '+fmt(c3)+' = '+fmt(k3*m3)+'. Lalu kurangi '+fmt(c3)+': n = '+fmt(n3)+'. Uji: ('+fmt(n3)+' + '+fmt(c3)+') ÷ '+k3+' = '+fmt(m3)+' ✓';}
+    else{k3=ri(2,9);n3=ri(2,9)*10000;c3=ri(1,9)*100;m3=k3*n3-c3;corr3=n3;
+      q3='<b>n × '+k3+' − '+fmt(c3)+' = '+fmt(m3)+'</b>. Nilai n adalah ...';
+      dec3=[m3+c3,Math.round(m3/k3),m3];
+      exp3='Tambahkan '+fmt(c3)+' ke kedua ruas: n × '+k3+' = '+fmt(m3+c3)+'. Lalu bagi '+k3+': n = '+fmt(n3)+'. Uji: '+fmt(n3)+' × '+k3+' − '+fmt(c3)+' = '+fmt(m3)+' ✓';}
+    o.push(mc(q3,corr3,dec3,exp3,'HOTS'));
+  }
+  return byLevel(o);}
+};
+var TOPICS=[['nama','Nama Bilangan'],['lambang','Lambang Bilangan'],['tempat','Nilai Tempat'],['dekomposisi','Dekomposisi'],['banding','Membandingkan Bilangan'],['urut','Mengurutkan Bilangan'],['bulat','Membulatkan Bilangan'],['tambah','Penjumlahan'],['kurang','Pengurangan'],['kali','Perkalian'],['bagi','Pembagian'],['campuran','Operasi Hitung Campuran'],['cerita','Soal Cerita Operasi Hitung'],['temukan','Menemukan Bilangan (Persamaan)']];
+
+/* ============ MESIN LATIHAN ============ */
+var PR={topic:null,qs:[],i:0,order:[0,1,2],cum:[0,0,0],ptb:[0,0,0],done:{},locked:false,
+drawList:function(){
+  var h='';
+  TOPICS.forEach(function(t,i){
+    h+='<li><button data-k="'+t[0]+'"><span class="tnum">'+(i+1)+'</span><span class="tl2">'+t[1]+'</span>'+(PR.done[t[0]]?'<span>✔</span>':'')+'</button></li>';
+  });
+  $('#prList').innerHTML=h;
+  $$('#prList button').forEach(function(b){b.onclick=function(){PR.ready(b.getAttribute('data-k'));};});
+},
+drawBoard:function(){
+  $('#prBoard').innerHTML=[0,1,2].map(function(i){
+    return '<div class="boardrow"><span class="avatar">'+esc(nm(i).charAt(0).toUpperCase())+'</span><span class="bname">'+esc(nm(i))+'</span><span class="bscore">'+PR.cum[i]+' poin</span></div>';
+  }).join('');
+},
+ready:function(key){
+  PR.topic=key;PR.qs=GEN[key]();PR.i=0;PR.ptb=[0,0,0];PR.locked=false;
+  PR.drawReady();
+  var w=$('#prWrap');
+  try{w.scrollIntoView({behavior:'smooth',block:'nearest'});}catch(e){}
+},
+drawReady:function(){
+  var name='';TOPICS.forEach(function(t){if(t[0]===PR.topic)name=t[1];});
+  $('#prWrap').innerHTML='<div class="card pop">'
+    +'<h3>👥 Siap-siap: '+name+'</h3>'
+    +'<p style="color:var(--soft)">10 soal: 3 mudah → 4 sedang → 3 HOTS. Tentukan dulu urutan penjawabnya:</p>'
+    +'<div class="ordrow" id="ordRow">'+PR.order.map(function(s,j){return '<div class="orditem"><span class="onum">'+(j+1)+'</span>'+esc(nm(s))+'</div>';}).join('')+'</div>'
+    +'<div class="ordmap" id="ordMap"></div>'
+    +'<div class="rowbtns"><button class="btn" id="shufBtn">🎲 Acak urutan siswa</button><button class="btn btn-acc" id="startBtn">Mulai latihan →</button></div></div>';
+  PR.mapOrder();
+  $('#shufBtn').onclick=function(){
+    PR.order=sh([0,1,2]);
+    $('#ordRow').innerHTML=PR.order.map(function(s,j){return '<div class="orditem pop"><span class="onum">'+(j+1)+'</span>'+esc(nm(s))+'</div>';}).join('');
+    PR.mapOrder();
+    toast('Urutan diacak! Semoga beruntung dengan giliranmu.');
+  };
+  $('#startBtn').onclick=function(){PR.drawQ();};
+},
+mapOrder:function(){
+  $('#ordMap').innerHTML=[0,1,2,3,4,5].map(function(i){return 'Soal '+(i+1)+' → <b>'+esc(nm(PR.order[i%3]))+'</b>';}).join(' &nbsp;·&nbsp; ')+' &nbsp;… (berulang sampai soal 10)';
+},
+drawQ:function(){
+  PR.locked=false;
+  var s=PR.qs[PR.i],turn=PR.order[PR.i%3];
+  $('#prWrap').innerHTML='<div class="qhead pop">'
+    +'<span class="qcount">Soal '+(PR.i+1)+'/10</span>'
+    +'<span class="lv lv-'+s.level+'">'+s.level+'</span>'
+    +'<span class="turnpill"><span class="avatar">'+esc(nm(turn).charAt(0).toUpperCase())+'</span>Giliran: '+esc(nm(turn))+'</span></div>'
+    +'<div class="qgrid"><div class="card"><div class="qq">'+s.q+'</div>'
+    +'<div class="qopts">'+s.opts.map(function(o,j){return '<button class="qopt" data-j="'+j+'"><span class="qletter">'+'ABCD'.charAt(j)+'</span><span>'+o+'</span></button>';}).join('')+'</div>'
+    +'<div id="qFeed" class="qfeed" hidden></div>'
+    +'<div class="rowbtns"><button id="qNext" class="btn btn-acc" hidden>'+(PR.i===9?'Lihat hasil':'Soal berikutnya')+' →</button></div></div>'
+    +'<aside class="card"><h4>Papan skor topik ini</h4>'
+    +[0,1,2].map(function(i){
+      return '<div class="boardrow"><span class="avatar" style="'+(i===turn?'background:var(--yel);color:var(--ink)':'')+'">'+esc(nm(i).charAt(0).toUpperCase())+'</span><span class="bname">'+esc(nm(i))+(i===turn?' <small>(giliran)</small>':'')+'</span><span class="bscore">'+PR.ptb[i]+'</span></div>';
+    }).join('')+'</aside></div>';
+  $$('#prWrap .qopt').forEach(function(b){b.onclick=function(){
+    if(PR.locked)return;PR.locked=true;
+    var j=+b.getAttribute('data-j'),ok=(j===s.ans);
+    $$('#prWrap .qopt').forEach(function(x,xj){
+      x.disabled=true;
+      if(xj===s.ans)x.classList.add('ok');
+      else if(xj===j)x.classList.add('bad');
+      else x.classList.add('dim');
+    });
+    if(ok){PR.ptb[turn]++;PR.cum[turn]++;}
+    var f=$('#qFeed');f.hidden=false;f.className='qfeed '+(ok?'g':'b');
+    f.innerHTML=(ok?'<b>Benar!</b> Kerja bagus, '+esc(nm(turn))+'.':'<b>Belum tepat.</b> Jawaban yang benar: <b>'+s.opts[s.ans]+'</b>.')+'<span class="exp">'+s.exp+'</span>';
+    $('#qNext').hidden=false;
+  };});
+  $('#qNext').onclick=function(){PR.i++;if(PR.i<10)PR.drawQ();else PR.drawResult();};
+},
+drawResult:function(){
+  PR.done[PR.topic]=1;
+  PR.drawList();PR.drawBoard();
+  var name='';TOPICS.forEach(function(t){if(t[0]===PR.topic)name=t[1];});
+  var rows=[0,1,2].map(function(s){
+    var n=0;PR.qs.forEach(function(_,i){if(PR.order[i%3]===s)n++;});
+    return {s:s,n:n,b:PR.ptb[s]};
+  });
+  $('#prWrap').innerHTML='<div class="card pop">'
+    +'<h3>🏆 Latihan "'+name+'" selesai!</h3>'
+    +rows.map(function(r){
+      return '<div class="resrow"><span class="avatar">'+esc(nm(r.s).charAt(0).toUpperCase())+'</span><span class="bname">'+esc(nm(r.s))+'</span><div class="bar"><div style="width:'+(r.n?Math.round(r.b/r.n*100):0)+'%"></div></div><span class="rs">'+r.b+'/'+r.n+'</span></div>';
+    }).join('')
+    +'<p style="margin-top:12px;color:var(--soft)">Perhatikan soal HOTS — di situlah daya nalar diuji. Diskusikan soal yang keliru bersama-sama, lalu tekan "Ulangi" untuk mendapat soal baru!</p>'
+    +'<div class="rowbtns"><button class="btn btn-acc" id="rsAgain">↺ Ulangi topik ini (soal baru)</button><button class="btn" id="rsBack">Pilih topik lain</button></div></div>';
+  $('#rsAgain').onclick=function(){PR.ready(PR.topic);};
+  $('#rsBack').onclick=function(){$('#prWrap').innerHTML='<div class="hint">Pilih salah satu dari 14 materi di atas untuk memulai.</div>';};
+}};
+safe('Latihan',function(){PR.drawList();PR.drawBoard();});
+
+/* ============ REFLEKSI ============ */
+var REFL=[{},{},{}],rfCur=0;
+function rfDraw(){
+  safe('Refleksi',function(){
+    $('#rfTabs').innerHTML=[0,1,2].map(function(i){
+      return '<button class="rtab'+(i===rfCur?' on':'')+(REFL[i].saved?' saved':'')+'" data-i="'+i+'"><span class="avatar av-s">'+esc(nm(i).charAt(0).toUpperCase())+'</span>'+esc(nm(i))+'<span class="doneTick">✔</span></button>';
+    }).join('');
+    $$('#rfTabs .rtab').forEach(function(b){b.onclick=function(){rfCur=+b.getAttribute('data-i');rfDraw();};});
+    var r=REFL[rfCur];
+    $('#rfBody').innerHTML=
+      '<div class="reflq">1. Bagian mana yang paling kamu sukai hari ini?</div>'
+      +'<input id="rfQ1" placeholder="Tulis jawabanmu di sini ..." value="'+esc(r.q1||'')+'">'
+      +'<div class="reflq">2. Materi apa yang masih ingin kamu pelajari lagi?</div>'
+      +'<input id="rfQ2" placeholder="Tulis jawabanmu di sini ..." value="'+esc(r.q2||'')+'">'
+      +'<div class="reflq">3. Seberapa paham kamu tentang bilangan ratusan ribu?</div>'
+      +'<div class="stars" id="rfStars">'+[1,2,3,4,5].map(function(v){return '<button data-v="'+v+'" class="'+(((r.stars||0)>=v)?'on':'')+'">★</button>';}).join('')+'</div>'
+      +'<div class="rowbtns"><button class="btn btn-acc" id="rfSave">✔ Simpan refleksi '+esc(nm(rfCur))+'</button></div>';
+    $$('#rfStars button').forEach(function(b){b.onclick=function(){r.stars=+b.getAttribute('data-v');
+      $$('#rfStars button').forEach(function(x){x.classList.toggle('on',(+x.getAttribute('data-v'))<=r.stars);});};});
+    $('#rfSave').onclick=function(){
+      r.q1=$('#rfQ1').value.trim();r.q2=$('#rfQ2').value.trim();
+      if(!r.q1&&!r.q2&&!r.stars){toast('Isi dulu minimal satu bagian, ya.');return;}
+      r.saved=true;rfDraw();toast('Refleksi <b>'+esc(nm(rfCur))+'</b> tersimpan. Terima kasih!');
+    };
+  });
+}
+safe('Refleksi-init',rfDraw);
+
+window.refreshNames=function(){
+  safe('Nama',function(){
+    $$('.thanksNames .chip').forEach(function(c,i){c.textContent=nm(i);});
+    if($('#prBoard'))PR.drawBoard();
+    rfDraw();
+  });
+};
+</script>
+</body>
+</html>
