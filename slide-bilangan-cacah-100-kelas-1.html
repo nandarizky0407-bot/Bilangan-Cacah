@@ -1,0 +1,1789 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Petualangan Bilangan Cacah sampai 100 — Kelas 1 SD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============ VARIABEL & DASAR ============ */
+:root{
+  --coral:#ff6b6b; --blue:#4d96ff; --yellow:#ffd93d; --green:#2fbf71;
+  --purple:#9b5de5; --orange:#ff9f45; --pink:#ff8fab; --teal:#00b8a9;
+  --ink:#33355c; --muted:#7a7fa6; --paper:#fffdf7;
+  --shadow:6px 6px 0 rgba(51,53,92,.12);
+  --r:22px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Nunito','Comic Sans MS','Segoe UI',sans-serif;
+  font-weight:700;color:var(--ink);background:#fff;
+  height:100vh;overflow:hidden;
+}
+h1,h2,h3,h4{font-family:'Baloo 2','Comic Sans MS',cursive;line-height:1.18;margin:.25em 0}
+p{margin:.4em 0}
+button{font-family:inherit;color:inherit}
+.muted{color:var(--muted)}
+.center{text-align:center}
+.hidden{display:none!important}
+.pop{animation:pop .4s ease both}
+.shake{animation:shake .45s ease}
+
+/* ============ KERANGKA APLIKASI ============ */
+#deck{display:flex;flex-direction:column;height:100vh}
+.topbar{
+  display:flex;align-items:center;gap:14px;padding:9px 18px;background:#fff;
+  border-bottom:3px solid var(--ink);z-index:30;flex:none;
+}
+.brand{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.02rem;white-space:nowrap}
+.progresswrap{flex:1;height:16px;background:#eef0ff;border:2.5px solid var(--ink);border-radius:99px;overflow:hidden;min-width:80px}
+#progressbar{height:100%;width:0;transition:width .45s ease;
+  background:linear-gradient(90deg,var(--coral),var(--orange),var(--yellow),var(--green),var(--blue),var(--purple));}
+.iconbtn{
+  border:2.5px solid var(--ink);background:#fff;border-radius:12px;cursor:pointer;
+  font-size:1.05rem;font-weight:800;padding:6px 12px;box-shadow:0 3px 0 rgba(51,53,92,.35);
+}
+.iconbtn:active{transform:translateY(2px);box-shadow:none}
+.stage{flex:1;position:relative;overflow:hidden;background:
+  radial-gradient(circle at 12% 18%,rgba(255,217,61,.22),transparent 34%),
+  radial-gradient(circle at 88% 12%,rgba(155,93,229,.14),transparent 30%),
+  radial-gradient(circle at 80% 85%,rgba(77,150,255,.14),transparent 34%),
+  radial-gradient(circle at 15% 82%,rgba(255,107,107,.14),transparent 30%),
+  var(--paper);}
+.slide{
+  position:absolute;inset:0;overflow-y:auto;padding:26px 20px 46px;
+  opacity:0;visibility:hidden;transform:translateX(70px);
+  transition:opacity .45s ease,transform .45s ease,visibility .45s;
+}
+.slide.prev{transform:translateX(-70px)}
+.slide.active{opacity:1;visibility:visible;transform:none;z-index:5}
+.slide::-webkit-scrollbar{width:10px}
+.slide::-webkit-scrollbar-thumb{background:#cfd4f5;border-radius:99px}
+.slide-inner{max-width:1080px;margin:0 auto;animation:slidein .5s ease}
+.navbar{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:10px 18px;background:#fff;border-top:3px solid var(--ink);z-index:30;flex:none;
+}
+.navcount{font-weight:900;color:var(--muted);font-size:.95rem}
+
+/* ============ TIPOGRAFI ============ */
+.kicker{
+  display:inline-block;background:var(--acc,var(--ink));color:#fff;padding:6px 18px;
+  border-radius:99px;font-weight:900;font-size:.82rem;letter-spacing:.6px;text-transform:uppercase;
+  border:2.5px solid var(--ink);
+}
+.h-title{font-size:clamp(1.6rem,3.4vw,2.45rem);margin:.35em 0 .2em}
+.h-title .hl{background:linear-gradient(transparent 58%,rgba(255,217,61,.85) 58%);padding:0 6px;border-radius:6px}
+.lead{font-size:1.08rem;font-weight:800;color:#4a4e80;max-width:820px}
+
+/* ============ TOMBOL ============ */
+.btn{
+  font-family:'Baloo 2',cursive;font-weight:800;font-size:1.05rem;border:3px solid var(--ink);
+  border-radius:18px;padding:12px 24px;cursor:pointer;color:#fff;background:var(--blue);
+  box-shadow:0 5px 0 rgba(51,53,92,.4);transition:transform .08s,box-shadow .08s;
+  display:inline-flex;align-items:center;gap:8px;justify-content:center;
+}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 rgba(51,53,92,.4)}
+.btn.b-coral{background:var(--coral)} .btn.b-blue{background:var(--blue)}
+.btn.b-green{background:var(--green)} .btn.b-purple{background:var(--purple)}
+.btn.b-orange{background:var(--orange)} .btn.b-teal{background:var(--teal)}
+.btn.ghost{background:#fff;color:var(--ink)}
+.btn.small{font-size:.92rem;padding:8px 16px;border-radius:14px}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn.done{opacity:.6}
+
+/* ============ KARTU & TATA LETAK ============ */
+.card{background:#fff;border:3px solid var(--ink);border-radius:var(--r);box-shadow:var(--shadow)}
+.card-pad{padding:18px 22px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{
+  border:2.5px solid var(--ink);border-radius:99px;padding:8px 18px;background:#fff;
+  font-weight:900;cursor:pointer;font-size:1rem;box-shadow:0 3px 0 rgba(51,53,92,.3);
+}
+.chip:active{transform:translateY(2px);box-shadow:none}
+.chip.on{background:var(--yellow);box-shadow:0 3px 0 rgba(51,53,92,.5)}
+.note{background:#fff8e6;border:3px dashed var(--orange);border-radius:16px;padding:12px 18px;font-weight:800}
+.tip{background:#e7f0ff;border:3px solid var(--blue);border-radius:16px;padding:12px 18px;font-weight:800}
+.banner{
+  background:linear-gradient(135deg,var(--yellow),var(--orange));border:3px solid var(--ink);
+  border-radius:18px;padding:14px 22px;font-family:'Baloo 2',cursive;font-size:1.35rem;
+  font-weight:800;box-shadow:var(--shadow);text-align:center;
+}
+.bigmath{
+  font-family:'Baloo 2',cursive;font-size:2.1rem;font-weight:800;text-align:center;
+  background:#fff;border:3px dashed var(--green);color:#137a44;border-radius:16px;padding:10px 16px;
+}
+.chant{
+  background:linear-gradient(135deg,#fff3c4,#ffe0ec);border:3px solid var(--ink);
+  border-radius:18px;padding:14px 20px;font-weight:800;line-height:2;font-size:1.05rem;
+}
+.minicard{
+  border:2.5px solid var(--ink);border-radius:12px;padding:8px 10px;background:#fff;
+  font-weight:800;font-size:.92rem;display:flex;flex-direction:column;align-items:center;gap:1px;
+}
+.minicard b{font-family:'Baloo 2',cursive;font-size:1.25rem}
+.minicard.hot{background:#fff3c4;box-shadow:0 3px 0 var(--orange)}
+.minigrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px}
+.mission-card{
+  position:relative;padding:16px 18px;border:3px solid var(--ink);border-radius:18px;
+  background:#fff;box-shadow:var(--shadow);display:flex;gap:14px;align-items:flex-start;
+}
+.mission-card p{margin:4px 0 0;font-weight:700;color:#4a4e80;font-size:.95rem}
+.m-emoji{
+  font-size:1.9rem;flex:none;width:58px;height:58px;border-radius:16px;border:2.5px solid var(--ink);
+  display:flex;align-items:center;justify-content:center;
+}
+.mc-1{background:#fff0f0}.mc-2{background:#e7f0ff}.mc-3{background:#e2f9ec}
+.mc-4{background:#f6ecff}.mc-5{background:#fff8e6}.mc-6{background:#ffeef4}
+.mascot{display:flex;gap:12px;align-items:flex-start;margin-top:14px}
+.mascot .owl{font-size:2.6rem;flex:none;animation:floaty 3.4s ease-in-out infinite}
+.mascot .bubble{
+  background:#fff;border:3px solid var(--ink);border-radius:4px 18px 18px 18px;
+  padding:10px 16px;font-weight:800;box-shadow:var(--shadow);font-size:.98rem;
+}
+
+/* ============ EMOJI, IKATAN 10, HITUNG ============ */
+.emoji-item{font-size:2.05rem;line-height:1.25;display:inline-flex;justify-content:center}
+.emoji-item.sm{font-size:1.28rem;line-height:1.3}
+.bundlewrap{position:relative;display:inline-block;margin:16px 12px 6px}
+.bundle{
+  border:3px dashed var(--purple);border-radius:16px;padding:7px;display:inline-flex;
+  flex-wrap:wrap;gap:1px;max-width:200px;background:#fff;box-shadow:0 4px 0 rgba(51,53,92,.15);
+}
+.blabel{
+  position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--purple);
+  color:#fff;font-size:.72rem;font-weight:900;padding:2px 11px;border-radius:99px;border:2px solid var(--ink);
+}
+.bcount{
+  position:absolute;top:-14px;right:-12px;background:var(--green);color:#fff;border:2.5px solid var(--ink);
+  border-radius:99px;font-weight:900;padding:3px 9px;font-size:.85rem;animation:pop .4s both;
+}
+.loose{display:inline-flex;flex-wrap:wrap;gap:1px;vertical-align:top;margin:16px 4px 6px;padding:6px;border:3px dashed var(--orange);border-radius:16px;background:#fff}
+.count-banner{
+  background:var(--yellow);border:3px solid var(--ink);border-radius:16px;padding:10px 20px;
+  font-family:'Baloo 2',cursive;font-weight:800;font-size:1.3rem;display:inline-block;margin-top:10px;
+}
+.gone{opacity:0;transform:scale(2.1) rotate(40deg);transition:all .6s ease}
+.taken{opacity:0;transform:translateX(90px) scale(.4) rotate(20deg);transition:all .7s ease}
+.countup-item{
+  display:inline-block;font-family:'Baloo 2',cursive;font-size:1.65rem;font-weight:800;
+  margin:4px 8px;animation:pop .5s both;color:var(--ink);
+}
+
+/* ============ KARTU FLIP & FLASHCARD ============ */
+.flip{perspective:900px;cursor:pointer;min-height:180px}
+.flip-in{position:relative;width:100%;height:100%;min-height:180px;transition:transform .55s;transform-style:preserve-3d}
+.flip.flipped .flip-in{transform:rotateY(180deg)}
+.fface{
+  position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border:3px solid var(--ink);border-radius:18px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:8px;padding:14px;text-align:center;font-weight:800;
+  box-shadow:var(--shadow);
+}
+.fface.front{background:#fff}
+.fface.back{background:linear-gradient(135deg,#fff6d8,#ffe9ec);transform:rotateY(180deg)}
+.fface .fe{font-size:2.7rem}
+.hint{font-size:.72rem;color:var(--muted);font-weight:800}
+.flash{perspective:800px;cursor:pointer;min-width:150px;min-height:120px}
+.flash-in{position:relative;width:100%;height:100%;min-height:120px;transition:transform .5s;transform-style:preserve-3d}
+.flash.flipped .flash-in{transform:rotateY(180deg)}
+.f-face{
+  position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border:3px solid var(--ink);border-radius:16px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;font-family:'Baloo 2',cursive;font-weight:800;font-size:1.25rem;padding:10px;text-align:center;
+}
+.f-face.front{background:#fff}
+.f-face.back{background:linear-gradient(135deg,#d9ffe9,#e8fff4);transform:rotateY(180deg);color:#137a44}
+
+/* ============ SCAFFOLDING: LANGKAH & KOSONG ============ */
+.tstep{display:none}
+.tstep.shown{display:block;margin-top:12px;animation:pop .35s both}
+.tstep p{margin:6px 0;font-weight:800}
+.stepnum{
+  display:inline-block;background:var(--blue);color:#fff;border-radius:99px;padding:2px 13px;
+  font-weight:900;margin-right:8px;font-size:.9rem;border:2px solid var(--ink);
+}
+.blank{
+  display:inline-flex;min-width:56px;height:46px;align-items:center;justify-content:center;
+  border:3px dashed var(--purple);border-radius:12px;background:#fff;color:var(--purple);
+  font-weight:900;cursor:pointer;font-size:1.45rem;font-family:'Baloo 2',cursive;padding:0 10px;
+  vertical-align:middle;
+}
+.blank.filled{border-style:solid;background:#f3e8ff;cursor:default}
+
+/* ============ PENJUMLAHAN BERSUSUN ============ */
+.colmath{
+  display:inline-block;background:#fff;border:3px solid var(--ink);border-radius:18px;
+  padding:12px 18px;box-shadow:var(--shadow);margin:6px 0;
+}
+.cmrow{
+  display:grid;grid-template-columns:52px 68px 68px;justify-items:center;align-items:center;
+  font-family:'Baloo 2',cursive;font-size:2.15rem;font-weight:800;
+}
+.cmcell{width:60px;height:58px;display:flex;align-items:center;justify-content:center;border-radius:12px}
+.cmcell.c-tens{color:#e0355c}
+.cmcell.c-ones{color:#1d6fe0}
+.cmcell.ans{background:#e2f9ec;border:3px solid var(--green);color:#137a44}
+.cmcell.carry{
+  font-size:1.15rem;width:42px;height:34px;background:var(--orange);color:#fff;
+  border:2.5px solid var(--ink);border-radius:10px;
+}
+.cmop{font-size:1.9rem;color:var(--ink)}
+.cmline{height:4.5px;background:var(--ink);border-radius:3px;margin:7px 0}
+.colmath.mini .cmrow{font-size:1.35rem;grid-template-columns:26px 42px 42px}
+.colmath.mini .cmcell{width:40px;height:38px}
+.c-tx{color:#e0355c}.c-on{color:#1d6fe0}
+
+/* ============ ANIMASI ============ */
+@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes slidein{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+@keyframes fall{to{transform:translateY(112vh) rotate(720deg);opacity:.9}}
+
+/* ============ SAMPUL ============ */
+.cover-wrap{min-height:78vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;gap:14px}
+.cover-title{
+  font-size:clamp(2.3rem,5.6vw,4rem);font-weight:800;color:var(--ink);
+  text-shadow:4px 4px 0 rgba(255,217,61,.75);max-width:900px;
+}
+.cover-sub{font-size:clamp(1.05rem,2vw,1.35rem);color:#4a4e80;font-weight:800;max-width:720px}
+.cover-chips{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.chip-info{border:3px solid var(--ink);background:#fff;border-radius:99px;padding:9px 20px;font-weight:900;box-shadow:0 4px 0 rgba(51,53,92,.25);font-size:.95rem}
+.float-emoji{position:absolute;font-size:2.4rem;opacity:.9;pointer-events:none;animation:floaty 4s ease-in-out infinite}
+.c-def{background:#e2f9ec;border:3px solid var(--green);border-radius:16px;padding:10px 22px;font-weight:900;font-size:1.02rem}
+
+/* ============ PAPAN NILAI TEMPAT ============ */
+.nt-board{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.nt-col{display:flex;flex-direction:column;gap:8px;align-items:center}
+.nt-head{background:var(--coral);color:#fff;border:3px solid var(--ink);border-radius:12px;padding:6px 16px;font-family:'Baloo 2',cursive;font-weight:800;font-size:1.05rem}
+.nt-head.ones{background:var(--blue)}
+.nt-big{
+  font-family:'Baloo 2',cursive;font-size:3.4rem;font-weight:800;width:120px;height:100px;
+  border:3px solid var(--ink);border-radius:18px;display:flex;align-items:center;justify-content:center;background:#fff;box-shadow:var(--shadow);
+}
+.bundle-row{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;align-items:flex-start}
+
+/* ============ MESIN BILANGAN ============ */
+.stepper{display:inline-flex;align-items:center;gap:8px;border:3px solid var(--ink);border-radius:16px;background:#fff;padding:6px 10px;box-shadow:0 4px 0 rgba(51,53,92,.2)}
+.stepper button{
+  width:44px;height:44px;border-radius:12px;border:3px solid var(--ink);background:var(--yellow);
+  font-family:'Baloo 2',cursive;font-size:1.5rem;font-weight:800;cursor:pointer;
+}
+.stepper button:active{transform:translateY(2px)}
+.stepper .val{min-width:74px;text-align:center;font-family:'Baloo 2',cursive;font-size:1.7rem;font-weight:800}
+.mdisplay{
+  font-family:'Baloo 2',cursive;font-size:1.8rem;font-weight:800;background:#f6f2ff;
+  border:3px dashed var(--purple);border-radius:14px;padding:10px 18px;margin-top:8px;
+}
+.huge{font-size:2.7rem;color:var(--purple)}
+
+/* ============ GAME COCOK (LAMBANG) ============ */
+.matchgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px 30px;max-width:640px}
+.mcard{
+  border:3px solid var(--ink);border-radius:14px;background:#fff;padding:11px 12px;font-weight:800;
+  font-size:1.08rem;cursor:pointer;text-align:center;font-family:'Baloo 2',cursive;
+  box-shadow:0 4px 0 rgba(51,53,92,.25);
+}
+.mcard.sel{background:#fff3c4;border-color:var(--orange);box-shadow:0 4px 0 var(--orange)}
+.mcard.matched{background:#e2f9ec;border-color:var(--green);color:#137a44;cursor:default;box-shadow:0 4px 0 var(--green)}
+.mcard.shakeit{animation:shake .45s}
+
+/* ============ KARTU PASANGAN & GAME ============ */
+.paircard{
+  border:3px solid var(--ink);border-radius:20px;background:#fff;padding:16px 18px;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:6px;box-shadow:var(--shadow);min-width:130px;
+}
+.paircard .pnum{font-family:'Baloo 2',cursive;font-size:2.7rem;font-weight:800;line-height:1}
+.paircard .peq{background:var(--green);color:#fff;border:2.5px solid var(--ink);border-radius:99px;padding:3px 16px;font-weight:900}
+.paircard:active{transform:scale(.97)}
+.target-num{
+  font-family:'Baloo 2',cursive;font-size:5.2rem;font-weight:800;color:var(--purple);
+  width:130px;height:130px;border:4px solid var(--ink);border-radius:26px;background:#fff;
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);
+}
+.pairobj{display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:center}
+
+/* ============ KUIS ============ */
+.quizwrap{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px;align-items:start}
+.qhead{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.qcat{background:var(--purple);color:#fff;padding:5px 16px;border-radius:99px;font-weight:900;font-size:.85rem;border:2.5px solid var(--ink)}
+.score-pill{background:#fff;border:2.5px solid var(--ink);padding:5px 16px;border-radius:99px;font-weight:900;font-size:.95rem}
+.qtext{font-size:1.28rem;font-weight:900;margin:6px 0 14px;line-height:1.55}
+.qobjects{
+  display:flex;flex-wrap:wrap;gap:2px;align-items:center;background:#fffdf7;
+  border:3px dashed var(--teal);border-radius:16px;padding:12px 14px;margin-bottom:14px;max-width:100%;
+}
+.qgroup{display:inline-flex;flex-wrap:wrap;gap:2px;background:#fff;border:2.5px solid var(--ink);border-radius:12px;padding:6px;max-width:300px}
+.qop-sign{font-family:'Baloo 2',cursive;font-size:2rem;font-weight:800;margin:0 10px;color:var(--coral)}
+.optgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.opt{
+  display:flex;align-items:center;gap:12px;text-align:left;background:#fff;border:3px solid var(--ink);
+  border-radius:16px;padding:12px 14px;font-weight:900;font-size:1.12rem;cursor:pointer;
+  box-shadow:0 4px 0 rgba(51,53,92,.25);font-family:'Baloo 2',cursive;
+}
+.opt .letter{
+  background:var(--blue);color:#fff;border-radius:10px;width:36px;height:36px;display:flex;
+  align-items:center;justify-content:center;font-family:'Baloo 2',cursive;flex:none;border:2px solid var(--ink);
+}
+.opt.sel{background:#e7f0ff;border-color:var(--blue);box-shadow:0 4px 0 var(--blue)}
+.opt.correct{background:#e2f9ec;border-color:var(--green);box-shadow:0 4px 0 var(--green)}
+.opt.wrong{background:#ffe7e7;border-color:var(--coral);box-shadow:0 4px 0 var(--coral);animation:shake .45s}
+.opt.dim{opacity:.55}
+.opt:disabled{cursor:default}
+.qactions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.feedback{min-height:30px;border-radius:16px;padding:12px 18px;font-weight:900;display:none;margin-top:14px;font-size:1.05rem}
+.feedback.ok{display:block;background:#e2f9ec;border:3px solid var(--green);color:#137a44}
+.feedback.no{display:block;background:#fff0e3;border:3px solid var(--orange);color:#b35c00}
+.bahas{
+  display:none;background:#f6f2ff;border:3px dashed var(--purple);border-radius:16px;
+  padding:14px 18px;margin-top:14px;font-weight:800;line-height:1.7;
+}
+.bahas.show{display:block;animation:pop .35s both}
+.stopwatch{
+  background:linear-gradient(135deg,#f3e8ff,#e3f2ff);border:3px solid var(--ink);border-radius:18px;
+  padding:14px;text-align:center;box-shadow:var(--shadow);
+}
+.stopwatch.running{background:linear-gradient(135deg,#d9ffe9,#e8fff4)}
+.sw-top{font-weight:900;font-size:.9rem;color:#4a4e80}
+.sw-time{font-family:'Baloo 2',cursive;font-size:2.5rem;font-weight:800;color:var(--purple);line-height:1.2}
+.stopwatch.running .sw-time{color:#137a44;animation:pulse 1s infinite}
+.sw-btns{display:flex;gap:8px;justify-content:center;margin-top:6px}
+.sw-hint{font-size:.8rem;font-weight:800;color:var(--muted);margin-top:8px;line-height:1.4}
+.qgrid{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.qdot{
+  width:34px;height:34px;border:2.5px solid var(--ink);border-radius:10px;background:#fff;
+  font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.82rem;
+}
+.qdot.cur{background:var(--yellow)}
+.qdot.ok{background:var(--green);color:#fff}
+.qdot.try{background:var(--orange);color:#fff}
+.qall-done{
+  background:linear-gradient(135deg,var(--green),var(--teal));color:#fff;border:3px solid var(--ink);
+  border-radius:18px;padding:16px 22px;font-family:'Baloo 2',cursive;font-size:1.4rem;font-weight:800;
+  text-align:center;margin-bottom:14px;box-shadow:var(--shadow);
+}
+
+/* ============ REFLEKSI ============ */
+.feelgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.feelbtn{
+  display:flex;flex-direction:column;align-items:center;gap:6px;border:3px solid var(--ink);
+  border-radius:18px;background:#fff;padding:14px;font-weight:900;cursor:pointer;box-shadow:0 4px 0 rgba(51,53,92,.25);
+}
+.feelbtn .fe{font-size:2.5rem}
+.feelbtn.on{background:#fff3c4;box-shadow:0 4px 0 var(--orange)}
+.resp{margin-top:12px;background:#e7f0ff;border:3px solid var(--blue);border-radius:14px;padding:12px 18px;font-weight:800;display:none}
+.resp.show{display:block;animation:pop .3s both}
+.checklist{display:flex;flex-direction:column;gap:10px}
+.checkitem{
+  display:flex;gap:12px;align-items:center;border:3px solid var(--ink);border-radius:14px;
+  background:#fff;padding:11px 16px;font-weight:800;cursor:pointer;user-select:none;
+}
+.checkitem .box{
+  width:30px;height:30px;border:3px solid var(--ink);border-radius:9px;display:flex;
+  align-items:center;justify-content:center;background:#fff;flex:none;font-weight:900;color:#fff;
+}
+.checkitem.on{background:#e2f9ec}
+.checkitem.on .box{background:var(--green)}
+.checkitem.on .box::after{content:'✓'}
+.starbtn{font-size:2.9rem;background:none;border:none;cursor:pointer;filter:grayscale(1);opacity:.4;transition:all .2s;padding:2px}
+.starbtn.on{filter:none;opacity:1;transform:scale(1.12)}
+
+/* ============ MENU & KONFETI ============ */
+.menu{position:fixed;inset:0;background:rgba(51,53,92,.55);display:none;z-index:60;align-items:center;justify-content:center;padding:20px}
+.menu.open{display:flex}
+.menu-panel{
+  background:#fff;border:4px solid var(--ink);border-radius:24px;max-width:760px;width:100%;
+  max-height:82vh;overflow:auto;padding:22px;box-shadow:var(--shadow);
+}
+.menu-panel h3{margin-top:0}
+.menu-item{
+  display:flex;gap:12px;align-items:center;padding:9px 12px;border-radius:12px;cursor:pointer;
+  font-weight:800;border:2.5px solid transparent;
+}
+.menu-item:hover{background:#f0f3ff;border-color:var(--blue)}
+.confetti-piece{position:fixed;top:-40px;z-index:99;pointer-events:none;animation:fall linear forwards}
+
+/* ============ RESPONSIF ============ */
+@media (max-width:920px){
+  .quizwrap{grid-template-columns:1fr}
+  .matchgrid{gap:10px 14px}
+  .brand{font-size:.85rem}
+}
+@media (max-width:560px){
+  .optgrid{grid-template-columns:1fr}
+  .cmrow{grid-template-columns:38px 52px 52px;font-size:1.7rem}
+  .cmcell{width:46px;height:46px}
+  .slide{padding:18px 12px 40px}
+  .card-pad{padding:14px 16px}
+}
+</style>
+</head>
+<body>
+<div id="deck">
+
+  <!-- ===== BILAH ATAS ===== -->
+  <header class="topbar">
+    <span class="brand">🔢 Petualangan Bilangan sampai 100</span>
+    <div class="progresswrap"><div id="progressbar"></div></div>
+    <button class="iconbtn" id="menuBtn" title="Daftar slide">☰ Menu</button>
+    <button class="iconbtn" id="fsBtn" title="Layar penuh">⛶</button>
+  </header>
+
+  <!-- ===== PANGGUNG SLIDE ===== -->
+  <main class="stage" id="stage">
+
+  </main>
+
+  <!-- ===== NAVIGASI BAWAH ===== -->
+  <nav class="navbar">
+    <button class="btn b-coral nav" id="prevBtn">⬅️ Sebelumnya</button>
+    <span class="navcount" id="navcount">Slide 1 / 20</span>
+    <button class="btn b-green nav" id="nextBtn">Berikutnya ➡️</button>
+  </nav>
+
+  <!-- ===== MENU DAFTAR SLIDE ===== -->
+  <div class="menu" id="menu">
+    <div class="menu-panel">
+      <h3>🗺️ Daftar Petualangan</h3>
+      <div id="menu-list"></div>
+      <div class="center" style="margin-top:14px"><button class="btn ghost" id="menuClose">✖ Tutup</button></div>
+    </div>
+  </div>
+
+</div>
+
+  <!-- ============ SLIDE 1: SAMPUL ============ -->
+  <section class="slide" data-title="Sampul" data-icon="🚀" style="--acc:var(--coral)">
+    <div class="slide-inner">
+      <span class="float-emoji" style="top:6%;left:6%;animation-delay:.2s">🔢</span>
+      <span class="float-emoji" style="top:12%;right:9%;animation-delay:.8s">🎈</span>
+      <span class="float-emoji" style="top:55%;left:4%;animation-delay:1.4s">⭐</span>
+      <span class="float-emoji" style="top:62%;right:6%;animation-delay:.5s">🍎</span>
+      <span class="float-emoji" style="top:32%;left:14%;animation-delay:2s">🧮</span>
+      <span class="float-emoji" style="top:38%;right:16%;animation-delay:1.1s">✨</span>
+      <div class="cover-wrap">
+        <span class="kicker">Matematika • Kelas 1 SD</span>
+        <h1 class="cover-title">Petualangan Bilangan Cacah sampai <span style="color:var(--purple)">100</span>!</h1>
+        <p class="cover-sub">Ayo mengenal nama &amp; lambang bilangan, nilai tempat, bongkar-rakit bilangan,
+        menghitung benda, penjumlahan &amp; pengurangan, sampai trik cepat pasangan bilangan! 🎉</p>
+        <div class="cover-chips">
+          <span class="chip-info">👩‍🏫 Untuk Kelas 1 SD</span>
+          <span class="chip-info">🖱️ Interaktif &amp; Menyenangkan</span>
+          <span class="chip-info">🏆 30 Soal Latihan</span>
+        </div>
+        <div class="c-def">💡 Tahukah kamu? Bilangan cacah adalah bilangan mulai dari 0, 1, 2, 3, 4, … sampai 100!</div>
+        <button class="btn b-coral" id="cover-start" style="font-size:1.25rem;padding:16px 34px">🚀 Mulai Petualangan!</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 2: APERSEPSI ============ -->
+  <section class="slide" data-title="Apersepsi: Angka di Sekitar Kita" data-icon="🤔" style="--acc:var(--orange)">
+    <div class="slide-inner">
+      <span class="kicker">Apersepsi • Ingatkan Dulu</span>
+      <h2 class="h-title"><span class="hl">Pernahkah Kamu…? 🤔</span></h2>
+      <p class="lead">Angka ada di sekitar kita setiap hari! Klik kartu-kartu di bawah untuk membukanya. 🎁</p>
+      <div class="grid3" style="margin:14px 0">
+        <div class="flip"><div class="flip-in">
+          <div class="fface front"><span class="fe">🚪</span><b>Nomor Rumah</b><span class="hint">klik aku!</span></div>
+          <div class="fface back"><b>Coba ingat! 👀</b><p style="margin:0">Lihat nomor di pintu rumahmu. Angka berapa itu? Itu salah satu bilangan!</p></div>
+        </div></div>
+        <div class="flip"><div class="flip-in">
+          <div class="fface front"><span class="fe">🎂</span><b>Umurmu</b><span class="hint">klik aku!</span></div>
+          <div class="fface back"><b>Coba ingat! 👀</b><p style="margin:0">Kamu berumur 7 tahun. Angka 7 adalah bilangan. Tahun depan tambah jadi berapa?</p></div>
+        </div></div>
+        <div class="flip"><div class="flip-in">
+          <div class="fface front"><span class="fe">✋</span><b>Jari Tangan</b><span class="hint">klik aku!</span></div>
+          <div class="fface back"><b>Coba hitung! 🖐️</b><p style="margin:0">Satu tangan ada 5 jari. Dua tangan: 5 + 5 = 10 jari!</p></div>
+        </div></div>
+        <div class="flip"><div class="flip-in">
+          <div class="fface front"><span class="fe">🚌</span><b>Nomor Kendaraan</b><span class="hint">klik aku!</span></div>
+          <div class="fface back"><b>Coba perhatikan! 🚗</b><p style="margin:0">Bus dan angkot punya nomor. Plat nomor juga penuh angka!</p></div>
+        </div></div>
+      </div>
+      <div class="card card-pad" style="margin-top:14px">
+        <b>🎯 Tantangan Apersepsi: Ayo hitung loncat sepuluh!</b>
+        <p style="margin:6px 0">Klik tombolnya, maka bilangan 10, 20, 30 … akan melompat keluar!</p>
+        <button class="btn b-orange" id="aper-count-btn">🦘 Ayo Loncat Sepuluh!</button>
+        <div id="aper-count-area" style="margin-top:12px;min-height:60px"></div>
+      </div>
+      <div class="banner" style="margin-top:16px">🌈 Hari ini kita berpetualang mengenal bilangan sampai 100. Siap? Ayo!</div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 3: MISI ============ -->
+  <section class="slide" data-title="Misi Kita Hari Ini" data-icon="🗺️" style="--acc:var(--purple)">
+    <div class="slide-inner">
+      <span class="kicker">Tujuan Pembelajaran</span>
+      <h2 class="h-title"><span class="hl">Peta Petualangan Angka 🗺️</span></h2>
+      <p class="lead">Ada 6 misi seru hari ini. Selesaikan semuanya, lalu uji keberanianmu di 30 soal latihan! ⭐</p>
+      <div class="grid2" style="margin:14px 0">
+        <div class="mission-card"><span class="m-emoji mc-1">📣</span><div><b>Misi 1 — Nama &amp; Lambang Bilangan</b><p>Menyebutkan nama bilangan sampai 100 (dua puluh lima!) dan menuliskan lambangnya.</p></div></div>
+        <div class="mission-card"><span class="m-emoji mc-2">🏢</span><div><b>Misi 2 — Nilai Tempat</b><p>Mengenal tempat puluhan dan satuan. Angka yang sama ternyata nilainya bisa berbeda!</p></div></div>
+        <div class="mission-card"><span class="m-emoji mc-3">🧩</span><div><b>Misi 3 — Dekomposisi &amp; Komposisi</b><p>Membongkar bilangan (47 = 40 + 7) dan merakitnya kembali (40 + 7 = 47).</p></div></div>
+        <div class="mission-card"><span class="m-emoji mc-4">🔍</span><div><b>Misi 4 — Menghitung Benda</b><p>Menghitung banyaknya benda sampai 100 dengan jurus ikatan 10!</p></div></div>
+        <div class="mission-card"><span class="m-emoji mc-5">➕</span><div><b>Misi 5 — Penjumlahan &amp; Pengurangan</b><p> dengan benda, cara bersusun, sampai menyimpan &amp; meminjam.</p></div></div>
+        <div class="mission-card"><span class="m-emoji mc-6">⚡</span><div><b>Misi 6 — Trik Pasangan Bilangan</b><p>Pasangan 1-9, 2-8, 3-7, 4-6, 5-5 untuk berhitung super cepat!</p></div></div>
+      </div>
+      <div class="mascot">
+        <span class="owl">🦉</span>
+        <span class="bubble">Halo, aku Burung Hantu Pintar! Aku akan menemanimu di sepanjang petualangan. Kalau nemu kesulitan, tenang saja — aku punya banyak jurus sakti! 🪄</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 4: NAMA BILANGAN ============ -->
+  <section class="slide" data-title="Misi 1: Nama Bilangan" data-icon="📣" style="--acc:var(--blue)">
+    <div class="slide-inner">
+      <span class="kicker">Misi 1 • Nama Bilangan</span>
+      <h2 class="h-title"><span class="hl">Nama Bilangan 10 sampai 100 📣</span></h2>
+      <p class="lead">Setiap bilangan punya nama. Bilangan puluhan namanya = <b>nama puluhan + nama satuan</b>.</p>
+
+      <div class="card card-pad" style="margin-top:12px">
+        <b>👨‍👩‍👧 Keluarga Belasan (10–19)</b>
+        <div class="minigrid" style="margin-top:10px">
+          <span class="minicard"><b>10</b>sepuluh</span>
+          <span class="minicard hot"><b>11</b>sebelas ⭐</span>
+          <span class="minicard"><b>12</b>dua belas</span>
+          <span class="minicard"><b>13</b>tiga belas</span>
+          <span class="minicard"><b>14</b>empat belas</span>
+          <span class="minicard"><b>15</b>lima belas</span>
+          <span class="minicard"><b>16</b>enam belas</span>
+          <span class="minicard"><b>17</b>tujuh belas</span>
+          <span class="minicard"><b>18</b>delapan belas</span>
+          <span class="minicard"><b>19</b>sembilan belas</span>
+        </div>
+        <div class="note" style="margin-top:10px">⚠️ Hati-hati! 11 itu <b>sebelas</b>, BUKAN "sepuluh satu" ya!</div>
+      </div>
+
+      <div class="card card-pad" style="margin-top:14px">
+        <b>🏬 Keluarga Puluhan (20–100)</b>
+        <div class="minigrid" style="margin-top:10px">
+          <span class="minicard"><b>20</b>dua puluh</span>
+          <span class="minicard"><b>30</b>tiga puluh</span>
+          <span class="minicard"><b>40</b>empat puluh</span>
+          <span class="minicard"><b>50</b>lima puluh</span>
+          <span class="minicard"><b>60</b>enam puluh</span>
+          <span class="minicard"><b>70</b>tujuh puluh</span>
+          <span class="minicard"><b>80</b>delapan puluh</span>
+          <span class="minicard"><b>90</b>sembilan puluh</span>
+          <span class="minicard hot"><b>100</b>seratus 🎉</span>
+        </div>
+        <div class="tip" style="margin-top:10px">💡 Contoh pola: 25 = <b>dua puluh</b> + <b>lima</b> → "dua puluh lima". Gampang, kan?</div>
+      </div>
+
+      <div class="card card-pad" style="margin-top:14px">
+        <b>🔧 Mesin Nama Bilangan — ayo coba!</b>
+        <p style="margin:6px 0">Tekan tombol + dan − untuk mengganti bilangan, lalu baca namanya keras-keras!</p>
+        <div class="row">
+          <div class="stepper"><button data-nm="t-">−</button><span class="val" id="nm-t">30</span><button data-nm="t+">+</button></div>
+          <span class="muted">puluhan</span>
+          <div class="stepper"><button data-nm="o-">−</button><span class="val" id="nm-o">5</span><button data-nm="o+">+</button></div>
+          <span class="muted">satuan</span>
+        </div>
+        <div class="mdisplay"><span class="huge" id="nm-num">35</span> = <span id="nm-name">tiga puluh lima</span></div>
+        <div class="muted" id="nm-br">3 puluhan + 5 satuan</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 5: LAMBANG BILANGAN ============ -->
+  <section class="slide" data-title="Misi 1: Lambang Bilangan" data-icon="🔢" style="--acc:var(--teal)">
+    <div class="slide-inner">
+      <span class="kicker">Misi 1 • Lambang Bilangan</span>
+      <h2 class="h-title"><span class="hl">Cocokkan Nama dan Lambangnya! 🧩</span></h2>
+      <p class="lead">Klik satu <b>nama bilangan</b> di kiri, lalu klik <b>lambangnya</b> di kanan. Kalau cocok, kartunya berubah hijau! 🍀</p>
+      <div class="card card-pad" style="margin-top:12px">
+        <div class="matchgrid">
+          <div id="mg-names" style="display:flex;flex-direction:column;gap:10px"></div>
+          <div id="mg-syms" style="display:flex;flex-direction:column;gap:10px"></div>
+        </div>
+        <p class="center" id="mg-fb" style="font-weight:900;min-height:28px;margin:12px 0 0"></p>
+        <div class="banner hidden" id="mg-banner">🎉 HEBAT! Semua nama dan lambang berhasil kamu cocokkan!</div>
+      </div>
+      <div class="card card-pad" style="margin-top:14px">
+        <b>🚂 Kereta Bilangan Puluhan — klik untuk tahu namanya!</b>
+        <div class="numstrip" id="numstrip" style="margin-top:10px">
+          <button class="chip" data-v="10">10</button><button class="chip" data-v="20">20</button>
+          <button class="chip" data-v="30">30</button><button class="chip" data-v="40">40</button>
+          <button class="chip" data-v="50">50</button><button class="chip" data-v="60">60</button>
+          <button class="chip" data-v="70">70</button><button class="chip" data-v="80">80</button>
+          <button class="chip" data-v="90">90</button><button class="chip" data-v="100">100</button>
+        </div>
+        <div class="mdisplay" id="strip-name" style="min-height:56px">👈 klik salah satu bilangan</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 6: NILAI TEMPAT ============ -->
+  <section class="slide" data-title="Misi 2: Nilai Tempat" data-icon="🏢" style="--acc:var(--green)">
+    <div class="slide-inner">
+      <span class="kicker">Misi 2 • Nilai Tempat</span>
+      <h2 class="h-title"><span class="hl">Puluhan dan Satuan 🏢</span></h2>
+      <p class="lead">Pada bilangan dua angka: angka <b class="c-tx">KIRI</b> tinggal di tempat <b class="c-tx">PULUHAN</b>,
+      angka <b class="c-on">KANAN</b> tinggal di tempat <b class="c-on">SATUAN</b>.</p>
+
+      <div class="card card-pad" style="margin-top:12px">
+        <b>🏘️ Pilih bilangan untuk masuk ke Papan Nilai Tempat:</b>
+        <div class="chips" id="nt-chips" style="margin-top:10px">
+          <button class="chip" data-n="21">21</button>
+          <button class="chip" data-n="34">34</button>
+          <button class="chip" data-n="47">47</button>
+          <button class="chip" data-n="85">85</button>
+          <button class="chip" data-n="99">99</button>
+        </div>
+        <div class="nt-board" style="margin-top:16px">
+          <div class="nt-col"><span class="nt-head">PULUHAN</span><span class="nt-big c-tx" id="nt-t">3</span></div>
+          <div class="nt-col"><span class="nt-head ones">SATUAN</span><span class="nt-big c-on" id="nt-o">4</span></div>
+        </div>
+        <div class="bundle-row" id="nt-bundles" style="margin-top:14px"></div>
+        <div class="bigmath" id="nt-eq" style="margin-top:10px">30 + 4 = 34</div>
+        <p id="nt-val" style="font-weight:800;margin-top:10px"></p>
+      </div>
+
+      <div class="tip" style="margin-top:14px">🔎 Penting! Angka yang SAMA bisa punya nilai BERBEDA: pada 34, angka <b class="c-tx">3</b> bernilai <b class="c-tx">30</b>, tetapi angka <b class="c-on">4</b> bernilai <b class="c-on">4</b>.</div>
+      <div class="mascot">
+        <span class="owl">🦉</span>
+        <span class="bubble">Jurus mengingat: tempat puluhan itu seperti lantai atas, tempat satuan lantai bawah. Angka di lantai atas nilainya sepuluh kali lipat!</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 7: DEKOMPOSISI ============ -->
+  <section class="slide" data-title="Misi 3: Dekomposisi" data-icon="🧨" style="--acc:var(--pink)">
+    <div class="slide-inner">
+      <span class="kicker">Misi 3 • Dekomposisi</span>
+      <h2 class="h-title"><span class="hl">Dekomposisi: Bongkar Bilangan! 🧨</span></h2>
+      <p class="lead">Dekomposisi artinya <b>membongkar</b> sebuah bilangan menjadi bagian-bagiannya:
+      bilangan puluhan menjadi <b class="c-tx">puluhan</b>, satuan tetap <b class="c-on">satuan</b>.</p>
+
+      <div class="card card-pad" style="margin-top:12px">
+        <b>🧰 Pilih bilangan yang mau dibongkar:</b>
+        <div class="chips" id="dk-chips" style="margin-top:10px">
+          <button class="chip" data-n="23">23</button>
+          <button class="chip" data-n="36">36</button>
+          <button class="chip" data-n="58">58</button>
+          <button class="chip" data-n="74">74</button>
+          <button class="chip" data-n="89">89</button>
+        </div>
+        <div class="bundle-row" id="dk-bundles" style="margin-top:10px"></div>
+        <div class="bigmath" id="dk-eq" style="margin-top:10px">30 + 6 = 36</div>
+      </div>
+
+      <div class="card card-pad" style="margin-top:14px">
+        <b>🌟 Tahukah kamu? Bilangan bisa dibongkar dengan BANYAK cara!</b>
+        <button class="btn b-purple small" data-show="#dk-altbox" style="margin:10px 0">👀 Klik untuk melihat contoh</button>
+        <div class="hidden" id="dk-altbox">
+          <p style="font-weight:800">Contoh membonkar 47:</p>
+          <p style="font-family:'Baloo 2',cursive;font-size:1.3rem;line-height:2">
+            47 = <b class="c-tx">40</b> + <b class="c-on">7</b> &nbsp;•&nbsp; 47 = 30 + 17 &nbsp;•&nbsp; 47 = 20 + 27 &nbsp;•&nbsp; 47 = 10 + 37
+          </p>
+          <div class="tip">Semuanya BENAR! Tetapi cara yang paling sering dipakai adalah <b>puluhan + satuan</b>.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 8: KOMPOSISI ============ -->
+  <section class="slide" data-title="Misi 3: Komposisi" data-icon="🛠️" style="--acc:var(--purple)">
+    <div class="slide-inner">
+      <span class="kicker">Misi 3 • Komposisi</span>
+      <h2 class="h-title"><span class="hl">Komposisi: Rakit Bilangan! 🛠️</span></h2>
+      <p class="lead">Komposisi adalah kebalikan dekomposisi: <b>menggabungkan</b> bagian-bagian menjadi bilangan utuh.
+      Caranya: puluhan digabung puluhan, satuan digabung satuan.</p>
+
+      <div class="card card-pad" style="margin-top:12px">
+        <b>🏗️ Mesin Rakit Bilangan</b>
+        <p style="margin:6px 0">Atur puluhan dan satuannya, lalu tekan <b>GABUNG!</b></p>
+        <div class="row">
+          <div class="stepper"><button data-km="t-">−</button><span class="val" id="km-t">50</span><button data-km="t+">+</button></div>
+          <span class="muted">puluhan</span>
+          <span class="qop-sign">+</span>
+          <div class="stepper"><button data-km="o-">−</button><span class="val" id="km-o">4</span><button data-km="o+">+</button></div>
+          <span class="muted">satuan</span>
+          <button class="btn b-purple" id="km-go">🏗️ GABUNG!</button>
+        </div>
+        <div class="chips" style="margin-top:12px">
+          <span class="muted" style="font-weight:900">Contoh cepat:</span>
+          <button class="chip" data-km-set="30,6">30 + 6</button>
+          <button class="chip" data-km-set="70,8">70 + 8</button>
+          <button class="chip" data-km-set="90,9">90 + 9</button>
+        </div>
+        <div class="hidden" id="km-out" style="margin-top:14px">
+          <div class="bigmath" id="km-res">50 + 4 = 54</div>
+          <div class="bundle-row" id="km-bundles" style="margin-top:10px"></div>
+        </div>
+      </div>
+
+      <div class="banner" style="margin-top:14px">🧩 Dekomposisi = MEMBONGKAR (47 → 40 + 7) • Komposisi = MERAKIT (40 + 7 → 47)</div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 9: MENGHITUNG BANYAKNYA BENDA ============ -->
+  <section class="slide" data-title="Misi 4: Menghitung Benda" data-icon="🔍" style="--acc:var(--orange)">
+    <div class="slide-inner">
+      <span class="kicker">Misi 4 • Menghitung Benda</span>
+      <h2 class="h-title"><span class="hl">Ayo Hitung Banyaknya Benda! 🔍</span></h2>
+      <p class="lead">Kalau bendanya banyak, jangan hitung satu-satu! Gunakan <b>JURUS IKAT 10</b>:
+      kumpulkan menjadi ikatan berisi 10, hitung ikatannya (10, 20, 30…), lalu tambah sisanya.</p>
+
+      <div class="card card-pad" style="margin-top:12px">
+        <b>🧺 Pilih benda yang mau dihitung:</b>
+        <div class="chips" id="cs-chips" style="margin-top:10px">
+          <button class="chip" data-cs="straw">🍓 Stroberi</button>
+          <button class="chip" data-cs="star">⭐ Bintang</button>
+          <button class="chip" data-cs="balloon">🎈 Balon</button>
+          <button class="chip" data-cs="fish">🐟 Ikan</button>
+          <button class="chip" data-cs="flower">🌸 Bunga</button>
+        </div>
+        <div style="border:3px dashed var(--teal);border-radius:18px;padding:12px 16px;margin-top:14px;min-height:120px;background:#fffdf7">
+          <div id="count-area"></div>
+          <div class="center"><span class="count-banner hidden" id="c-banner"></span></div>
+        </div>
+        <div class="row" style="margin-top:14px">
+          <button class="btn b-purple" id="c-ikat">🧺 1. Ikat 10!</button>
+          <button class="btn b-green" id="c-hitung">🔢 2. Hitung!</button>
+          <button class="btn ghost" id="c-ulang">🔄 Ulangi</button>
+        </div>
+      </div>
+
+      <div class="tip" style="margin-top:14px">💡 Cara menghitung: tunjuk satu per satu sambil bersuara. Setelah diikat, hitung ikatannya: <b>10, 20, 30…</b> baru lanjut satuan: <b>31, 32, 33…</b></div>
+      <div class="mascot">
+        <span class="owl">🦉</span>
+        <span class="bubble">Tahukah kamu? 10 ikat 10 = 100! Karena itu 100 namanya "seratus". Kamu sudah dekat sekali dengan 100! 💯</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 10: PENJUMLAHAN DENGAN BENDA ============ -->
+  <section class="slide" data-title="Misi 5: Penjumlahan dengan Benda" data-icon="🍎" style="--acc:var(--green)">
+    <div class="slide-inner">
+      <span class="kicker">Misi 5 • Penjumlahan</span>
+      <h2 class="h-title"><span class="hl">Penjumlahan dengan Benda 🍎</span></h2>
+      <div class="card card-pad" style="margin-top:10px">
+        <p style="font-size:1.15rem;font-weight:900">🍎 Cerita: Dina punya <b>12 apel</b>. Ibu memberi <b>5 apel</b> lagi.
+        Berapa apel Dina sekarang?</p>
+        <div class="row">
+          <button class="btn b-blue" data-show="#ao-g1">1️⃣ Lihat 12 apel</button>
+          <button class="btn b-orange" data-show="#ao-g2">2️⃣ Datang 5 apel</button>
+          <button class="btn b-green" data-show="#ao-all" data-confetti>3️⃣ Gabung &amp; hitung!</button>
+        </div>
+        <div class="hidden" id="ao-g1" style="margin-top:12px">
+          <p style="font-weight:800;margin:4px 0">Apel Dina (12):</p>
+          <div class="qobjects" id="ao-h1"></div>
+        </div>
+        <div class="hidden" id="ao-g2" style="margin-top:12px">
+          <p style="font-weight:800;margin:4px 0">Apel dari Ibu (5):</p>
+          <div class="qobjects" id="ao-h2"></div>
+        </div>
+        <div class="hidden" id="ao-all" style="margin-top:12px">
+          <p style="font-weight:800;margin:4px 0">Digabung semua (12 + 5), lalu hitung ikat 10-nya:</p>
+          <div class="qobjects" id="ao-h3"></div>
+          <div class="bigmath" style="margin-top:10px">12 + 5 = 17 🎉 Apel Dina sekarang ada 17!</div>
+        </div>
+      </div>
+
+      <div class="card card-pad" style="margin-top:14px">
+        <p style="font-size:1.1rem;font-weight:900">🎈 Contoh dengan ikatan 10: ada <b>20 balon</b> merah, datang <b>30 balon</b> biru. Berapa semuanya?</p>
+        <button class="btn b-purple" data-show="#ao-tens">👀 Lihat cara hitungnya</button>
+        <div class="hidden" id="ao-tens" style="margin-top:12px">
+          <div class="row" style="justify-content:center">
+            <span class="bundlewrap"><span class="bundle" id="at-b1"></span><span class="blabel">10</span></span>
+            <span class="bundlewrap"><span class="bundle" id="at-b2"></span><span class="blabel">10</span></span>
+            <span class="qop-sign">+</span>
+            <span class="bundlewrap"><span class="bundle" id="at-b3"></span><span class="blabel">10</span></span>
+            <span class="bundlewrap"><span class="bundle" id="at-b4"></span><span class="blabel">10</span></span>
+            <span class="bundlewrap"><span class="bundle" id="at-b5"></span><span class="blabel">10</span></span>
+          </div>
+          <div class="bigmath" style="margin-top:12px">20 + 30 = 50 → 2 ikat + 3 ikat = 5 ikat = 50 balon! 🎈</div>
+        </div>
+      </div>
+
+      <div class="tip" style="margin-top:14px">📌 Intinya: <b>penjumlahan = menggabungkan semua benda, lalu menghitung seluruhnya.</b> Kalau banyak, ikat dulu per 10 supaya cepat!</div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 11: PENGURANGAN DENGAN BENDA ============ -->
+  <section class="slide" data-title="Misi 5: Pengurangan dengan Benda" data-icon="🎈" style="--acc:var(--coral)">
+    <div class="slide-inner">
+      <span class="kicker">Misi 5 • Pengurangan</span>
+      <h2 class="h-title"><span class="hl">Pengurangan dengan Benda 🎈</span></h2>
+      <div class="card card-pad" style="margin-top:10px">
+        <p style="font-size:1.15rem;font-weight:900">🎈 Cerita: Rudi punya <b>9 balon</b>. Tiba-tiba <b>3 balon meletus</b>! DUAM!
+        Berapa sisa balon Rudi?</p>
+        <div class="row">
+          <button class="btn b-blue" data-show="#so-gwrap">1️⃣ Lihat 9 balon</button>
+          <button class="btn b-coral" id="so-pop">2️⃣ BUAM! Letuskan 3</button>
+          <button class="btn b-green hidden" id="so-count-btn" data-show="#so-banner" data-confetti>3️⃣ Hitung sisanya!</button>
+        </div>
+        <div class="hidden" id="so-gwrap" style="margin-top:12px">
+          <p style="font-weight:800;margin:4px 0">Balon Rudi (9):</p>
+          <div class="qobjects" id="so-g"></div>
+        </div>
+        <div class="hidden" id="so-banner" style="margin-top:12px">
+          <div class="bigmath">9 − 3 = 6 🎉 Sisa balon Rudi ada 6!</div>
+        </div>
+      </div>
+
+      <div class="card card-pad" style="margin-top:14px">
+        <p style="font-size:1.1rem;font-weight:900">🍬 Contoh ikatan 10: ada <b>20 permen</b> (2 ikat). Kakak memakan <b>10 permen</b> (1 ikat). Berapa sisanya?</p>
+        <button class="btn b-purple" id="so-tens-btn">👀 Lihat cara hitungnya</button>
+        <div class="hidden" id="so-tens" style="margin-top:12px">
+          <div class="row" style="justify-content:center">
+            <span class="bundlewrap"><span class="bundle" id="st-b1"></span><span class="blabel">10</span></span>
+            <span class="bundlewrap"><span class="bundle" id="st-b2"></span><span class="blabel">10</span></span>
+          </div>
+          <div class="bigmath hidden" id="st-res" style="margin-top:12px">20 − 10 = 10 → tersisa 1 ikat = 10 permen! 🍬</div>
+        </div>
+      </div>
+
+      <div class="tip" style="margin-top:14px">📌 Intinya: <b>pengurangan = mengambil atau menyisihkan sebagian benda, lalu menghitung yang tersisa.</b></div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 12: PENJUMLAHAN BERSUSUN ============ -->
+  <section class="slide" data-title="Misi 5: Penjumlahan Bersusun" data-icon="➕" style="--acc:var(--blue)">
+    <div class="slide-inner">
+      <span class="kicker">Misi 5 • Penjumlahan Bersusun</span>
+      <h2 class="h-title"><span class="hl">Penjumlahan Bersusun ➕</span></h2>
+      <p class="lead">Cara bersusun = menulis bilangan <b>ke bawah</b>. Satuan sejajar satuan, puluhan sejajar puluhan.
+      Selalu mulai dari <b class="c-on">SATUAN</b> dulu!</p>
+
+      <div class="grid2" style="margin-top:12px">
+        <div class="card card-pad">
+          <b>✏️ Contoh A: 23 + 14 (tanpa menyimpan)</b>
+          <div class="center">
+            <div class="colmath">
+              <div class="cmrow"><span class="cmop"></span><span class="cmcell c-tens">2</span><span class="cmcell c-ones">3</span></div>
+              <div class="cmrow"><span class="cmop">+</span><span class="cmcell c-tens">1</span><span class="cmcell c-ones">4</span></div>
+              <div class="cmline"></div>
+              <div class="cmrow"><span class="cmop"></span><span class="cmcell c-tens ans hidden" id="a23t">3</span><span class="cmcell c-ones ans hidden" id="a23o">7</span></div>
+            </div>
+          </div>
+          <button class="btn b-blue" data-next="sa1">▶ Mulai Langkah demi Langkah</button>
+          <div class="tstep" data-group="sa1" data-unhide="#a23o"><p><span class="stepnum">1</span>Satuan dulu: <b class="c-on">3 + 4 = 7</b> → tulis 7 di tempat satuan.</p></div>
+          <div class="tstep" data-group="sa1" data-unhide="#a23t"><p><span class="stepnum">2</span>Puluhan: <b class="c-tx">2 + 1 = 3</b> → tulis 3 di tempat puluhan.</p></div>
+          <div class="tstep" data-group="sa1" data-confetti><div class="bigmath">23 + 14 = 37 🎉</div></div>
+        </div>
+
+        <div class="card card-pad">
+          <b>✏️ Contoh B: 28 + 15 (ada yang disimpan!)</b>
+          <div class="center">
+            <div class="colmath">
+              <div class="cmrow"><span class="cmop"></span><span class="cmcell carry hidden" id="b28c">1</span><span class="cmcell"></span></div>
+              <div class="cmrow"><span class="cmop"></span><span class="cmcell c-tens">2</span><span class="cmcell c-ones">8</span></div>
+              <div class="cmrow"><span class="cmop">+</span><span class="cmcell c-tens">1</span><span class="cmcell c-ones">5</span></div>
+              <div class="cmline"></div>
+              <div class="cmrow"><span class="cmop"></span><span class="cmcell c-tens ans hidden" id="b28t">4</span><span class="cmcell c-ones ans hidden" id="b28o">3</span></div>
+            </div>
+          </div>
+          <button class="btn b-blue" data-next="sa2">▶ Mulai Langkah demi Langkah</button>
+          <div class="tstep" data-group="sa2"><p><span class="stepnum">1</span>Satuan dulu: <b class="c-on">8 + 5 = 13</b>. Wah, 13 lebih dari 9! Tempat satuan hanya boleh diisi satu angka. 😲</p></div>
+          <div class="tstep" data-group="sa2" data-unhide="#b28o,#b28c"><p><span class="stepnum">2</span>Tulis <b>3</b> di satuan, lalu <b>SIMPAN 1</b> di tempat puluhan (angka oranye kecil).</p></div>
+          <div class="tstep" data-group="sa2" data-unhide="#b28t"><p><span class="stepnum">3</span>Puluhan: <b class="c-tx">2 + 1 = 3</b>, plus simpanan <b>1</b> → <b class="c-tx">4</b>.</p></div>
+          <div class="tstep" data-group="sa2" data-confetti><div class="bigmath">28 + 15 = 43 🎉</div>
+            <div class="tip" style="margin-top:8px">⚡ Trik cepat 8 + 5: 8 minta pasangannya (2) ke 5 → 5 = 2 + 3 → 8 + 2 = 10 → 10 + 3 = <b>13</b>! (Pelajari di Misi 6!)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 13: PENGURANGAN BERSUSUN ============ -->
+  <section class="slide" data-title="Misi 5: Pengurangan Bersusun" data-icon="➖" style="--acc:var(--coral)">
+    <div class="slide-inner">
+      <span class="kicker">Misi 5 • Pengurangan Bersusun</span>
+      <h2 class="h-title"><span class="hl">Pengurangan Bersusun ➖</span></h2>
+      <p class="lead">Sama seperti penjumlahan: satuan sejajar satuan, puluhan sejajar puluhan, mulai dari
+      <b class="c-on">SATUAN</b> dulu. Kalau satuannya kurang, kita harus <b>MEMINJAM</b>!</p>
+
+      <div class="grid2" style="margin-top:12px">
+        <div class="card card-pad">
+          <b>✏️ Contoh A: 47 − 23 (tanpa meminjam)</b>
+          <div class="center">
+            <div class="colmath">
+              <div class="cmrow"><span class="cmop"></span><span class="cmcell c-tens">4</span><span class="cmcell c-ones">7</span></div>
+              <div class="cmrow"><span class="cmop">−</span><span class="cmcell c-tens">2</span><span class="cmcell c-ones">3</span></div>
+              <div class="cmline"></div>
+              <div class="cmrow"><span class="cmop"></span><span class="cmcell c-tens ans hidden" id="s47t">2</span><span class="cmcell c-ones ans hidden" id="s47o">4</span></div>
+            </div>
+          </div>
+          <button class="btn b-coral" data-next="ss1">▶ Mulai Langkah demi Langkah</button>
+          <div class="tstep" data-group="ss1" data-unhide="#s47o"><p><span class="stepnum">1</span>Satuan dulu: <b class="c-on">7 − 3 = 4</b> → tulis 4.</p></div>
+          <div class="tstep" data-group="ss1" data-unhide="#s47t"><p><span class="stepnum">2</span>Puluhan: <b class="c-tx">4 − 2 = 2</b> → tulis 2.</p></div>
+          <div class="tstep" data-group="ss1" data-confetti><div class="bigmath">47 − 23 = 24 🎉</div></div>
+        </div>
+
+        <div class="card card-pad">
+          <b>✏️ Contoh B: 52 − 38 (ada yang dipinjam!)</b>
+          <div class="center">
+            <div class="colmath">
+              <div class="cmrow"><span class="cmop"></span><span class="cmcell carry hidden" id="b52c1">4</span><span class="cmcell carry hidden" id="b52c2">12</span></div>
+              <div class="cmrow"><span class="cmop"></span><span class="cmcell c-tens">5</span><span class="cmcell c-ones">2</span></div>
+              <div class="cmrow"><span class="cmop">−</span><span class="cmcell c-tens">3</span><span class="cmcell c-ones">8</span></div>
+              <div class="cmline"></div>
+              <div class="cmrow"><span class="cmop"></span><span class="cmcell c-tens ans hidden" id="b52t">1</span><span class="cmcell c-ones ans hidden" id="b52o">4</span></div>
+            </div>
+          </div>
+          <button class="btn b-coral" data-next="ss2">▶ Mulai Langkah demi Langkah</button>
+          <div class="tstep" data-group="ss2"><p><span class="stepnum">1</span>Satuan dulu: <b class="c-on">2 − 8</b>. TIDAK BISA! 2 lebih kecil dari 8. 😲</p></div>
+          <div class="tstep" data-group="ss2" data-unhide="#b52c1,#b52c2"><p><span class="stepnum">2</span><b>Pinjam 1 puluhan!</b> Angka 5 berubah jadi <b class="c-tx">4</b>, dan satuan bertambah 10 menjadi <b class="c-on">12</b>.</p></div>
+          <div class="tstep" data-group="ss2" data-unhide="#b52o"><p><span class="stepnum">3</span>Sekarang bisa: <b class="c-on">12 − 8 = 4</b> → tulis 4. ⚡ Trik pasangan: 8 = 2 + 6 → 12 − 2 = 10 → 10 − 6 = <b>4</b>!</p></div>
+          <div class="tstep" data-group="ss2" data-unhide="#b52t"><p><span class="stepnum">4</span>Puluhan: <b class="c-tx">4 − 3 = 1</b> → tulis 1.</p></div>
+          <div class="tstep" data-group="ss2" data-confetti><div class="bigmath">52 − 38 = 14 🎉</div></div>
+        </div>
+      </div>
+
+      <div class="note" style="margin-top:14px">📌 Ingat urutannya: <b>satuan dulu, puluhan belakangan</b>. Kalau satuannya kurang besar, pinjam 1 dari puluhan!</div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 14: PASANGAN BILANGAN ============ -->
+  <section class="slide" data-title="Misi 6: Pasangan Bilangan" data-icon="👫" style="--acc:var(--purple)">
+    <div class="slide-inner">
+      <span class="kicker">Misi 6 • Trik Cepat</span>
+      <h2 class="h-title"><span class="hl">Pasangan Bilangan 10 👫</span></h2>
+      <p class="lead">Ada bilangan-bilangan yang jika bersama jumlahnya selalu <b>10</b>. Mereka adalah pasangan sahabat!
+      Klik kartu-kartu pasangan di bawah! 🎊</p>
+
+      <div class="row" style="justify-content:center;margin-top:12px">
+        <button class="paircard"><span class="pnum">1</span>👫<span class="pnum">9</span><span class="peq">= 10</span></button>
+        <button class="paircard"><span class="pnum">2</span>👫<span class="pnum">8</span><span class="peq">= 10</span></button>
+        <button class="paircard"><span class="pnum">3</span>👫<span class="pnum">7</span><span class="peq">= 10</span></button>
+        <button class="paircard"><span class="pnum">4</span>👫<span class="pnum">6</span><span class="peq">= 10</span></button>
+        <button class="paircard"><span class="pnum">5</span>👫<span class="pnum">5</span><span class="peq">= 10</span></button>
+      </div>
+
+      <div class="chant" style="margin-top:16px">
+        🎵 <b>LAGU PASANGAN SEPULUH</b> 🎵<br>
+        Satu dan sembilan bersahabat! 👋<br>
+        Dua dan delapan jangan lupa! 🛹<br>
+        Tiga dan tujuh saling sayang! 💚<br>
+        Empat dan enam jalan berdua! 🚶🚶<br>
+        Lima dan lima berpelukan! 🤗<br>
+        Semuanya jadi <b>SEPULUH!</b> 🙌
+      </div>
+
+      <div class="card card-pad" style="margin-top:16px">
+        <b>🎮 GAME: Cari Pasangannya!</b>
+        <p style="margin:6px 0">Bilangan ini butuh pasangan untuk menjadi 10. Klik jawaban yang benar!</p>
+        <div class="pairobj">
+          <div class="target-num" id="pr-target">7</div>
+          <div>
+            <p style="font-weight:900;margin:0 0 8px">Pasangan dari bilangan ini adalah…</p>
+            <div class="row" id="pr-opts"></div>
+            <p id="pr-fb" style="font-weight:900;min-height:26px;margin:10px 0 0"></p>
+            <p class="muted" id="pr-score">Ronde: 0 • Benar: 0</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 15: TRIK PENJUMLAHAN CEPAT ============ -->
+  <section class="slide" data-title="Misi 6: Trik Penjumlahan Cepat" data-icon="⚡" style="--acc:var(--orange)">
+    <div class="slide-inner">
+      <span class="kicker">Misi 6 • Trik Penjumlahan Cepat</span>
+      <h2 class="h-title"><span class="hl">Trik Pasangan untuk Penjumlahan ⚡</span></h2>
+      <div class="tip" style="margin-top:8px">💡 Idenya: kalau ada bilangan yang <b>hampir 10</b>, minta bantuan pasangannya!
+      Buat <b>10</b> dulu, baru tambahkan sisanya.</div>
+
+      <div class="grid2" style="margin-top:14px">
+        <!-- SCAFFOLDING 1: LIHAT AKU -->
+        <div class="card card-pad">
+          <span class="kicker" style="background:var(--blue)">1️⃣ Lihat Aku! (contoh guru)</span>
+          <h3 style="margin:8px 0">Berapa <span class="c-tx">8</span> + <span class="c-on">5</span>?</h3>
+          <button class="btn b-blue" data-next="ta">▶ Mulai Langkah demi Langkah</button>
+          <div class="tstep" data-group="ta"><p><span class="stepnum">1</span><b class="c-tx">8</b> ingin menjadi 10. Pasangan 8 adalah <b>2</b>, jadi 8 butuh 2 lagi.</p></div>
+          <div class="tstep" data-group="ta"><p><span class="stepnum">2</span>Pecah angka <b class="c-on">5</b> menjadi: <b>5 = 2 + 3</b> (2-nya untuk 8).</p></div>
+          <div class="tstep" data-group="ta"><p><span class="stepnum">3</span>Satukan pasangannya: <b class="c-tx">8</b> + 2 = <b>10</b> ✨</p></div>
+          <div class="tstep" data-group="ta" data-confetti><p><span class="stepnum">4</span>Sisa 3 dijumlahkan: <b>10 + 3 = 13</b> 🎉</p>
+            <div class="bigmath">8 + 5 = 13 ✅</div></div>
+        </div>
+
+        <!-- SCAFFOLDING 2: AYO BERSAMA -->
+        <div class="card card-pad">
+          <span class="kicker" style="background:var(--green)">2️⃣ Ayo Kerjakan Bersama! (klik kotaknya)</span>
+          <h3 style="margin:8px 0">Berapa <span class="c-tx">9</span> + <span class="c-on">4</span>?</h3>
+          <div class="tstep shown" style="display:block">
+            <p><span class="stepnum">1</span>Pasangan dari 9 adalah <span class="blank" data-ans="1">?</span></p>
+            <p><span class="stepnum">2</span>Pecah 4 menjadi 1 dan <span class="blank" data-ans="3">?</span></p>
+            <p><span class="stepnum">3</span>Majukan pasangannya: 9 + 1 = <span class="blank" data-ans="10">?</span></p>
+            <p><span class="stepnum">4</span>Lalu 10 + 3 = <span class="blank" data-ans="13">?</span> 🎉</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCAFFOLDING 3: GILIRANMU -->
+      <div class="card card-pad" style="margin-top:14px">
+        <span class="kicker" style="background:var(--orange)">3️⃣ Giliranmu! (pikirkan dulu, baru klik)</span>
+        <h3 style="margin:8px 0">Berapa <span class="c-tx">7</span> + <span class="c-on">6</span>?</h3>
+        <button class="btn b-orange" data-show="#tc-ans" data-confetti>🤔 Sudah kupikirkan, cek jawaban!</button>
+        <div class="hidden" id="tc-ans" style="margin-top:12px">
+          <p style="font-weight:800;line-height:2.1;font-size:1.08rem">
+            <span class="stepnum">1</span>7 butuh <b>3</b> untuk menjadi 10 (pasangan 7 adalah 3).<br>
+            <span class="stepnum">2</span>Pecah 6 = 3 + <b>3</b>.<br>
+            <span class="stepnum">3</span>7 + 3 = 10 ✨<br>
+            <span class="stepnum">4</span>10 + 3 = <b>13</b> 🎉
+          </p>
+          <div class="bigmath">7 + 6 = 13 ✅ Kamu luar biasa!</div>
+        </div>
+      </div>
+
+      <!-- VERSI PULUHAN -->
+      <div class="card card-pad" style="margin-top:14px">
+        <b>🏠 Versi Puluhan: menuju 100! (klik kartunya untuk dibalik)</b>
+        <p style="margin:6px 0">Pasangan juga berlaku untuk puluhan. 3 puluhan + 7 puluhan = 10 puluhan = <b>100</b>!</p>
+        <div class="row" style="justify-content:center">
+          <div class="flash"><div class="flash-in">
+            <div class="f-face front">30 + 70 = ?</div>
+            <div class="f-face back">= 100!<br><span style="font-size:.9rem">(3 &amp; 7 pasangan)</span></div>
+          </div></div>
+          <div class="flash"><div class="flash-in">
+            <div class="f-face front">40 + 60 = ?</div>
+            <div class="f-face back">= 100!<br><span style="font-size:.9rem">(4 &amp; 6 pasangan)</span></div>
+          </div></div>
+          <div class="flash"><div class="flash-in">
+            <div class="f-face front">20 + 80 = ?</div>
+            <div class="f-face back">= 100!<br><span style="font-size:.9rem">(2 &amp; 8 pasangan)</span></div>
+          </div></div>
+          <div class="flash"><div class="flash-in">
+            <div class="f-face front">50 + 50 = ?</div>
+            <div class="f-face back">= 100!<br><span style="font-size:.9rem">(5 &amp; 5 kembar)</span></div>
+          </div></div>
+          <div class="flash"><div class="flash-in">
+            <div class="f-face front">90 + 10 = ?</div>
+            <div class="f-face back">= 100!<br><span style="font-size:.9rem">(9 &amp; 1 pasangan)</span></div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="banner" style="margin-top:14px">⚡ JURUS SAKTI: buat 10 dulu dengan pasangan, lalu jumlahkan sisanya!</div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 16: TRIK PENGURANGAN CEPAT ============ -->
+  <section class="slide" data-title="Misi 6: Trik Pengurangan Cepat" data-icon="🧮" style="--acc:var(--teal)">
+    <div class="slide-inner">
+      <span class="kicker">Misi 6 • Trik Pengurangan Cepat</span>
+      <h2 class="h-title"><span class="hl">Trik Pasangan untuk Pengurangan 🧮</span></h2>
+      <div class="tip" style="margin-top:8px">💡 Idenya: turunkan bilangan ke <b>10</b> (atau puluhannya) DULU dengan pasangannya,
+      baru kurangkan sisanya.</div>
+
+      <div class="grid2" style="margin-top:14px">
+        <!-- SCAFFOLDING 1 -->
+        <div class="card card-pad">
+          <span class="kicker" style="background:var(--blue)">1️⃣ Lihat Aku! (contoh guru)</span>
+          <h3 style="margin:8px 0">Berapa <span class="c-tx">14</span> − <span class="c-on">6</span>?</h3>
+          <button class="btn b-blue" data-next="ts1">▶ Mulai Langkah demi Langkah</button>
+          <div class="tstep" data-group="ts1"><p><span class="stepnum">1</span>14 ingin turun ke 10. Berapa yang dikurangkan? <b>4</b> (karena 14 − 4 = 10).</p></div>
+          <div class="tstep" data-group="ts1"><p><span class="stepnum">2</span>Pecah <b class="c-on">6</b> memakai 4 itu: <b>6 = 4 + 2</b>.</p></div>
+          <div class="tstep" data-group="ts1"><p><span class="stepnum">3</span>Kurangi dulu: <b class="c-tx">14</b> − 4 = <b>10</b> ✨</p></div>
+          <div class="tstep" data-group="ts1" data-confetti><p><span class="stepnum">4</span>Sisa 2 dikurangkan: <b>10 − 2 = 8</b> 🎉</p>
+            <div class="bigmath">14 − 6 = 8 ✅</div></div>
+        </div>
+
+        <!-- SCAFFOLDING 2 -->
+        <div class="card card-pad">
+          <span class="kicker" style="background:var(--green)">2️⃣ Ayo Kerjakan Bersama! (klik kotaknya)</span>
+          <h3 style="margin:8px 0">Berapa <span class="c-tx">13</span> − <span class="c-on">5</span>?</h3>
+          <div class="tstep shown" style="display:block">
+            <p><span class="stepnum">1</span>5 = <span class="blank" data-ans="3">?</span> + 2 &nbsp;(3 karena 13 − 3 = 10)</p>
+            <p><span class="stepnum">2</span>13 − <span class="blank" data-ans="3">?</span> = <span class="blank" data-ans="10">?</span></p>
+            <p><span class="stepnum">3</span>10 − 2 = <span class="blank" data-ans="8">?</span> 🎉</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCAFFOLDING 3 -->
+      <div class="card card-pad" style="margin-top:14px">
+        <span class="kicker" style="background:var(--orange)">3️⃣ Giliranmu! (pikirkan dulu, baru klik)</span>
+        <h3 style="margin:8px 0">Berapa <span class="c-tx">15</span> − <span class="c-on">8</span>?</h3>
+        <button class="btn b-orange" data-show="#tk-ans" data-confetti>🤔 Sudah kupikirkan, cek jawaban!</button>
+        <div class="hidden" id="tk-ans" style="margin-top:12px">
+          <p style="font-weight:800;line-height:2.1;font-size:1.08rem">
+            <span class="stepnum">1</span>15 turun ke 10 dengan mengurangi <b>5</b>. Jadi pecah 8 = 5 + <b>3</b>.<br>
+            <span class="stepnum">2</span>15 − 5 = 10 ✨<br>
+            <span class="stepnum">3</span>10 − 3 = <b>7</b> 🎉
+          </p>
+          <div class="bigmath">15 − 8 = 7 ✅ Kamu hebat!</div>
+        </div>
+      </div>
+
+      <!-- VERSI PULUHAN -->
+      <div class="card card-pad" style="margin-top:14px">
+        <b>🏠 Versi Puluhan: pengurangan dari 100! (klik kartunya)</b>
+        <p style="margin:6px 0">100 − 30 = 70, karena pasangan 3 puluhan (30) menuju 100 adalah 7 puluhan (70). Lihat kartu lainnya!</p>
+        <div class="row" style="justify-content:center">
+          <div class="flash"><div class="flash-in">
+            <div class="f-face front">100 − 30 = ?</div>
+            <div class="f-face back">= 70!<br><span style="font-size:.9rem">(pasangan 3 adalah 7)</span></div>
+          </div></div>
+          <div class="flash"><div class="flash-in">
+            <div class="f-face front">100 − 40 = ?</div>
+            <div class="f-face back">= 60!<br><span style="font-size:.9rem">(pasangan 4 adalah 6)</span></div>
+          </div></div>
+          <div class="flash"><div class="flash-in">
+            <div class="f-face front">100 − 70 = ?</div>
+            <div class="f-face back">= 30!<br><span style="font-size:.9rem">(pasangan 7 adalah 3)</span></div>
+          </div></div>
+          <div class="flash"><div class="flash-in">
+            <div class="f-face front">100 − 20 = ?</div>
+            <div class="f-face back">= 80!<br><span style="font-size:.9rem">(pasangan 2 adalah 8)</span></div>
+          </div></div>
+          <div class="flash"><div class="flash-in">
+            <div class="f-face front">100 − 50 = ?</div>
+            <div class="f-face back">= 50!<br><span style="font-size:.9rem">(pasangan 5 adalah 5)</span></div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="banner" style="margin-top:14px">⚡ JURUS SAKTI: turun ke 10 dulu, lalu kurangkan sisanya!</div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 17: LATIHAN SOAL ============ -->
+  <section class="slide" data-title="Latihan: 30 Soal Seru" data-icon="🏆" style="--acc:var(--orange)">
+    <div class="slide-inner">
+      <span class="kicker">Latihan • 30 Soal</span>
+      <h2 class="h-title"><span class="hl">Uji Kemampuanmu! 🏆</span></h2>
+      <div class="card card-pad" style="margin-top:8px">
+        <b>📖 Cara mengerjakan:</b>
+        <p style="margin:6px 0 0;font-weight:800;line-height:1.8">
+          1️⃣ Klik <b>▶ Mulai</b> pada stopwatch saat kamu siap menjawab.<br>
+          2️⃣ Baca soal, pilih jawaban A, B, C, atau D.<br>
+          3️⃣ Klik <b>✅ Cek Jawaban</b>. Kalau benar, klik <b>⏹ Stop</b> stopwatchmu (biasanya otomatis berhenti!).<br>
+          4️⃣ Klik <b>📖 Pembahasan</b> untuk melihat cara mengerjakannya. Lanjut ke soal berikutnya!
+        </p>
+      </div>
+      <div id="quiz-body" style="margin-top:14px"></div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 18: KESIMPULAN ============ -->
+  <section class="slide" data-title="Kesimpulan" data-icon="🎓" style="--acc:var(--green)">
+    <div class="slide-inner">
+      <span class="kicker">Kesimpulan</span>
+      <h2 class="h-title"><span class="hl">Hari Ini Kamu Sudah Bisa… 🎓</span></h2>
+      <div class="grid2" style="margin-top:12px">
+        <div class="card card-pad" style="display:flex;gap:12px;align-items:flex-start"><span style="font-size:1.8rem">✅</span><div><b>Nama Bilangan</b><p style="margin:2px 0 0;font-weight:700;color:#4a4e80">11 itu sebelas, 20-90 keluarga puluhan, dan 100 = seratus!</p></div></div>
+        <div class="card card-pad" style="display:flex;gap:12px;align-items:flex-start"><span style="font-size:1.8rem">✅</span><div><b>Lambang Bilangan</b><p style="margin:2px 0 0;font-weight:700;color:#4a4e80">Menuliskan bilangan dari namanya, dan sebaliknya.</p></div></div>
+        <div class="card card-pad" style="display:flex;gap:12px;align-items:flex-start"><span style="font-size:1.8rem">✅</span><div><b>Nilai Tempat</b><p style="margin:2px 0 0;font-weight:700;color:#4a4e80">Angka kiri = puluhan, angka kanan = satuan. Angka sama, nilai bisa beda!</p></div></div>
+        <div class="card card-pad" style="display:flex;gap:12px;align-items:flex-start"><span style="font-size:1.8rem">✅</span><div><b>Dekomposisi &amp; Komposisi</b><p style="margin:2px 0 0;font-weight:700;color:#4a4e80">Membongkar (47 = 40 + 7) dan merakit (40 + 7 = 47) bilangan.</p></div></div>
+        <div class="card card-pad" style="display:flex;gap:12px;align-items:flex-start"><span style="font-size:1.8rem">✅</span><div><b>Menghitung Benda</b><p style="margin:2px 0 0;font-weight:700;color:#4a4e80">Jurus ikat 10: hitung 10, 20, 30… lalu tambah sisanya.</p></div></div>
+        <div class="card card-pad" style="display:flex;gap:12px;align-items:flex-start"><span style="font-size:1.8rem">✅</span><div><b>Penjumlahan &amp; Pengurangan</b><p style="margin:2px 0 0;font-weight:700;color:#4a4e80">Dengan benda dan cara bersusun, termasuk menyimpan &amp; meminjam.</p></div></div>
+        <div class="card card-pad" style="display:flex;gap:12px;align-items:flex-start"><span style="font-size:1.8rem">✅</span><div><b>Trik Pasangan Bilangan ⚡</b><p style="margin:2px 0 0;font-weight:700;color:#4a4e80">1-9, 2-8, 3-7, 4-6, 5-5 untuk berhitung super cepat!</p></div></div>
+        <div class="card card-pad" style="display:flex;gap:12px;align-items:flex-start"><span style="font-size:1.8rem">🏆</span><div><b>30 Soal Latihan</b><p style="margin:2px 0 0;font-weight:700;color:#4a4e80">Kamu menguji kemampuanmu dengan stopwatch! Keren!</p></div></div>
+      </div>
+
+      <div class="card card-pad center" style="margin-top:16px">
+        <b style="font-size:1.15rem">👫 Pasangan Sahabat Sepuluh (selalu ingat!)</b>
+        <p style="font-family:'Baloo 2',cursive;font-size:1.6rem;font-weight:800;line-height:2;margin:8px 0 0">
+          1 + 9 = 10 &nbsp;•&nbsp; 2 + 8 = 10 &nbsp;•&nbsp; 3 + 7 = 10 &nbsp;•&nbsp; 4 + 6 = 10 &nbsp;•&nbsp; 5 + 5 = 10
+        </p>
+      </div>
+      <div class="banner" style="margin-top:16px">🌟 KAMU LUAR BIASA! Kamu sudah menguasai bilangan cacah sampai 100! 🌟</div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 19: REFLEKSI ============ -->
+  <section class="slide" data-title="Refleksi" data-icon="💭" style="--acc:var(--blue)">
+    <div class="slide-inner">
+      <span class="kicker">Refleksi</span>
+      <h2 class="h-title"><span class="hl">Ceritakan Perasaanmu 💭</span></h2>
+
+      <div class="card card-pad" style="margin-top:10px">
+        <b>😊 Bagaimana perasaanmu hari ini? Klik salah satu!</b>
+        <div class="feelgrid" style="margin-top:12px">
+          <button class="feelbtn" data-resp="WOW! Senang sekali mendengarnya! Terus semangat ya, petualangan angka masih panjang! 🚀"><span class="fe">🤩</span>Luar biasa!</button>
+          <button class="feelbtn" data-resp="Alhamdulillah, senang mendengarnya! Ayo ceritakan bagian mana yang paling kamu suka! 😄"><span class="fe">😊</span>Senang</button>
+          <button class="feelbtn" data-resp="Tidak apa-apa! Besok kita belajar lagi dengan cara yang lebih seru, ya! 💪"><span class="fe">😐</span>Biasa saja</button>
+          <button class="feelbtn" data-resp="Terima kasih sudah jujur! Tanyakan kepada Bapak/Ibu Guru bagian yang masih membingungkan, kita belajar bersama! 🤗"><span class="fe">🤔</span>Masih bingung</button>
+        </div>
+        <div class="resp" id="feel-resp"></div>
+      </div>
+
+      <div class="card card-pad" style="margin-top:14px">
+        <b>📌 Centang yang sudah bisa kamu lakukan hari ini!</b>
+        <div class="checklist" style="margin-top:12px">
+          <div class="checkitem"><span class="box"></span>Aku bisa menyebutkan nama bilangan sampai 100</div>
+          <div class="checkitem"><span class="box"></span>Aku bisa menentukan puluhan dan satuan</div>
+          <div class="checkitem"><span class="box"></span>Aku bisa membongkar bilangan (dekomposisi)</div>
+          <div class="checkitem"><span class="box"></span>Aku bisa menjumlahkan dan mengurangkan</div>
+          <div class="checkitem"><span class="box"></span>Aku hafal pasangan bilangan 10! ⚡</div>
+        </div>
+      </div>
+
+      <div class="grid2" style="margin-top:14px">
+        <div class="card card-pad center">
+          <b>⭐ Beri bintang untuk dirimu!</b>
+          <div id="star-row" style="margin-top:6px">
+            <button class="starbtn" data-s="1">⭐</button><button class="starbtn" data-s="2">⭐</button><button class="starbtn" data-s="3">⭐</button><button class="starbtn" data-s="4">⭐</button><button class="starbtn" data-s="5">⭐</button>
+          </div>
+          <p class="muted" id="star-msg" style="font-weight:800;min-height:24px">klik jumlah bintangmu!</p>
+        </div>
+        <div class="card card-pad">
+          <b>🌈 Bagian mana yang paling seru hari ini?</b>
+          <div class="chips" id="fav-chips" style="margin-top:10px">
+            <button class="chip" data-f="1">🔍 Menghitung benda</button>
+            <button class="chip" data-f="2">⚡ Trik pasangan cepat</button>
+            <button class="chip" data-f="3">🏆 Kuis 30 soal</button>
+          </div>
+          <p class="muted" id="fav-msg" style="font-weight:800;margin-top:10px;min-height:24px">pilih satu, ya!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SLIDE 20: THANK YOU ============ -->
+  <section class="slide" data-title="Thank You For Today!" data-icon="🎉" style="--acc:var(--pink)">
+    <div class="slide-inner">
+      <span class="float-emoji" style="top:8%;left:8%;animation-delay:.3s">🎉</span>
+      <span class="float-emoji" style="top:14%;right:10%;animation-delay:1s">🌟</span>
+      <span class="float-emoji" style="top:58%;left:6%;animation-delay:1.7s">🎈</span>
+      <span class="float-emoji" style="top:66%;right:8%;animation-delay:.6s">💯</span>
+      <div class="cover-wrap">
+        <span style="font-size:4.6rem;animation:pulse 2s infinite">🎉</span>
+        <h1 class="cover-title" style="color:var(--purple)">Thank You For Today!</h1>
+        <p class="cover-sub">Terima kasih sudah belajar bersama hari ini. Kamu hebat sekali —
+        sekarang kamu mengenal bilangan cacah sampai 100!</p>
+        <div class="cover-chips">
+          <span class="chip-info">🔢 Bilangan sampai 100 ✅</span>
+          <span class="chip-info">⚡ Trik Pasangan 10 ✅</span>
+          <span class="chip-info">🏆 30 Soal Latihan ✅</span>
+        </div>
+        <button class="btn b-coral" id="party-btn" style="font-size:1.25rem;padding:16px 34px">🎊 Rayakan dengan Konfeti!</button>
+        <p class="muted" style="font-weight:800">Sampai jumpa di petualangan angka berikutnya! 👋🦉</p>
+        <p class="hint">Matematika Kelas 1 SD • Bilangan Cacah sampai 100</p>
+      </div>
+    </div>
+  </section>
+<script>
+"use strict";
+/* ==================== HELPER ==================== */
+const $  = (s, root=document) => root.querySelector(s);
+const $$ = (s, root=document) => Array.from(root.querySelectorAll(s));
+const shuffle = a => { a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+const fmtDtk = ms => (ms/1000).toFixed(1).replace('.', ',') + ' dtk';
+
+function spawnConfetti(n=36){
+  const E=['🎉','⭐','✨','🎈','💛','💚','💙','🧡','💜','🌈'];
+  for(let i=0;i<n;i++){
+    const s=document.createElement('span');
+    s.className='confetti-piece';
+    s.textContent=E[Math.floor(Math.random()*E.length)];
+    s.style.left=(3+Math.random()*94)+'%';
+    s.style.fontSize=(14+Math.random()*20)+'px';
+    s.style.animationDuration=(1.8+Math.random()*1.8)+'s';
+    s.style.animationDelay=(Math.random()*0.4)+'s';
+    document.body.appendChild(s);
+    s.addEventListener('animationend',()=>s.remove());
+  }
+}
+function emojiSpans(e,n,cls='emoji-item'){ let h=''; for(let i=0;i<n;i++) h+='<span class="'+cls+'">'+e+'</span>'; return h; }
+function bundleHTML(t,o,e='🟡'){
+  let h='';
+  for(let i=0;i<t;i++) h+='<span class="bundlewrap"><span class="bundle">'+emojiSpans(e,10,'emoji-item sm')+'</span><span class="blabel">10</span></span>';
+  if(o>0) h+='<span class="loose">'+emojiSpans(e,o,'emoji-item sm')+'</span>';
+  return h;
+}
+function namaBilangan(n){
+  if(n===100) return 'seratus';
+  const s=['','satu','dua','tiga','empat','lima','enam','tujuh','delapan','sembilan'];
+  if(n===10) return 'sepuluh';
+  if(n===11) return 'sebelas';
+  if(n<20) return s[n]+' belas';
+  const p=Math.floor(n/10), o=n%10;
+  return s[p]+' puluh'+(o? ' '+s[o] : '');
+}
+
+/* ==================== NAVIGASI SLIDE ==================== */
+const slides=$$('.slide'); const NSLIDE=slides.length; let cur=0;
+const menu=$('#menu'), menuList=$('#menu-list');
+slides.forEach((sl,i)=>{
+  const it=document.createElement('div');
+  it.className='menu-item';
+  it.innerHTML='<span style="font-size:1.35rem">'+(sl.dataset.icon||'📄')+'</span><span>'+(i+1)+'. '+(sl.dataset.title||'Slide')+'</span>';
+  it.addEventListener('click',()=>{ go(i); toggleMenu(false); });
+  menuList.appendChild(it);
+});
+function go(i){
+  if(i<0||i>=NSLIDE) return;
+  slides.forEach((sl,k)=>{ sl.classList.toggle('active',k===i); sl.classList.toggle('prev',k<i); });
+  cur=i;
+  $('#progressbar').style.width=(i/(NSLIDE-1)*100)+'%';
+  $('#navcount').textContent='Slide '+(i+1)+' / '+NSLIDE;
+  $('#prevBtn').disabled=(i===0);
+  $('#nextBtn').disabled=(i===NSLIDE-1);
+  slides[i].scrollTop=0;
+}
+$('#nextBtn').addEventListener('click',()=>go(cur+1));
+$('#prevBtn').addEventListener('click',()=>go(cur-1));
+document.addEventListener('keydown',e=>{
+  if(e.target.matches('input,textarea')) return;
+  if(e.key==='ArrowRight') go(cur+1);
+  if(e.key==='ArrowLeft') go(cur-1);
+});
+function toggleMenu(f){ menu.classList.toggle('open',f); }
+$('#menuBtn').addEventListener('click',()=>toggleMenu(true));
+$('#menuClose').addEventListener('click',()=>toggleMenu(false));
+menu.addEventListener('click',e=>{ if(e.target===menu) toggleMenu(false); });
+$('#fsBtn').addEventListener('click',()=>{
+  if(document.fullscreenElement) document.exitFullscreen();
+  else if(document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+});
+$('#cover-start').addEventListener('click',()=>go(1));
+
+/* ==================== INTERAKSI GENERIK ==================== */
+/* Klik-tampilkan (reveal) */
+$$('[data-show]').forEach(b=>b.addEventListener('click',()=>{
+  $$(b.dataset.show).forEach(x=>{ x.classList.remove('hidden'); x.classList.add('pop'); });
+  b.classList.add('done');
+  if(b.dataset.confetti!==undefined) spawnConfetti(24);
+}));
+/* Langkah demi langkah (scaffolding) */
+$$('[data-next]').forEach(b=>b.addEventListener('click',()=>{
+  const g=b.dataset.next;
+  const steps=$$('.tstep[data-group="'+g+'"]');
+  const nx=steps.find(x=>!x.classList.contains('shown'));
+  if(nx){
+    nx.classList.add('shown','pop');
+    (nx.dataset.unhide||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(sel=>{
+      $$(sel).forEach(x=>{ x.classList.remove('hidden'); x.classList.add('pop'); });
+    });
+    if(nx.dataset.confetti!==undefined) spawnConfetti(22);
+    if(!steps.some(x=>!x.classList.contains('shown'))){ b.textContent='🎉 Selesai! Hebat!'; b.disabled=true; }
+  }
+}));
+/* Kotak isian (blank) diklik untuk melihat jawaban */
+$$('.blank').forEach(b=>b.addEventListener('click',()=>{
+  if(b.classList.contains('filled')) return;
+  b.textContent=b.dataset.ans; b.classList.add('filled');
+}));
+/* Kartu flip & flashcard */
+$$('.flip,.flash').forEach(f=>f.addEventListener('click',()=>f.classList.toggle('flipped')));
+/* Kartu pasangan (slide 14) */
+$$('.paircard').forEach(c=>c.addEventListener('click',()=>{ c.classList.remove('pop'); void c.offsetWidth; c.classList.add('pop'); spawnConfetti(8); }));
+
+/* ==================== APERSEPSI: LONCAT SEPULUH ==================== */
+$('#aper-count-btn').addEventListener('click',()=>{
+  const area=$('#aper-count-area'); area.innerHTML='';
+  for(let i=1;i<=10;i++){
+    const sp=document.createElement('span');
+    sp.className='countup-item'; sp.textContent=(i*10);
+    sp.style.animationDelay=(i*0.13)+'s';
+    area.appendChild(sp);
+  }
+  const bravo=document.createElement('span');
+  bravo.className='countup-item'; bravo.textContent='SERATUS! 🎉'; bravo.style.color='var(--purple)';
+  bravo.style.animationDelay='1.45s';
+  area.appendChild(bravo);
+  setTimeout(()=>spawnConfetti(26),1500);
+});
+
+/* ==================== MISI 1: MESIN NAMA BILANGAN ==================== */
+const NM={t:3,o:5};
+function nmRender(){
+  $('#nm-t').textContent=NM.t*10; $('#nm-o').textContent=NM.o;
+  const n=NM.t*10+NM.o;
+  $('#nm-num').textContent=n;
+  $('#nm-name').textContent=namaBilangan(n);
+  $('#nm-br').textContent=NM.t+' puluhan + '+NM.o+' satuan';
+}
+$$('[data-nm]').forEach(b=>b.addEventListener('click',()=>{
+  const k=b.dataset.nm;
+  if(k==='t-') NM.t=Math.max(1,NM.t-1);
+  if(k==='t+') NM.t=Math.min(9,NM.t+1);
+  if(k==='o-') NM.o=Math.max(0,NM.o-1);
+  if(k==='o+') NM.o=Math.min(9,NM.o+1);
+  nmRender();
+}));
+
+/* ==================== MISI 1: GAME COCOK LAMBANG ==================== */
+const MG={pairs:[['sepuluh',10],['delapan belas',18],['tiga puluh',30],['lima puluh enam',56],['tujuh puluh',70],['seratus',100]],selN:-1,selV:-1,done:0,lock:false};
+function mgInit(){
+  const names=shuffle(MG.pairs.map((p,i)=>({txt:p[0],i})));
+  const syms =shuffle(MG.pairs.map((p,i)=>({txt:p[1],i})));
+  const nb=$('#mg-names'), sb=$('#mg-syms'); nb.innerHTML=''; sb.innerHTML='';
+  names.forEach(o=>{
+    const b=document.createElement('button'); b.className='mcard'; b.textContent=o.txt; b.dataset.i=o.i;
+    b.addEventListener('click',()=>mgPick('n',o.i,b)); nb.appendChild(b);
+  });
+  syms.forEach(o=>{
+    const b=document.createElement('button'); b.className='mcard'; b.textContent=o.txt; b.dataset.i=o.i;
+    b.addEventListener('click',()=>mgPick('v',o.i,b)); sb.appendChild(b);
+  });
+  MG.selN=-1; MG.selV=-1; MG.done=0; MG.lock=false;
+  $('#mg-fb').textContent=''; $('#mg-banner').classList.add('hidden');
+}
+function mgCard(side,i){ return $$('.mcard',(side==='n'?$('#mg-names'):$('#mg-syms'))).find(c=>+c.dataset.i===i); }
+function mgPick(side,i,btn){
+  if(MG.lock) return;
+  const matched=btn.classList.contains('matched');
+  if(matched) return;
+  if(side==='n'){ MG.selN = (MG.selN===i? -1 : i); } else { MG.selV = (MG.selV===i? -1 : i); }
+  ['n','v'].forEach(s=>{ $$('.mcard',(s==='n'?$('#mg-names'):$('#mg-syms'))).forEach(c=>c.classList.toggle('sel',
+    (s==='n'&&c.dataset.i==String(MG.selN))||(s==='v'&&c.dataset.i==String(MG.selV)))); });
+  if(MG.selN>=0 && MG.selV>=0){
+    MG.lock=true;
+    if(MG.selN===MG.selV){
+      mgCard('n',MG.selN).classList.add('matched'); mgCard('n',MG.selN).classList.remove('sel');
+      mgCard('v',MG.selV).classList.add('matched'); mgCard('v',MG.selV).classList.remove('sel');
+      MG.done++; MG.selN=-1; MG.selV=-1; MG.lock=false;
+      $('#mg-fb').textContent='✅ Cocok! '+(6-MG.done)+' pasang lagi!';
+      if(MG.done===6){ $('#mg-fb').textContent=''; $('#mg-banner').classList.remove('hidden'); spawnConfetti(34); }
+    }else{
+      $('#mg-fb').textContent='❌ Belum cocok, coba lagi ya!';
+      const a=mgCard('n',MG.selN), b=mgCard('v',MG.selV);
+      a.classList.add('shakeit'); b.classList.add('shakeit');
+      setTimeout(()=>{ a.classList.remove('sel','shakeit'); b.classList.remove('sel','shakeit');
+        MG.selN=-1; MG.selV=-1; MG.lock=false; },600);
+    }
+  }
+}
+mgInit();
+
+/* Kereta bilangan */
+$$('#numstrip .chip').forEach(c=>c.addEventListener('click',()=>{
+  $$('#numstrip .chip').forEach(x=>x.classList.remove('on'));
+  c.classList.add('on');
+  const el=$('#strip-name'); el.classList.remove('pop'); void el.offsetWidth;
+  el.textContent=c.dataset.v+' = '+namaBilangan(+c.dataset.v); el.classList.add('pop');
+}));
+
+/* ==================== MISI 2: NILAI TEMPAT ==================== */
+const NT={n:34};
+function ntRender(){
+  const str=String(NT.n); const t=+str[0], o=+str[1];
+  $('#nt-t').textContent=t; $('#nt-o').textContent=o;
+  $('#nt-eq').textContent=(t*10)+' + '+o+' = '+NT.n;
+  $('#nt-val').innerHTML='Angka <b class="c-tx">'+t+'</b> di tempat puluhan bernilai <b class="c-tx">'+(t*10)+'</b> • Angka <b class="c-on">'+o+'</b> di tempat satuan bernilai <b class="c-on">'+o+'</b>';
+  $('#nt-bundles').innerHTML=bundleHTML(t,o,'🟡');
+  $$('#nt-chips .chip').forEach(c=>c.classList.toggle('on',+c.dataset.n===NT.n));
+}
+$$('#nt-chips .chip').forEach(c=>c.addEventListener('click',()=>{ NT.n=+c.dataset.n; ntRender(); }));
+
+/* ==================== MISI 3: DEKOMPOSISI ==================== */
+const DK={n:36};
+function dkRender(){
+  const str=String(DK.n); const t=+str[0], o=+str[1];
+  $('#dk-eq').textContent=DK.n+' = '+(t*10)+' + '+o;
+  $('#dk-bundles').innerHTML=bundleHTML(t,o,'🟡');
+  $$('#dk-chips .chip').forEach(c=>c.classList.toggle('on',+c.dataset.n===DK.n));
+}
+$$('#dk-chips .chip').forEach(c=>c.addEventListener('click',()=>{ DK.n=+c.dataset.n; dkRender(); }));
+
+/* ==================== MISI 3: KOMPOSISI ==================== */
+const KM={t:50,o:4};
+function kmRender(){ $('#km-t').textContent=KM.t; $('#km-o').textContent=KM.o; }
+$$('[data-km]').forEach(b=>b.addEventListener('click',()=>{
+  const k=b.dataset.km;
+  if(k==='t-') KM.t=Math.max(10,KM.t-10);
+  if(k==='t+') KM.t=Math.min(90,KM.t+10);
+  if(k==='o-') KM.o=Math.max(0,KM.o-1);
+  if(k==='o+') KM.o=Math.min(9,KM.o+1);
+  kmRender();
+}));
+$$('[data-km-set]').forEach(c=>c.addEventListener('click',()=>{
+  const p=c.dataset.kmSet.split(','); KM.t=+p[0]; KM.o=+p[1]; kmRender(); kmGo();
+}));
+function kmGo(){
+  const n=KM.t+KM.o;
+  $('#km-out').classList.remove('hidden'); $('#km-out').classList.add('pop');
+  $('#km-res').textContent=KM.t+' + '+KM.o+' = '+n+'  ('+namaBilangan(n)+')';
+  $('#km-bundles').innerHTML=bundleHTML(KM.t/10,KM.o,'🟡');
+}
+$('#km-go').addEventListener('click',kmGo);
+
+/* ==================== MISI 4: MENGHITUNG BENDA ==================== */
+const CS={
+  sets:{ straw:{e:'🍓',n:12,label:'stroberi'}, star:{e:'⭐',n:23,label:'bintang'},
+         balloon:{e:'🎈',n:31,label:'balon'}, fish:{e:'🐟',n:45,label:'ikan'}, flower:{e:'🌸',n:52,label:'bunga'} },
+  key:'straw', mode:'scattered'
+};
+function csRender(){
+  const S=CS.sets[CS.key], area=$('#count-area'), bn=$('#c-banner');
+  area.innerHTML=''; bn.classList.add('hidden');
+  if(CS.mode==='scattered'){
+    area.innerHTML=emojiSpans(S.e,S.n);
+  }else{
+    const tens=Math.floor(S.n/10), ones=S.n%10;
+    let h='';
+    for(let i=0;i<tens;i++){
+      h+='<span class="bundlewrap"><span class="bundle">'+emojiSpans(S.e,10,'emoji-item sm')+'</span><span class="blabel">10</span>'
+        +(CS.mode==='counted'?'<span class="bcount">'+((i+1)*10)+'</span>':'')+'</span>';
+    }
+    if(ones>0){
+      h+='<span class="loose">'+emojiSpans(S.e,ones,'emoji-item sm')
+        +(CS.mode==='counted'?'<span class="bcount">'+S.n+'</span>':'')+'</span>';
+    }
+    area.innerHTML=h;
+    if(CS.mode==='counted'){
+      let s='Hitung: ';
+      const labels=[]; for(let i=1;i<=tens;i++) labels.push(i*10);
+      if(ones>0){ for(let j=1;j<=ones;j++) labels.push(tens*10+j); }
+      s+=labels.join(', ')+' → JUMLAHNYA '+S.n+'!';
+      bn.textContent='🎉 '+s;
+      bn.classList.remove('hidden');
+    }
+  }
+  $$('#cs-chips .chip').forEach(c=>c.classList.toggle('on',c.dataset.cs===CS.key));
+}
+$$('#cs-chips .chip').forEach(c=>c.addEventListener('click',()=>{ CS.key=c.dataset.cs; CS.mode='scattered'; csRender(); }));
+$('#c-ikat').addEventListener('click',()=>{ CS.mode='grouped'; csRender(); });
+$('#c-hitung').addEventListener('click',()=>{ CS.mode='counted'; csRender(); });
+$('#c-ulang').addEventListener('click',()=>{ CS.mode='scattered'; csRender(); });
+
+/* ==================== MISI 5: BENDA PENJUMLAHAN & PENGURANGAN ==================== */
+$('#ao-h1').innerHTML=emojiSpans('🍎',12);
+$('#ao-h2').innerHTML=emojiSpans('🍎',5);
+$('#ao-h3').innerHTML='<span class="bundlewrap"><span class="bundle">'+emojiSpans('🍎',10,'emoji-item sm')+'</span><span class="blabel">10</span></span>'
+  +'<span class="loose">'+emojiSpans('🍎',7,'emoji-item sm')+'</span>';
+['at-b1','at-b2'].forEach(id=>{ $('#'+id).innerHTML=emojiSpans('🎈',10,'emoji-item sm'); });
+['at-b3','at-b4','at-b5'].forEach(id=>{ $('#'+id).innerHTML=emojiSpans('🔵',10,'emoji-item sm'); });
+
+const soBalloons=$('#so-g');
+soBalloons.innerHTML=emojiSpans('🎈',9);
+$('#so-pop').addEventListener('click',()=>{
+  $$('.emoji-item',soBalloons).slice(-3).forEach(b=>b.classList.add('gone'));
+  $('#so-count-btn').classList.remove('hidden');
+});
+['st-b1','st-b2'].forEach(id=>{ $('#'+id).innerHTML=emojiSpans('🍬',10,'emoji-item sm'); });
+$('#so-tens-btn').addEventListener('click',()=>{
+  setTimeout(()=>{
+    $('#st-b2').parentElement.classList.add('taken');
+    setTimeout(()=>$('#st-res').classList.remove('hidden'),800);
+  },500);
+});
+
+/* ==================== MISI 6: GAME CARI PASANGAN ==================== */
+const PR={round:0,score:0,target:0};
+function prNext(){
+  PR.target=1+Math.floor(Math.random()*9); // 1..9
+  $('#pr-target').textContent=PR.target;
+  $('#pr-target').classList.remove('pop'); void $('#pr-target').offsetWidth; $('#pr-target').classList.add('pop');
+  const pair=10-PR.target;
+  const dis=new Set([pair]);
+  while(dis.size<4){ const d=1+Math.floor(Math.random()*9); dis.add(d); }
+  const opts=shuffle(Array.from(dis));
+  const box=$('#pr-opts'); box.innerHTML='';
+  opts.forEach(v=>{
+    const b=document.createElement('button');
+    b.className='chip'; b.style.fontSize='1.35rem'; b.style.padding='10px 22px'; b.textContent=v;
+    b.addEventListener('click',()=>{
+      PR.round++;
+      if(v===pair){ PR.score++; $('#pr-fb').textContent='✅ BENAR! '+PR.target+' + '+v+' = 10! 🎉'; $('#pr-fb').style.color='#137a44'; spawnConfetti(10); }
+      else{ $('#pr-fb').textContent='❌ Belum tepat! Pasangan '+PR.target+' adalah '+pair+' ('+PR.target+' + '+pair+' = 10)'; $('#pr-fb').style.color='#b35c00'; }
+      $('#pr-score').textContent='Ronde: '+PR.round+' • Benar: '+PR.score;
+      setTimeout(prNext,1100);
+    });
+    box.appendChild(b);
+  });
+  $('#pr-fb').textContent='';
+}
+prNext();
+
+/* ==================== REFLEKSI ==================== */
+$$('.feelbtn').forEach(b=>b.addEventListener('click',()=>{
+  $$('.feelbtn').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  const r=$('#feel-resp'); r.textContent=b.dataset.resp; r.classList.remove('show'); void r.offsetWidth; r.classList.add('show');
+}));
+$$('.checkitem').forEach(c=>c.addEventListener('click',()=>c.classList.toggle('on')));
+$$('.starbtn').forEach(s=>s.addEventListener('click',()=>{
+  const v=+s.dataset.s;
+  $$('.starbtn').forEach(x=>x.classList.toggle('on',+x.dataset.s<=v));
+  const msg=['','Semangat! Ayo terus berlatih 💪','Bagus! Terus tingkatkan ya 👍','Hebat! Kamu paham sebagian besar 🌟','Luar biasa! Hampir sempurna 🎉','SEMPURNA! Kamu bintang kelas! 🤩'];
+  $('#star-msg').textContent=msg[v];
+  if(v>=4) spawnConfetti(16);
+}));
+$$('#fav-chips .chip').forEach(c=>c.addEventListener('click',()=>{
+  $$('#fav-chips .chip').forEach(x=>x.classList.remove('on'));
+  c.classList.add('on');
+  $('#fav-msg').textContent='Wah pilihan yang seru! Terima kasih sudah berbagi 😊';
+}));
+
+/* ==================== THANK YOU ==================== */
+$('#party-btn').addEventListener('click',()=>spawnConfetti(70));
+
+/* ==================== INISIALISASI AWAL ==================== */
+nmRender(); ntRender(); dkRender(); kmRender(); csRender(); go(0);
+
+/* ==================== DATA 30 SOAL ==================== */
+const QUESTIONS=[
+{cat:'Nama Bilangan',q:'Bagaimana nama bilangan <b>13</b>?',opts:['tiga belas','tiga puluh','sepuluh tiga','tiga satu'],b:'13 ada di keluarga belasan: 10 + 3. Namanya <b>tiga belas</b>. Ingat, 11 itu istimewa: <b>sebelas</b>, bukan "sepuluh satu" ya!'},
+{cat:'Nama Bilangan',q:'Bilangan "<b>dua puluh tujuh</b>" ditulis dengan lambang…',opts:['27','72','207','17'],b:'Dua puluh = 20, tujuh = 7. Gabungkan: 20 + 7 = <b>27</b>. Puluhan ditulis dulu, baru satuan!'},
+{cat:'Nama Bilangan',q:'Nama bilangan <b>40</b> adalah…',opts:['empat puluh','empat belas','empat','sepuluh empat'],b:'4 puluhan bernilai 40, namanya <b>empat puluh</b>. Hati-hati: 14 itu "empat belas", beda dengan 40 ya!'},
+{cat:'Nama Bilangan',q:'Bilangan sesudah 19 adalah…',opts:['20','18','21','10'],b:'19 + 1 = <b>20</b> (dua puluh). Setelah keluarga belasan, kita masuk keluarga puluhan: 20, 30, 40, …'},
+{cat:'Lambang Bilangan',q:'Lambang bilangan "<b>sembilan puluh</b>" adalah…',opts:['90','19','99','9'],b:'Sembilan puluh = 9 puluhan = <b>90</b>. Lambangnya angka 9 lalu 0. Angka 0 di tempat satuan!'},
+{cat:'Lambang Bilangan',q:'Nama bilangan <b>100</b> adalah…',opts:['seratus','sepuluh puluh','satu ratus','sebelas puluh'],b:'100 terdiri dari 10 ikat puluhan (10 × 10). Namanya <b>seratus</b>!'},
+{cat:'Nilai Tempat',q:'Pada bilangan <b>56</b>, angka 5 menempati tempat…',opts:['puluhan','satuan','seratus','ratusan'],b:'Pada bilangan dua angka: angka KIRI = puluhan, angka KANAN = satuan. Jadi 5 ada di tempat <b>puluhan</b> dan bernilai 50.'},
+{cat:'Nilai Tempat',q:'Bilangan <b>72</b> terdiri dari…',opts:['7 puluhan dan 2 satuan','2 puluhan dan 7 satuan','7 satuan dan 2 seratus','72 puluhan'],b:'7 di kiri = 7 puluhan (70). 2 di kanan = 2 satuan. Jadi 72 = 70 + 2.'},
+{cat:'Nilai Tempat',q:'Angka 8 pada bilangan <b>84</b> bernilai…',opts:['80','8','800','18'],b:'8 ada di tempat puluhan, jadi bernilai <b>80</b>. Angka sama, tempat berbeda, nilai bisa berbeda!'},
+{cat:'Bongkar & Rakit',q:'<b>3 puluhan</b> dan <b>6 satuan</b> membentuk bilangan…',opts:['36','63','306','33'],b:'3 puluhan = 30. 6 satuan = 6. Rakit: 30 + 6 = <b>36</b> (tiga puluh enam).'},
+{cat:'Nilai Tempat',q:'Bilangan <b>90</b> mempunyai … puluhan.',opts:['9','90','0','19'],b:'90 = 9 × 10, jadi ada <b>9</b> puluhan dan 0 satuan.'},
+{cat:'Bongkar & Rakit',q:'Dekomposisi (bongkar) bilangan <b>47</b> adalah…',opts:['40 + 7','4 + 7','47 + 7','40 + 70'],b:'47 punya 4 puluhan dan 7 satuan → 40 + 7 = 47. Bongkar artinya pisahkan puluhan dan satuannya!'},
+{cat:'Bongkar & Rakit',q:'<b>40 + 9</b> = …',opts:['49','409','13','59'],b:'4 puluhan (40) digabung 9 satuan → <b>49</b> (empat puluh sembilan).'},
+{cat:'Bongkar & Rakit',q:'<b>60 + 30</b> = …',opts:['90','63','93','96'],b:'Hitung puluhannya: 6 puluhan + 3 puluhan = 9 puluhan = <b>90</b>.'},
+{cat:'Bongkar & Rakit',q:'<b>70 + 8</b> = …',opts:['78','708','15','87'],b:'7 puluhan (70) + 8 satuan = <b>78</b> (tujuh puluh delapan).'},
+{cat:'Bongkar & Rakit',q:'<b>80</b> = 70 + …',opts:['10','1','18','80'],b:'80 dibongkar menjadi 70 + 10 = 80. Satu puluhan (10) melengkapi 7 puluhan menjadi 8 puluhan.'},
+{cat:'Hitung Benda',q:'Ada berapa banyak <b>stroberi</b>? 🍓',vis:{e:'🍓',n:14},opts:['14','12','16','41'],b:'Pakai jurus ikat 10: ada 1 ikat 10 dan 4 lepas. Hitung: 10 … lalu 11, 12, 13, 14. Jumlahnya <b>14</b> stroberi!'},
+{cat:'Hitung Benda',q:'Ada berapa banyak <b>bintang</b>? ⭐',vis:{e:'⭐',n:23},opts:['23','20','32','25'],b:'2 ikat 10 dan 3 lepas: 10, 20 … lalu 21, 22, 23. Jumlahnya <b>23</b> bintang!'},
+{cat:'Hitung Benda',q:'Ada berapa banyak <b>balon</b>? 🎈',vis:{e:'🎈',n:31},opts:['31','13','30','33'],b:'3 ikat 10 dan 1 lepas: 10, 20, 30 … lalu 31. Jumlahnya <b>31</b> balon!'},
+{cat:'Hitung Benda',q:'Ada berapa banyak <b>ikan</b>? 🐟',vis:{e:'🐟',n:45},opts:['45','35','54','40'],b:'4 ikat 10 dan 5 lepas: 10, 20, 30, 40 … lalu 41, 42, 43, 44, 45. Jumlahnya <b>45</b> ikan!'},
+{cat:'Hitung Benda',q:'Ada berapa banyak <b>bunga</b>? 🌸',vis:{e:'🌸',n:52},opts:['52','25','51','55'],b:'5 ikat 10 dan 2 lepas: 10, 20, 30, 40, 50 … lalu 51, 52. Jumlahnya <b>52</b> bunga!'},
+{cat:'Penjumlahan Benda',q:'Dina punya <b>12 apel</b> 🍎, lalu Ibu memberi <b>5 apel</b> lagi. Berapa apel Dina sekarang?',vis:{g:[['🍎',12],['🍎',5]],sign:'+'},opts:['17','12','7','15'],b:'Gabungkan semuanya, lalu hitung mulai dari 12: 13, 14, 15, 16, 17. Jadi 12 + 5 = <b>17</b> apel!'},
+{cat:'Pengurangan Benda',q:'Rudi punya <b>9 balon</b> 🎈, lalu <b>3 balon meletus</b>. Sisa balon Rudi…',vis:{e:'🎈',n:9},opts:['6','12','3','9'],b:'9 − 3: hitung mundur 9 → 8 → 7 → <b>6</b>. Cek: 6 + 3 = 9. Jadi sisanya <b>6</b> balon.'},
+{cat:'Penjumlahan Benda',q:'Ada <b>10 apel merah</b> dan <b>10 apel hijau</b>. Berapa semuanya?',vis:{g:[['🍎',10],['🍏',10]],sign:'+'},opts:['20','10','12','11'],b:'1 ikat 10 + 1 ikat 10 = 2 ikat = <b>20</b> (dua puluh).'},
+{cat:'Bersusun',q:'<b>23 + 14</b> = … <br><span class="muted" style="font-size:.95rem">Kerjakan dengan cara bersusun: satuan dulu, lalu puluhan!</span>',vis:{col:{a:'23',b:'14',op:'+'}},opts:['37','38','27','47'],b:'Bersusun: satuan dulu → 3 + 4 = 7. Lalu puluhan → 2 + 1 = 3. Hasilnya <b>37</b>!'},
+{cat:'Bersusun',q:'<b>36 + 27</b> = … <br><span class="muted" style="font-size:.95rem">Hati-hati, ada yang harus disimpan!</span>',vis:{col:{a:'36',b:'27',op:'+'}},opts:['63','53','613','16'],b:'Satuan: 6 + 7 = 13 → tulis 3, SIMPAN 1. Puluhan: 3 + 2 + 1 (simpanan) = 6. Hasilnya <b>63</b>!'},
+{cat:'Bersusun',q:'<b>58 − 24</b> = … <br><span class="muted" style="font-size:.95rem">Kerjakan dengan cara bersusun!</span>',vis:{col:{a:'58',b:'24',op:'−'}},opts:['34','44','26','24'],b:'Satuan dulu: 8 − 4 = 4. Puluhan: 5 − 2 = 3. Hasilnya <b>34</b>!'},
+{cat:'Trik Pasangan',q:'Pasangan bilangan <b>7</b> agar jumlahnya 10 adalah…',opts:['3','2','4','13'],b:'3 dan 7 adalah pasangan sahabat: 7 + 3 = 10. Ingat lagunya: "tiga dan tujuh saling sayang"! 💚'},
+{cat:'Trik Pasangan',q:'<b>30 + 70</b> = … <span class="muted">(pakai trik pasangan!)</span>',opts:['100','10','37','90'],b:'3 puluhan + 7 puluhan. Angka 3 dan 7 adalah pasangan → 10 puluhan = <b>100</b> (seratus)!'},
+{cat:'Trik Pasangan',q:'<b>100 − 60</b> = … <span class="muted">(ingat pasangannya!)</span>',opts:['40','60','4','50'],b:'Pasangan 6 puluhan (60) menuju 10 puluhan (100) adalah 4 puluhan. Jadi 100 − 60 = <b>40</b>!'}
+];
+
+/* ==================== MESIN KUIS ==================== */
+const QS=QUESTIONS.map(()=>({order:null,picked:-1,checked:false,solved:false,firstTry:false,tries:0,fbType:null,fbText:'',bahasShown:false}));
+const SWQ=QUESTIONS.map(()=>({ms:0,run:false,t0:0,base:0,iv:null}));
+let QCUR=0, stars=0, solvedN=0;
+
+function swStart(i){ const S=SWQ[i]; if(S.run) return; S.run=true; S.t0=Date.now();
+  S.iv=setInterval(()=>{ S.ms=Date.now()-S.t0+S.base; const el=$('#swt-'+i); if(el) el.textContent=fmtDtk(S.ms); },100); }
+function swStop(i){ const S=SWQ[i]; if(!S.run) return; S.run=false; clearInterval(S.iv); S.base=S.ms; }
+function swReset(i){ const S=SWQ[i]; S.run=false; clearInterval(S.iv); S.ms=0; S.base=0; }
+
+function qVis(v){
+  if(!v) return '';
+  if(v.e) return '<div class="qobjects">'+emojiSpans(v.e,v.n)+'</div>';
+  if(v.g){
+    let h='<div class="qobjects">';
+    v.g.forEach((gp,idx)=>{ h+='<span class="qgroup">'+emojiSpans(gp[0],gp[1])+'</span>'; if(idx<v.g.length-1) h+='<span class="qop-sign">'+(v.sign||'+')+'</span>'; });
+    return h+'</div>';
+  }
+  if(v.col){ const c=v.col;
+    return '<div class="center"><div class="colmath mini">'
+      +'<div class="cmrow"><span class="cmop"></span><span class="cmcell c-tens">'+c.a[0]+'</span><span class="cmcell c-ones">'+c.a[1]+'</span></div>'
+      +'<div class="cmrow"><span class="cmop">'+c.op+'</span><span class="cmcell c-tens">'+c.b[0]+'</span><span class="cmcell c-ones">'+c.b[1]+'</span></div>'
+      +'<div class="cmline"></div></div></div>';
+  }
+  return '';
+}
+
+function qGridHtml(){
+  let h='<div class="qgrid">';
+  for(let j=0;j<QUESTIONS.length;j++){
+    let cls='qdot'; if(j===QCUR) cls+=' cur'; else if(QS[j].solved) cls+=' ok'; else if(QS[j].checked) cls+=' try';
+    h+='<button class="'+cls+'" data-j="'+j+'">'+(j+1)+'</button>';
+  }
+  return h+'</div>';
+}
+
+function qRender(i){
+  QCUR=i; const st=QS[i], Q=QUESTIONS[i];
+  if(!st.order) st.order=shuffle(Q.opts.map((_,k)=>k));
+  const correctK=st.order.indexOf(0);
+  let opts='';
+  st.order.forEach((oi,k)=>{
+    let cls='opt';
+    if(st.solved){ if(oi===0) cls+=' correct'; else cls+=' dim'; }
+    else{ if(st.picked===k) cls+= st.checked&&k!==correctK ? ' wrong' : ' sel'; }
+    opts+='<button class="'+cls+'" data-k="'+k+'"'+(st.solved?' disabled':'')+'><span class="letter">'+'ABCD'[k]+'</span><span>'+Q.opts[oi]+'</span></button>';
+  });
+  let fbCls='feedback', fbTxt=st.fbText||'';
+  if(st.fbType) fbCls+=' '+st.fbType;
+  const swS=SWQ[i];
+  let swHint;
+  if(st.solved && swS.ms>0) swHint='⏱️ Waktumu: <b>'+fmtDtk(swS.ms)+'</b> — hebat!';
+  else if(swS.run) swHint='Sedang berjalan… klik ⏹ Stop setelah berhasil menjawab!';
+  else swHint='Klik ▶ Mulai saat siap menjawab. Stop setelah berhasil!';
+
+  $('#quiz-body').innerHTML=
+    (solvedN===QUESTIONS.length?'<div class="qall-done">🏆 LUAR BIASA! Semua 30 soal sudah kamu selesaikan! Kamu juara bilangan! 🏆</div>':'')
+    +'<div class="qhead"><span class="qcat">Soal '+(i+1)+' • '+Q.cat+'</span>'
+    +'<span class="score-pill">⭐ Bintang: <b>'+stars+'</b> &nbsp;•&nbsp; Selesai: <b>'+solvedN+'</b>/'+QUESTIONS.length+'</span></div>'
+    +'<div class="quizwrap"><div class="card card-pad">'
+      +'<div class="qtext">'+(i+1)+'. '+Q.q+'</div>'
+      +qVis(Q.vis)
+      +'<div class="optgrid" id="q-opts">'+opts+'</div>'
+      +'<div class="qactions">'
+        +'<button class="btn b-green" id="q-check"'+(st.solved?' disabled':'')+'>✅ Cek Jawaban</button>'
+        +'<button class="btn b-purple" id="q-bahas"'+((st.checked||st.solved)?'':' disabled')+'>📖 Pembahasan</button>'
+        +(st.solved?'<button class="btn ghost small" id="q-retry">↻ Ulangi Soal Ini</button>':'')
+      +'</div>'
+      +'<div class="'+fbCls+'" id="q-fb">'+fbTxt+'</div>'
+      +'<div class="bahas'+(st.bahasShown?' show':'')+'" id="q-bahasbox">💡 <b>Pembahasan:</b><br>'+Q.b+'</div>'
+    +'</div>'
+    +'<div class="qright">'
+      +'<div class="stopwatch'+(swS.run?' running':'')+'">'
+        +'<div class="sw-top">⏱️ Stopwatch Soal '+(i+1)+'</div>'
+        +'<div class="sw-time" id="swt-'+i+'">'+fmtDtk(swS.ms)+'</div>'
+        +'<div class="sw-btns">'
+          +'<button class="btn small '+(swS.run?'b-coral':'b-green')+'" id="swb-'+i+'">'+(swS.run?'⏹ Stop':'▶ Mulai')+'</button>'
+          +'<button class="btn small ghost" id="swr-'+i+'">↺</button>'
+        +'</div>'
+        +'<div class="sw-hint">'+swHint+'</div>'
+      +'</div>'
+      +'<div class="card card-pad" style="margin-top:14px">'
+        +'<div class="row" style="justify-content:space-between">'
+          +'<button class="btn small ghost" id="q-prev"'+(i===0?' disabled':'')+'>◀</button>'
+          +'<b>Soal '+(i+1)+' / '+QUESTIONS.length+'</b>'
+          +'<button class="btn small ghost" id="q-next"'+(i===QUESTIONS.length-1?' disabled':'')+'>▶</button>'
+        +'</div>'
+        +qGridHtml()
+      +'</div>'
+    +'</div></div>';
+
+  /* --- event wiring --- */
+  $$('#q-opts .opt').forEach(o=>o.addEventListener('click',()=>{
+    if(st.solved) return;
+    st.picked=+o.dataset.k;
+    $$('#q-opts .opt').forEach(x=>x.classList.remove('sel'));
+    o.classList.add('sel');
+  }));
+  $('#q-check').addEventListener('click',()=>{
+    if(st.solved) return;
+    if(st.picked<0){ st.fbType='no'; st.fbText='Pilih dulu jawabanmu, ya! 😊'; qRender(i); return; }
+    st.checked=true; st.tries++;
+    if(st.picked===correctK){
+      st.solved=true; st.firstTry=(st.tries===1);
+      if(st.firstTry) stars++;
+      solvedN++;
+      swStop(i);
+      st.fbType='ok';
+      st.fbText=st.firstTry?'🎉 BENAR! Luar biasa, kamu dapat bintang! ⭐':'🎉 BENAR! Hebat, akhirnya berhasil! 💪';
+      spawnConfetti(26);
+    }else{
+      st.fbType='no';
+      st.fbText='Hampir! Coba lagi ya, kamu pasti bisa! 💪';
+    }
+    qRender(i);
+  });
+  $('#q-bahas').addEventListener('click',()=>{ st.bahasShown=true; $('#q-bahasbox').classList.add('show'); });
+  const rb=$('#q-retry');
+  if(rb) rb.addEventListener('click',()=>{
+    if(st.solved){ solvedN=Math.max(0,solvedN-1); if(st.firstTry) stars=Math.max(0,stars-1); }
+    st.picked=-1; st.checked=false; st.solved=false; st.firstTry=false; st.tries=0;
+    st.fbType=null; st.fbText=''; st.bahasShown=false;
+    swReset(i);
+    qRender(i);
+  });
+  $('#swb-'+i).addEventListener('click',()=>{ if(SWQ[i].run) swStop(i); else swStart(i); qRender(i); });
+  $('#swr-'+i).addEventListener('click',()=>{ swReset(i); qRender(i); });
+  $('#q-prev').addEventListener('click',()=>{ if(i>0) qRender(i-1); });
+  $('#q-next').addEventListener('click',()=>{ if(i<QUESTIONS.length-1) qRender(i+1); });
+  $$('#quiz-body .qdot').forEach(d=>d.addEventListener('click',()=>qRender(+d.dataset.j)));
+}
+qRender(0);
+</script>
+</body>
+</html>
+
