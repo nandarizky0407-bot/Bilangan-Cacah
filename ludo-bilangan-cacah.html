@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ludo Bilangan Cacah — Game Edukasi Matematika Kelas 3 SD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--indigo:#4338ca;--indigo-l:#eef2ff}
+body{font-family:'Baloo 2','Comic Sans MS','Segoe UI',system-ui,sans-serif;color:var(--ink);min-height:100vh;background:linear-gradient(135deg,#bfdbfe 0%,#ddd6fe 48%,#fbcfe8 100%);background-attachment:fixed}
+body::before,body::after{content:'';position:fixed;border-radius:50%;filter:blur(70px);opacity:.45;pointer-events:none;z-index:0}
+body::before{width:46vmax;height:46vmax;left:-14vmax;top:-16vmax;background:#93c5fd}
+body::after{width:42vmax;height:42vmax;right:-12vmax;bottom:-18vmax;background:#f9a8d4}
+.hidden{display:none!important}
+button{font-family:inherit}
+.screen{display:none;min-height:100dvh;flex-direction:column;align-items:center;position:relative;z-index:1}
+.screen.active{display:flex}
+
+/* ============ KARTU MENU & INPUT NAMA ============ */
+.menu-card{background:#fff;border-radius:28px;box-shadow:0 18px 50px rgba(30,41,59,.20);width:min(94vw,840px);margin:auto;padding:28px 32px 30px;text-align:center;position:relative;z-index:1}
+.logo{font-size:44px;line-height:1.2;letter-spacing:6px}
+.title{font-size:clamp(30px,5vw,44px);font-weight:800;color:var(--indigo);letter-spacing:.5px;line-height:1.15}
+.subtitle{color:var(--muted);font-weight:600;margin-top:2px;font-size:16px}
+.credit{margin-top:16px;font-size:12.5px;color:#94a3b8;font-weight:600}
+.rules-box{text-align:left;background:#f8fafc;border:2px dashed #c7d2fe;border-radius:18px;padding:16px 20px;margin:18px 0 6px;max-height:320px;overflow:auto}
+.rules-box h3{color:var(--indigo);margin:10px 0 6px;font-size:16.5px}
+.rules-box h3:first-child{margin-top:0}
+.rules-box p{font-size:14.5px;line-height:1.5;margin-bottom:6px}
+.rules-box ol,.rules-box ul{padding-left:22px;display:grid;gap:6px;font-size:14.5px;line-height:1.5;margin-bottom:6px}
+.rules-box li b{color:#0f172a}
+.mini-legend{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:8px 0;font-size:13.5px;font-weight:600}
+.sec-title{font-size:21px;font-weight:800;color:#0f172a;margin:18px 0 12px}
+.count-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.count-btn{font-size:19px;font-weight:800;padding:14px 26px;border-radius:999px;border:3px solid var(--line);background:#fff;cursor:pointer;color:#334155;transition:.18s;line-height:1.25}
+.count-btn small{display:block;font-size:12px;font-weight:600;color:#94a3b8}
+.count-btn:hover{transform:translateY(-2px);border-color:#a5b4fc}
+.count-btn.sel{border-color:#4f46e5;background:var(--indigo-l);color:var(--indigo);box-shadow:0 6px 16px rgba(79,70,229,.25);transform:translateY(-2px)}
+.btn-primary{margin-top:18px;font-size:19px;font-weight:800;color:#7c2d12;background:linear-gradient(180deg,#fde047,#f59e0b);border:none;border-radius:999px;padding:14px 30px;cursor:pointer;box-shadow:0 6px 0 #b45309,0 10px 20px rgba(180,83,9,.25);transition:.15s}
+.btn-primary:hover:not(:disabled){transform:translateY(-2px);filter:brightness(1.04)}
+.btn-primary:active:not(:disabled){transform:translateY(3px);box-shadow:0 2px 0 #b45309}
+.btn-primary:disabled{background:#e2e8f0;color:#94a3b8;box-shadow:0 4px 0 #cbd5e1;cursor:not-allowed}
+.btn-secondary{font-size:17px;font-weight:800;color:#475569;background:#fff;border:3px solid var(--line);border-radius:999px;padding:13px 26px;cursor:pointer;box-shadow:0 4px 0 #cbd5e1;transition:.15s;margin-top:18px}
+.btn-secondary:hover{border-color:#a5b4fc;transform:translateY(-2px)}
+.row-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+#name-rows{margin:20px 0 4px;text-align:left;max-width:520px;margin-left:auto;margin-right:auto}
+.name-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.name-row input{flex:1;min-width:0;font-family:inherit;font-size:18px;font-weight:700;padding:12px 16px;border-radius:14px;border:3px solid var(--line);outline:none;color:var(--ink);background:#fff}
+.name-row input:focus{border-color:#818cf8}
+.pchip{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:12px;color:#fff;font-weight:800;font-size:19px;flex:0 0 auto;box-shadow:inset 0 -3px 5px rgba(0,0,0,.22),0 2px 6px rgba(2,6,23,.22)}
+.pchip.mini{width:26px;height:26px;font-size:13px;border-radius:8px;vertical-align:middle;margin-right:2px}
+.switch-row{display:flex;align-items:center;gap:10px;background:#f8fafc;border:2px dashed #c7d2fe;padding:12px 16px;border-radius:14px;font-weight:700;cursor:pointer;margin:14px auto 0;max-width:520px;text-align:left;font-size:15.5px;line-height:1.35}
+.switch-row input{width:22px;height:22px;accent-color:#4f46e5;flex:0 0 auto}
+.switch-row small{color:var(--muted);font-weight:600;font-size:12.5px;display:block}
+/* ============ LAYAR PERMAINAN ============ */
+.game-top{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 18px 6px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:20px;color:#3730a3}
+.brand small{font-size:12px;color:#64748b;font-weight:700}
+.top-btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn-icon{background:#fff;border:2px solid var(--line);border-radius:999px;padding:8px 14px;font-weight:700;font-size:14px;color:#334155;cursor:pointer;box-shadow:0 2px 6px rgba(2,6,23,.08);transition:.15s}
+.btn-icon:hover{border-color:#a5b4fc;transform:translateY(-1px)}
+.game-layout{display:flex;gap:20px;align-items:flex-start;justify-content:center;flex-wrap:wrap;padding:8px 16px 34px;width:100%}
+.board-wrap{--cell:40px;position:relative;width:min(94vw,600px);width:min(94vw,600px,calc(100dvh - 150px));aspect-ratio:1/1;border-radius:20px;overflow:hidden;box-shadow:0 16px 40px rgba(2,6,23,.30);background:#fff;flex:0 0 auto;user-select:none}
+#board{position:absolute;inset:0;display:grid;grid-template-columns:repeat(15,1fr);grid-template-rows:repeat(15,1fr)}
+#pawn-layer{position:absolute;inset:0;pointer-events:none;z-index:6}
+
+/* sel jalur */
+.cell{background:#fff;box-shadow:inset 0 0 0 1px #dbe4f0;position:relative}
+.cell.start-red{background:#ef4444}.cell.start-green{background:#22c55e}.cell.start-yellow{background:#f59e0b}.cell.start-blue{background:#3b82f6}
+.cell.start-red::after,.cell.start-green::after,.cell.start-yellow::after,.cell.start-blue::after{content:'★';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:calc(var(--cell)*.55);text-shadow:0 1px 3px rgba(0,0,0,.35)}
+.cell.gate-red{background:#fca5a5}.cell.gate-green{background:#86efac}.cell.gate-yellow{background:#fcd34d}.cell.gate-blue{background:#93c5fd}
+.cell.home-red{background:#fecaca}.cell.home-green{background:#bbf7d0}.cell.home-yellow{background:#fde68a}.cell.home-blue{background:#bfdbfe}
+
+/* basis (rumah) */
+.base{position:relative}
+.b-red{background:#ef4444}.b-green{background:#22c55e}.b-yellow{background:#f59e0b}.b-blue{background:#3b82f6}
+.base.dimmed{filter:grayscale(.9) opacity(.45)}
+.base-inner{position:absolute;inset:13%;background:rgba(255,255,255,.93);border-radius:16px;box-shadow:inset 0 0 0 3px rgba(255,255,255,.7),0 2px 10px rgba(2,6,23,.15)}
+.base.active-glow::before{content:'';position:absolute;inset:0;border:calc(var(--cell)*.14) solid #fde047;border-radius:8px;animation:glowpulse 1.2s ease-in-out infinite;z-index:2;pointer-events:none}
+.base-slot{position:absolute;width:23%;aspect-ratio:1/1;border:3px dashed rgba(255,255,255,.95);border-radius:50%;transform:translate(-50%,-50%);z-index:1}
+.base-name{position:absolute;left:50%;bottom:5.5%;transform:translateX(-50%);background:#fff;color:#1e293b;font-weight:800;font-size:calc(var(--cell)*.42);padding:2px 12px;border-radius:999px;box-shadow:0 2px 6px rgba(2,6,23,.25);white-space:nowrap;max-width:88%;overflow:hidden;text-overflow:ellipsis;z-index:2}
+
+/* pusat papan */
+.center-area{grid-area:7/7/10/10;position:relative;z-index:2}
+.tri{position:absolute;inset:0}
+.tri-red{background:#ef4444;clip-path:polygon(0 0,50% 50%,0 100%)}
+.tri-green{background:#22c55e;clip-path:polygon(0 0,100% 0,50% 50%)}
+.tri-yellow{background:#f59e0b;clip-path:polygon(100% 0,100% 100%,50% 50%)}
+.tri-blue{background:#3b82f6;clip-path:polygon(0 100%,50% 50%,100% 100%)}
+
+/* pion */
+.pawn{position:absolute;z-index:10;width:calc(var(--cell)*1.16);height:calc(var(--cell)*1.16);border-radius:50%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.78),rgba(255,255,255,0) 55%),var(--pc);border:calc(var(--cell)*.06) solid #fff;box-shadow:0 calc(var(--cell)*.07) calc(var(--cell)*.16) rgba(2,6,23,.42),inset 0 calc(var(--cell)*-.09) calc(var(--cell)*.12) rgba(0,0,0,.28);transition:left .19s linear,top .19s linear;pointer-events:auto}
+.pc-red{--pc:#ef4444;--pcd:#991b1b}.pc-green{--pc:#22c55e;--pcd:#166534}.pc-yellow{--pc:#f59e0b;--pcd:#92400e}.pc-blue{--pc:#3b82f6;--pcd:#1e40af}
+.pawn-ico{font-size:calc(var(--cell)*.5);line-height:1;filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
+.pawn-num{position:absolute;top:calc(var(--cell)*-.16);left:calc(var(--cell)*-.16);width:calc(var(--cell)*.54);height:calc(var(--cell)*.54);font-size:calc(var(--cell)*.34);background:#fff;border:2px solid var(--pc);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--pcd);box-shadow:0 1px 4px rgba(2,6,23,.3)}
+.pawn.selectable{cursor:pointer;animation:pulse 1.1s ease-in-out infinite}
+.pawn.selectable:hover{transform:translate(-50%,-50%) scale(1.22);z-index:60}
+.pawn.hop{animation:hop .4s ease}
+.pawn.bumped{animation:bumpshake .65s ease}
+
+/* dadu */
+.dice-zone{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:12px 0}
+.dice{width:62px;height:62px;background:#fff;border:3px solid #334155;border-radius:14px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:7px;gap:2px;box-shadow:0 4px 10px rgba(2,6,23,.18);flex:0 0 auto}
+.dice.rolling{animation:shake .45s linear infinite}
+.pip{background:#334155;border-radius:50%;width:100%;height:100%;align-self:center;justify-self:center;visibility:hidden}
+.btn-roll{flex:1;min-width:150px;font-size:17px;line-height:1.25;padding:12px 14px;border:none;border-radius:16px;color:#fff;font-weight:800;cursor:pointer;background:linear-gradient(180deg,#34d399,#059669);box-shadow:0 5px 0 #047857,0 8px 16px rgba(4,120,87,.25);transition:.15s}
+.btn-roll:active:not(:disabled){transform:translateY(3px);box-shadow:0 2px 0 #047857}
+.btn-roll:disabled{background:#e2e8f0;color:#94a3b8;box-shadow:0 4px 0 #cbd5e1;cursor:not-allowed}
+
+/* sidebar */
+.sidebar{width:330px;max-width:94vw;display:flex;flex-direction:column;gap:14px}
+.card{background:#fff;border-radius:20px;box-shadow:0 10px 26px rgba(2,6,23,.12);padding:16px 18px}
+.card-title{font-weight:800;margin-bottom:10px;color:#334155;font-size:16px}
+.turn-name{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:800;margin-bottom:2px}
+.status{background:var(--indigo-l);border-radius:12px;padding:10px 13px;font-weight:700;color:var(--indigo);min-height:48px;display:flex;align-items:center;line-height:1.4;font-size:15px}
+.prow{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:14px;border:2px solid transparent;margin-bottom:4px}
+.prow.current{background:#fef9c3;border-color:#facc15}
+.pname{font-weight:800;font-size:15.5px;line-height:1.2}
+.pdots{display:flex;gap:4px;margin-top:4px}
+.pdot{width:15px;height:15px;border-radius:50%;border:2px solid #cbd5e1;background:#f1f5f9}
+.pdot.track{background:var(--pc);border-color:var(--pcd)}
+.pdot.home{background:var(--pc);border-color:var(--pcd);box-shadow:inset 0 0 0 2px #fff}
+.pdot.center{background:#fbbf24;border-color:#d97706}
+.pmeta{margin-left:auto;text-align:right;font-size:12px;color:var(--muted);font-weight:700;line-height:1.35;white-space:nowrap}
+.legend-row{display:flex;align-items:center;gap:10px;padding:6px 0;font-weight:700;font-size:14px}
+.legend-ico{width:34px;height:34px;border-radius:10px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:19px;flex:0 0 auto}
+.legend-row b{color:#475569;margin-left:auto;font-size:11.5px;background:#f8fafc;border:1px solid var(--line);padding:2px 9px;border-radius:999px;white-space:nowrap}
+
+/* modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px}
+.q-card{background:#fff;border-radius:24px;width:min(580px,96vw);max-height:92dvh;overflow:auto;padding:22px 24px;animation:pop .25s ease}
+.q-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.q-player{font-weight:800;font-size:16.5px;display:flex;align-items:center;gap:8px}
+.badge{padding:5px 12px;border-radius:999px;font-weight:800;font-size:13px}
+.badge-cat{background:var(--indigo-l);color:var(--indigo);border:2px solid #c7d2fe}
+.badge-dice{background:#dcfce7;color:#166534;border:2px solid #86efac}
+.q-text{font-size:19px;font-weight:700;line-height:1.5;margin:4px 0 16px;color:#0f172a}
+.q-opts{display:grid;gap:10px}
+.q-opt{display:flex;align-items:center;gap:12px;text-align:left;font-size:16px;font-weight:700;padding:11px 14px;border-radius:14px;border:3px solid var(--line);background:#fff;cursor:pointer;transition:.15s;color:var(--ink)}
+.q-opt:hover:not(:disabled){border-color:#a5b4fc;transform:translateX(4px)}
+.q-opt .letter{width:32px;height:32px;flex:0 0 32px;border-radius:10px;background:var(--indigo-l);color:var(--indigo);display:flex;align-items:center;justify-content:center;font-weight:800}
+.q-opt.correct{background:#dcfce7;border-color:#22c55e;color:#14532d}
+.q-opt.correct .letter{background:#22c55e;color:#fff}
+.q-opt.wrong{background:#fee2e2;border-color:#ef4444;color:#7f1d1d}
+.q-opt.wrong .letter{background:#ef4444;color:#fff}
+.q-opt.faded{opacity:.5}
+.q-fb{margin-top:14px;border-radius:14px;padding:12px 15px;font-weight:600;line-height:1.55;font-size:15px}
+.q-fb.ok{background:#dcfce7;border:2px solid #86efac;color:#14532d}
+.q-fb.bad{background:#fee2e2;border:2px solid #fca5a5;color:#7f1d1d}
+.q-card .btn-primary{display:block;margin-left:auto;margin-right:auto}
+#q-next{width:100%;margin-top:14px}
+
+/* pemenang */
+.win-card{text-align:center;max-width:520px}
+.win-trophy{font-size:74px;line-height:1;animation:bounce 1s ease-in-out infinite}
+.win-title{font-size:clamp(26px,4.5vw,38px);font-weight:800;color:#b45309;margin-top:6px;line-height:1.2}
+.win-sub{color:var(--muted);font-weight:600;margin-top:4px;font-size:15.5px}
+.win-table{margin:18px auto 4px;border-collapse:collapse;width:100%}
+.win-table th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.5px;padding:6px 10px;border-bottom:2px solid #f1f5f9;text-align:center}
+.win-table td{padding:9px 10px;border-bottom:2px solid #f1f5f9;font-size:15.5px;font-weight:700;text-align:center}
+.win-table tr.winner-row{background:#fef9c3}
+.confetti{position:fixed;top:-4vh;width:12px;height:18px;z-index:300;animation:cfall linear forwards;pointer-events:none}
+
+/* animasi */
+@keyframes pop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes shake{0%{transform:rotate(0)}25%{transform:rotate(-14deg) translateY(-3px)}50%{transform:rotate(10deg)}75%{transform:rotate(-8deg) translateY(-2px)}100%{transform:rotate(0)}}
+@keyframes pulse{0%,100%{box-shadow:0 calc(var(--cell)*.07) calc(var(--cell)*.16) rgba(2,6,23,.42),0 0 0 0 rgba(255,255,255,.85)}50%{box-shadow:0 calc(var(--cell)*.07) calc(var(--cell)*.16) rgba(2,6,23,.42),0 0 0 calc(var(--cell)*.30) rgba(255,255,255,.20)}}
+@keyframes hop{0%,100%{margin-top:0}50%{margin-top:calc(var(--cell)*-.38)}}
+@keyframes bumpshake{0%,100%{margin-left:0;margin-top:0}15%{margin-left:calc(var(--cell)*-.20);margin-top:calc(var(--cell)*-.12)}35%{margin-left:calc(var(--cell)*.20);margin-top:calc(var(--cell)*-.08)}55%{margin-left:calc(var(--cell)*-.16)}75%{margin-left:calc(var(--cell)*.12);margin-top:calc(var(--cell)*-.10)}}
+@keyframes glowpulse{0%,100%{box-shadow:inset 0 0 0 4px rgba(253,224,71,.95)}50%{box-shadow:inset 0 0 0 9px rgba(253,224,71,.5)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes cfall{to{transform:translateY(110vh) rotate(720deg)}}
+
+@media (max-width:1020px){
+  .game-layout{flex-direction:column;align-items:center}
+  .board-wrap{width:min(94vw,540px)}
+  .sidebar{width:min(94vw,540px)}
+}
+@media (max-width:560px){
+  .mini-legend{grid-template-columns:1fr}
+  .menu-card{padding:22px 18px}
+  .q-text{font-size:17px}
+  .q-opt{font-size:14.5px}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= LAYAR 1: MENU / CARA BERMAIN ================= -->
+<section id="screen-menu" class="screen active">
+  <div class="menu-card">
+    <div class="logo">🎲 🔢 ✖️</div>
+    <h1 class="title">Ludo Bilangan Cacah</h1>
+    <p class="subtitle">Game Edukasi Bilangan Cacah &bull; Matematika Kelas 3 SD</p>
+    <div class="rules-box" id="rules-menu"></div>
+    <h2 class="sec-title">👨‍👩‍👧‍👦 Pilih Jumlah Pemain</h2>
+    <div class="count-btns" id="count-btns">
+      <button class="count-btn" data-n="2">👥 2 Pemain<small>Satu lawan satu</small></button>
+      <button class="count-btn" data-n="3">🧑‍🤝‍🧑 3 Pemain<small>Tiga petualang</small></button>
+      <button class="count-btn" data-n="4">🎉 4 Pemain<small>Rame-ramean!</small></button>
+    </div>
+    <button id="btn-next-names" class="btn-primary" disabled>Lanjut: Isi Nama Pemain ➜</button>
+    <p class="credit">Sumber soal: Kumpulan 100 Soal Bilangan Cacah Kelas 3 SD &bull; Soal, Kunci &amp; Pembahasan Bahasa Indonesia (5 Bagian @ 20 Soal)</p>
+  </div>
+</section>
+
+<!-- ================= LAYAR 2: INPUT NAMA ================= -->
+<section id="screen-names" class="screen">
+  <div class="menu-card">
+    <h1 class="title" style="font-size:30px">✏️ Isi Nama Pemain</h1>
+    <p class="subtitle">Nama boleh dikosongkan — akan diberi nama otomatis.</p>
+    <div id="name-rows"></div>
+    <label class="switch-row"><input type="checkbox" id="opt-double"><span>⚡ Mode Dadu Ganda<small>Lempar 2 dadu sekaligus, pion maju sesuai jumlahnya. Permainan lebih cepat selesai!</small></span></label>
+    <label class="switch-row"><input type="checkbox" id="opt-senggol" checked><span>💥 Senggol Pion<small>Jika pionmu mendarat di petak yang sama dengan pion lawan (di luar petak start ★), pion lawan yang datang lebih dulu <b>tersenggol dan kembali ke rumah</b>. Matikan jika ingin pion berbagi petak dengan damai.</small></span></label>
+    <div class="row-btns">
+      <button id="btn-back-menu" class="btn-secondary">⟵ Kembali</button>
+      <button id="btn-start" class="btn-primary" style="margin-top:0">🚀 Mulai Bermain!</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LAYAR 3: PERMAINAN ================= -->
+<section id="screen-game" class="screen">
+  <header class="game-top">
+    <span class="brand">🎲 Ludo Bilangan Cacah <small>• Matematika Kelas 3 SD</small></span>
+    <div class="top-btns">
+      <button id="btn-rules" class="btn-icon">📖 Cara Main</button>
+      <button id="btn-sound" class="btn-icon" title="Nyalakan/matikan suara">🔊</button>
+      <button id="btn-restart" class="btn-icon">🔄 Ulangi</button>
+    </div>
+  </header>
+  <div class="game-layout">
+    <div class="board-wrap">
+      <div id="board"></div>
+      <div id="pawn-layer"></div>
+    </div>
+    <aside class="sidebar">
+      <div class="card">
+        <div class="card-title">🎛️ Giliran Bermain</div>
+        <div class="turn-name" id="turn-name"></div>
+        <div class="dice-zone">
+          <div class="dice" id="dice-1"><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div></div>
+          <div class="dice hidden" id="dice-2"><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div><div class="pip"></div></div>
+          <button class="btn-roll" id="btn-roll">🎲 Lempar Dadu</button>
+        </div>
+        <div class="status" id="status">…</div>
+      </div>
+      <div class="card" id="players-panel"></div>
+      <div class="card">
+        <div class="card-title">🧩 Jenis Soal Tiap Pion</div>
+        <div class="legend-row"><span class="legend-ico">🔢</span><span>Nilai Tempat, Nilai Angka, Dekomposisi, Nama & Lambang Bilangan</span><b>Pion 1</b></div>
+        <div class="legend-row"><span class="legend-ico">⚖️</span><span>Mengurutkan dan Membandingkan Bilangan</span><b>Pion 2</b></div>
+        <div class="legend-row"><span class="legend-ico">➕</span><span>Penjumlahan Bilangan Cacah Ribuan</span><b>Pion 3</b></div>
+        <div class="legend-row"><span class="legend-ico">➖</span><span>Pengurangan Bilangan Cacah Ribuan</span><b>Pion 4</b></div>
+        <div class="legend-row"><span class="legend-ico">✖️</span><span>Perkalian Bilangan Cacah</span><b>Pion 5</b></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ================= MODAL SOAL ================= -->
+<div id="modal-q" class="modal-overlay hidden">
+  <div class="q-card">
+    <div class="q-head">
+      <span class="q-player" id="q-player"></span>
+      <span class="badge badge-cat" id="q-cat"></span>
+      <span class="badge badge-dice" id="q-dice"></span>
+    </div>
+    <div class="q-text" id="q-text"></div>
+    <div class="q-opts" id="q-opts"></div>
+    <div class="q-fb hidden" id="q-fb"></div>
+    <button id="q-next" class="btn-primary hidden">Lanjut ➜</button>
+  </div>
+</div>
+
+<!-- ================= MODAL ATURAN ================= -->
+<div id="modal-rules" class="modal-overlay hidden">
+  <div class="q-card">
+    <h2 style="text-align:center;color:var(--indigo);margin-bottom:10px">📖 Cara Bermain</h2>
+    <div class="rules-box" id="rules-modal" style="max-height:54vh;margin-top:0"></div>
+    <button id="btn-close-rules" class="btn-primary" style="width:100%">Mengerti! ➜</button>
+  </div>
+</div>
+
+<!-- ================= MODAL KONFIRMASI ULANGI ================= -->
+<div id="modal-restart" class="modal-overlay hidden">
+  <div class="q-card" style="max-width:430px;text-align:center">
+    <h2 style="color:#b45309">🔄 Ulangi Permainan?</h2>
+    <p style="margin:12px 0 4px;color:var(--muted);font-weight:600">Permainan saat ini akan diulang dari awal (kembali ke menu utama).</p>
+    <div class="row-btns">
+      <button id="btn-restart-no" class="btn-secondary">Batal</button>
+      <button id="btn-restart-yes" class="btn-primary" style="margin-top:0">Ya, Ulangi</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= OVERLAY PEMENANG ================= -->
+<div id="modal-win" class="modal-overlay hidden">
+  <div class="q-card win-card">
+    <div id="win-fill"></div>
+    <button id="btn-again" class="btn-primary">🔁 Main Lagi</button>
+  </div>
+</div>
+
+<script>
+'use strict';
+/* =====================================================
+   LUDO BILANGAN CACAH — Game Edukasi Matematika Kelas 3 SD
+   Sumber soal: Kumpulan 100 Soal Bilangan Cacah Kelas 3 SD — Bilangan Cacah Puluhan Ribu (5 bagian @ 20 soal)
+   ===================================================== */
+
+const CATS = {
+  1:{icon:'🔢', name:'Nilai Tempat, Nilai Angka, Dekomposisi, Nama & Lambang Bilangan'},
+  2:{icon:'⚖️', name:'Mengurutkan dan Membandingkan Bilangan'},
+  3:{icon:'➕', name:'Penjumlahan Bilangan Cacah Ribuan'},
+  4:{icon:'➖', name:'Pengurangan Bilangan Cacah Ribuan'},
+  5:{icon:'✖️', name:'Perkalian Bilangan Cacah'}
+};
+
+const PLAYERS = [
+  {key:'red',    label:'Merah',  color:'#ef4444', dark:'#991b1b'},
+  {key:'green',  label:'Hijau',  color:'#22c55e', dark:'#166534'},
+  {key:'yellow', label:'Kuning', color:'#f59e0b', dark:'#92400e'},
+  {key:'blue',   label:'Biru',   color:'#3b82f6', dark:'#1e40af'}
+];
+
+const LETTERS = ['A','B','C','D'];
+
+/* ===== BANK SOAL (a = indeks jawaban benar pada array o) ===== */
+/* Sumber: Kumpulan 100 Soal Bilangan Cacah Kelas 3 SD — Bilangan Cacah Puluhan Ribu — soal, kunci & pembahasan Bahasa Indonesia (5 bagian @ 20 soal) */
+const QB = {
+1: [ /* PION 1: NILAI TEMPAT, NILAI ANGKA, DEKOMPOSISI, NAMA & LAMBANG BILANGAN (Soal 1-20) */
+ {q:"Pada bilangan 14.582, angka 4 menempati nilai tempat ...", o:["Puluhan ribu","Ribuan","Ratusan","Puluhan"], a:1, e:"Pada 14.582: 1 = puluhan ribu, 4 = ribuan, 5 = ratusan, 8 = puluhan, 2 = satuan."},
+ {q:"Nilai angka 7 pada bilangan 27.350 adalah ...", o:["70.000","7.000","700","70"], a:1, e:"Angka 7 menempati posisi ribuan, sehingga nilai angkanya adalah 7 × 1.000 = 7.000."},
+ {q:"Lambang bilangan dari \"tiga puluh lima ribu dua ratus enam\" adalah ...", o:["35.260","35.026","35.206","35.216"], a:2, e:"Tiga puluh lima ribu = 35.000, dua ratus = 200, enam = 6. Jadi lambang bilangannya 35.206."},
+ {q:"Nama bilangan dari 48.019 adalah ...", o:["Empat puluh delapan ribu sembilan belas","Empat puluh delapan ribu sembilan puluh","Empat puluh delapan ribu seratus sembilan","Empat puluh delapan ribu sembilan"], a:0, e:"48 = empat puluh delapan ribu, 0 di ratusan tidak dibaca, 19 = sembilan belas."},
+ {q:"Bentuk dekomposisi panjang dari bilangan 23.450 yang benar adalah ...", o:["20.000 + 3.000 + 400 + 5","20.000 + 3.000 + 400 + 50","2.000 + 300 + 40 + 5","20.000 + 300 + 40 + 50"], a:1, e:"Dekomposisi berdasarkan nilai tempat: 20.000 + 3.000 + 400 + 50 + 0."},
+ {q:"Nilai dari 5 puluh ribuan + 2 ribuan + 0 ratusan + 8 puluhan + 3 satuan adalah ...", o:["52.803","52.830","52.083","50.283"], a:2, e:"50.000 + 2.000 + 0 + 80 + 3 = 52.083."},
+ {q:"Angka yang menempati posisi puluhan ribu pada bilangan 61.925 adalah ...", o:["1","9","6","2"], a:2, e:"Pada 61.925, angka terdepan (6) menempati nilai tempat puluhan ribu bernilai 60.000."},
+ {q:"Pada bilangan 80.412, angka 0 menempati nilai tempat ...", o:["Puluhan ribu","Ribuan","Ratusan","Puluhan"], a:1, e:"Pada 80.412, angka 8 adalah puluhan ribu dan angka 0 adalah ribuan."},
+ {q:"Bentuk 70.000 + 600 + 40 + 9 jika ditulis dalam lambang bilangan menjadi ...", o:["76.049","70.649","76.490","70.469"], a:1, e:"70.000 + 600 + 40 + 9 digabungkan menjadi 70.649 (angka ribuannya 0)."},
+ {q:"Selisih nilai angka 5 dan nilai angka 3 pada bilangan 53.000 adalah ...", o:["2.000","47.000","50.000","48.000"], a:1, e:"Nilai angka 5 = 50.000, nilai angka 3 = 3.000. Selisih = 50.000 - 3.000 = 47.000."},
+ {q:"Lambang bilangan dari \"dua belas ribu lima ratus\" adalah ...", o:["12.050","12.500","12.005","12.550"], a:1, e:"Dua belas ribu = 12.000 ditambah lima ratus = 500, ditulis 12.500."},
+ {q:"Nama bilangan dari 75.300 adalah ...", o:["Tujuh puluh lima ribu tiga ratus","Tujuh puluh lima ribu tiga puluh","Tujuh puluh lima ribu tiga","Tujuh ribu lima ratus tiga puluh"], a:0, e:"75 = tujuh puluh lima ribu, 300 = tiga ratus."},
+ {q:"Angka 9 pada bilangan 19.420 mempunyai nilai angka sebesar ...", o:["90.000","9.000","900","90"], a:1, e:"Angka 9 berada di nilai tempat ribuan, bernilai 9 × 1.000 = 9.000."},
+ {q:"Bentuk dekomposisi dari 91.074 adalah ...", o:["90.000 + 1.000 + 70 + 4","90.000 + 100 + 70 + 4","9.000 + 1.000 + 700 + 4","90.000 + 1.000 + 700 + 4"], a:0, e:"Ratusan bernilai 0, sehingga penjumlahannya adalah 90.000 + 1.000 + 70 + 4."},
+ {q:"Bilangan yang memiliki nilai tempat ratusan bernilai 0 adalah ...", o:["34.502","21.085","15.600","40.231"], a:1, e:"Pada 21.085, angka ratusannya adalah 0."},
+ {q:"\"Enam puluh ribu delapan belas\" bila ditulis dalam bentuk lambang bilangan adalah ...", o:["60.180","60.018","60.810","68.000"], a:1, e:"Enam puluh ribu = 60.000, delapan belas = 18. Hasilnya 60.018 (ribuan dan ratusan bernilai 0)."},
+ {q:"Pada bilangan 99.999, angka 9 yang menempati nilai tempat ratusan memiliki nilai angka ...", o:["90.000","9.000","900","90"], a:2, e:"Nilai tempat ratusan pada angka 9 bernilai 9 × 100 = 900."},
+ {q:"Bentuk 40.000 + 5.000 + 300 + 2 sama dengan ...", o:["45.320","45.302","45.032","40.532"], a:1, e:"40.000 + 5.000 + 300 + 2 = 45.302 (angka puluhannya 0)."},
+ {q:"Lambang bilangan dari \"delapan puluh sembilan ribu empat ratus tiga puluh\" adalah ...", o:["89.430","89.403","89.340","98.430"], a:0, e:"Delapan puluh sembilan ribu = 89.000, empat ratus tiga puluh = 430. Digabung: 89.430."},
+ {q:"Angka 3 pada bilangan 63.851 menempati posisi ...", o:["Puluhan ribu","Ribuan","Ratusan","Satuan"], a:1, e:"Pada 63.851: 6 adalah puluhan ribu, 3 adalah ribuan."}
+],
+2: [ /* PION 2: MENGURUTKAN & MEMBANDINGKAN BILANGAN CACAH (Soal 21-40) */
+ {q:"Tanda perbandingan yang tepat untuk 34.500 ... 34.600 adalah ...", o:[">","<","=","≥"], a:1, e:"Membandingkan ratusan: 500 lebih kecil dari 600, sehingga 34.500 < 34.600."},
+ {q:"Perbandingan berikut yang bernilai benar adalah ...", o:["15.200 > 15.400","28.900 < 28.750","43.150 > 43.105","50.005 < 49.999"], a:2, e:"Pada puluhannya: 50 lebih besar daripada 05, maka 43.150 > 43.105 benar."},
+ {q:"Urutan bilangan berikut dari yang terkecil adalah: 25.000, 21.000, 27.000, 23.000", o:["21.000, 23.000, 25.000, 27.000","27.000, 25.000, 23.000, 21.000","21.000, 25.000, 23.000, 27.000","23.000, 21.000, 25.000, 27.000"], a:0, e:"Urutan naik dari angka ribuan: 1 < 3 < 5 < 7."},
+ {q:"Urutan bilangan berikut dari yang terbesar adalah: 62.400, 62.100, 62.800, 62.500", o:["62.100, 62.400, 62.500, 62.800","62.800, 62.500, 62.400, 62.100","62.800, 62.400, 62.500, 62.100","62.500, 62.800, 62.400, 62.100"], a:1, e:"Urutan turun dari angka ratusan: 800 > 500 > 400 > 100."},
+ {q:"Bilangan yang terletak tepat di antara 45.899 dan 45.901 adalah ...", o:["45.900","45.890","45.910","45.990"], a:0, e:"Bilangan bulat setelah 45.899 dan sebelum 45.901 adalah 45.900."},
+ {q:"Di antara bilangan berikut, yang nilainya paling kecil adalah ...", o:["38.450","38.095","38.100","38.059"], a:3, e:"Membandingkan ratusan dan puluhan: 059 paling kecil dibandingkan 095, 100, dan 450."},
+ {q:"Di antara bilangan berikut, yang nilainya paling besar adalah ...", o:["79.800","79.890","79.905","79.899"], a:2, e:"Angka ratusan terbesar adalah 9, sehingga 79.905 adalah bilangan terbesar."},
+ {q:"52.310 ... 52.301. Tanda pertidaksamaan yang tepat adalah ...", o:["<",">","=","+"], a:1, e:"Membandingkan dua digit terakhir: 10 > 01, maka 52.310 > 52.301."},
+ {q:"Bilangan yang lebih besar dari 65.400 tetapi lebih kecil dari 65.500 adalah ...", o:["65.390","65.450","65.520","65.505"], a:1, e:"65.400 < 65.450 < 65.500."},
+ {q:"Diketahui empat bilangan: P = 41.200, Q = 41.050, R = 41.300, S = 41.150. Urutan dari yang terkecil adalah ...", o:["Q, S, P, R","Q, P, S, R","R, P, S, Q","S, Q, P, R"], a:0, e:"Nilai: Q (41.050) < S (41.150) < P (41.200) < R (41.300)."},
+ {q:"80.000 ... 79.999. Tanda pembanding yang benar adalah ...", o:["<",">","=","≤"], a:1, e:"80.000 lebih besar satu angka daripada 79.999."},
+ {q:"Bilangan 54.321 lebih ... daripada bilangan 54.312.", o:["kecil","besar","sedikit","sama"], a:1, e:"Membandingkan puluhan: 21 > 12, maka 54.321 lebih besar dari 54.312."},
+ {q:"Urutan naik (terkecil ke terbesar) dari: 18.500, 18.250, 18.750, 18.000 adalah ...", o:["18.750, 18.500, 18.250, 18.000","18.000, 18.250, 18.500, 18.750","18.000, 18.500, 18.250, 18.750","18.250, 18.000, 18.500, 18.750"], a:1, e:"Urutan naik dengan kelipatan 250: 0 < 250 < 500 < 750."},
+ {q:"Urutan turun (terbesar ke terkecil) dari: 90.100, 91.000, 89.900, 90.500 adalah ...", o:["91.000, 90.500, 90.100, 89.900","89.900, 90.100, 90.500, 91.000","91.000, 90.100, 90.500, 89.900","90.500, 91.000, 90.100, 89.900"], a:0, e:"Urutan menurun dari terbesar: 91.000 lalu 90.500 lalu 90.100 lalu 89.900."},
+ {q:"Tanda yang tepat untuk melengkapi 10.005 ... 10.050 adalah ...", o:[">","<","=","≥"], a:1, e:"05 < 50, maka 10.005 < 10.050."},
+ {q:"Manakah dari bilangan berikut yang kurang dari 23.400?", o:["23.405","23.410","23.399","23.500"], a:2, e:"23.399 memiliki ratusan 300 yang kurang dari 400."},
+ {q:"Manakah dari bilangan berikut yang lebih dari 76.500?", o:["76.499","76.501","76.450","76.400"], a:1, e:"76.501 lebih besar dari 76.500 selisih 1 angka."},
+ {q:"Perhatikan bilangan: 35.120; 35.210; 35.012; 35.102. Bilangan kedua terkecil adalah ...", o:["35.012","35.102","35.120","35.210"], a:1, e:"Urutan: 35.012 (terkecil), 35.102 (kedua terkecil), 35.120, 35.210."},
+ {q:"47.650 ... 47.650. Simbol yang benar adalah ...", o:[">","<","=","≠"], a:2, e:"Kedua bilangan memiliki nilai yang persis sama."},
+ {q:"Toko A menjual 12.450 buku, Toko B menjual 12.500 buku, dan Toko C menjual 12.350 buku. Toko yang menjual buku paling banyak adalah ...", o:["Toko A","Toko B","Toko C","Toko A dan C"], a:1, e:"Perbandingan: 12.500 (B) > 12.450 (A) > 12.350 (C)."}
+],
+3: [ /* PION 3: PENJUMLAHAN BILANGAN CACAH RIBUAN (Soal 41-60) */
+ {q:"Hasil dari 2.300 + 1.400 adalah ...", o:["3.600","3.700","3.800","4.700"], a:1, e:"2.300 + 1.400 = (2.000 + 1.000) + (300 + 400) = 3.000 + 700 = 3.700."},
+ {q:"Hasil dari 4.250 + 3.125 adalah ...", o:["7.375","7.385","7.275","7.475"], a:0, e:"4.250 + 3.125 = 7.375 (tanpa teknik menyimpan)."},
+ {q:"Hasil penjumlahan 5.620 + 2.740 adalah ...", o:["8.260","8.360","8.460","7.360"], a:1, e:"5.620 + 2.740 = 8.360 (ratusan: 600 + 700 = 1.300, simpan 1 ke ribuan)."},
+ {q:"Hasil dari 6.475 + 1.850 adalah ...", o:["8.225","8.315","8.325","7.325"], a:2, e:"6.475 + 1.850 = 8.325 (puluhan: 7+5=12, ratusan: 1+4+8=13)."},
+ {q:"3.500 + 4.500 = ...", o:["7.000","8.000","8.500","9.000"], a:1, e:"3.500 + 4.500 = 8.000."},
+ {q:"Hasil dari 1.825 + 2.435 adalah ...", o:["4.250","4.260","4.360","4.160"], a:1, e:"1.825 + 2.435 = 4.260."},
+ {q:"Sebuah toko memiliki stok 3.150 pensil. Toko tersebut membeli lagi 1.250 pensil. Jumlah pensil sekarang adalah ...", o:["4.300","4.400","4.500","5.400"], a:1, e:"3.150 + 1.250 = 4.400 pensil."},
+ {q:"Hasil dari 7.120 + 1.980 adalah ...", o:["9.000","9.100","8.900","9.200"], a:1, e:"7.120 + 1.980 = 9.100."},
+ {q:"4.380 + 2.540 = ...", o:["6.820","6.920","7.020","6.910"], a:1, e:"4.380 + 2.540 = 6.920."},
+ {q:"Hasil dari 5.000 + 3.750 adalah ...", o:["8.650","8.700","8.750","8.850"], a:2, e:"5.000 + 3.750 = 8.750."},
+ {q:"2.765 + 3.482 = ...", o:["6.147","6.247","6.347","6.257"], a:1, e:"2.765 + 3.482: 5+2=7; 6+8=14 (tulis 4, simpan 1); 1+7+4=12 (tulis 2, simpan 1); 1+2+3=6, jadi 6.247."},
+ {q:"Hasil penjumlahan 1.450 + 2.320 + 1.100 adalah ...", o:["4.770","4.870","4.670","5.870"], a:1, e:"1.450 + 2.320 = 3.770. Kemudian 3.770 + 1.100 = 4.870."},
+ {q:"Petani memanen 2.450 kg jagung di ladang A dan 3.650 kg di ladang B. Total panen jagung adalah ... kg.", o:["6.000","6.100","5.100","6.200"], a:1, e:"2.450 + 3.650 = 6.100 kg."},
+ {q:"6.215 + 2.580 = ...", o:["8.795","8.695","8.895","7.795"], a:0, e:"6.215 + 2.580 = 8.795."},
+ {q:"Nilai dari 3.840 + 4.160 adalah ...", o:["7.900","8.000","8.100","7.990"], a:1, e:"3.840 + 4.160 = 8.000."},
+ {q:"Hasil dari 5.555 + 2.445 adalah ...", o:["7.900","7.990","8.000","8.100"], a:2, e:"5.555 + 2.445 = 8.000."},
+ {q:"4.128 + 3.694 = ...", o:["7.722","7.822","7.812","7.922"], a:1, e:"4.128 + 3.694 = 7.822."},
+ {q:"Hasil dari 2.999 + 1.001 adalah ...", o:["3.990","4.000","4.100","3.900"], a:1, e:"2.999 + 1.001 = 4.000."},
+ {q:"Di perpustakaan ada 4.230 buku cerita dan 2.650 buku pelajaran. Jumlah seluruh buku adalah ...", o:["6.780","6.880","6.980","7.880"], a:1, e:"4.230 + 2.650 = 6.880 buku."},
+ {q:"1.750 + 5.250 = ...", o:["6.900","7.000","7.100","6.800"], a:1, e:"1.750 + 5.250 = 7.000."}
+],
+4: [ /* PION 4: PENGURANGAN BILANGAN CACAH RIBUAN (Soal 61-80) */
+ {q:"Hasil dari 4.800 - 2.300 adalah ...", o:["2.400","2.500","2.600","1.500"], a:1, e:"4.800 - 2.300 = 2.500."},
+ {q:"Hasil pengurangan 6.750 - 3.420 adalah ...", o:["3.330","3.230","3.320","3.430"], a:0, e:"6.750 - 3.420 = 3.330."},
+ {q:"5.420 - 1.850 = ...", o:["3.570","3.670","3.470","4.570"], a:0, e:"5.420 - 1.850 = 3.570 (meminjam dari ribuan)."},
+ {q:"Hasil dari 8.000 - 3.450 adalah ...", o:["4.450","4.550","4.650","5.550"], a:1, e:"8.000 - 3.450 = 4.550."},
+ {q:"7.300 - 2.800 = ...", o:["4.500","4.400","5.500","4.600"], a:0, e:"7.300 - 2.800 = 4.500."},
+ {q:"Paman mempunyai 5.600 batu bata. Digunakan untuk membangun dinding sebanyak 3.250 batu bata. Sisa batu bata adalah ...", o:["2.350","2.450","2.250","2.150"], a:0, e:"5.600 - 3.250 = 2.350 batu bata."},
+ {q:"Hasil dari 9.500 - 4.750 adalah ...", o:["4.650","4.750","4.850","5.750"], a:1, e:"9.500 - 4.750 = 4.750."},
+ {q:"6.125 - 2.480 = ...", o:["3.645","3.745","3.545","4.645"], a:0, e:"6.125 - 2.480 = 3.645."},
+ {q:"Hasil dari 7.000 - 2.135 adalah ...", o:["4.765","4.865","4.965","5.865"], a:1, e:"7.000 - 2.135 = 4.865."},
+ {q:"8.420 - 5.190 = ...", o:["3.230","3.130","3.330","2.230"], a:0, e:"8.420 - 5.190 = 3.230."},
+ {q:"Peternak memiliki 4.500 butir telur. Terjual sebanyak 2.680 butir. Telur yang belum terjual adalah ... butir.", o:["1.820","1.920","1.720","2.820"], a:0, e:"4.500 - 2.680 = 1.820 butir telur."},
+ {q:"Hasil dari 5.200 - 3.650 adalah ...", o:["1.450","1.550","1.650","2.550"], a:1, e:"5.200 - 3.650 = 1.550."},
+ {q:"9.870 - 4.560 = ...", o:["5.310","5.210","5.410","4.310"], a:0, e:"9.870 - 4.560 = 5.310."},
+ {q:"Hasil dari 6.000 - 1.250 adalah ...", o:["4.650","4.750","4.850","5.750"], a:1, e:"6.000 - 1.250 = 4.750."},
+ {q:"7.540 - 3.825 = ...", o:["3.615","3.715","3.815","3.725"], a:1, e:"7.540 - 3.825 = 3.715."},
+ {q:"4.300 - 2.950 = ...", o:["1.350","1.450","1.250","1.300"], a:0, e:"4.300 - 2.950 = 1.350."},
+ {q:"Hasil pengurangan 8.210 - 4.690 adalah ...", o:["3.420","3.520","3.620","4.520"], a:1, e:"8.210 - 4.690 = 3.520."},
+ {q:"Sebuah pabrik memproduksi 9.200 pasang sepatu. Sebanyak 6.450 pasang telah dikirim ke toko. Sisa sepatu di pabrik adalah ...", o:["2.650","2.750","2.850","3.750"], a:1, e:"9.200 - 6.450 = 2.750 pasang sepatu."},
+ {q:"5.000 - 2.785 = ...", o:["2.215","2.315","2.115","3.215"], a:0, e:"5.000 - 2.785 = 2.215."},
+ {q:"Hasil dari 6.450 - 3.990 adalah ...", o:["2.360","2.460","2.560","2.450"], a:1, e:"6.450 - 3.990 = 2.460."}
+],
+5: [ /* PION 5: PERKALIAN BILANGAN CACAH SATUAN s.d. PULUHAN (Soal 81-100) */
+ {q:"Hasil dari 12 × 4 adalah ...", o:["44","46","48","52"], a:2, e:"12 × 4 = (10 × 4) + (2 × 4) = 40 + 8 = 48."},
+ {q:"Hasil perkalian 15 × 5 adalah ...", o:["65","70","75","80"], a:2, e:"15 × 5 = 75."},
+ {q:"Nilai dari 24 × 3 adalah ...", o:["62","72","82","74"], a:1, e:"24 × 3 = (20 × 3) + (4 × 3) = 60 + 12 = 72."},
+ {q:"35 × 2 = ...", o:["60","65","70","75"], a:2, e:"35 × 2 = 70."},
+ {q:"Hasil dari 18 × 6 adalah ...", o:["98","108","118","104"], a:1, e:"18 × 6 = (10 × 6) + (8 × 6) = 60 + 48 = 108."},
+ {q:"42 × 4 = ...", o:["158","164","168","172"], a:2, e:"42 × 4 = (40 × 4) + (2 × 4) = 160 + 8 = 168."},
+ {q:"Di dalam sebuah kotak terdapat 25 bungkus permen. Jika ada 4 kotak permen, jumlah seluruh permen adalah ... bungkus.", o:["80","90","100","120"], a:2, e:"25 × 4 = 100 bungkus permen."},
+ {q:"Hasil dari 10 × 20 adalah ...", o:["20","100","200","300"], a:2, e:"10 × 20 = 200."},
+ {q:"14 × 7 = ...", o:["88","94","98","108"], a:2, e:"14 × 7 = (10 × 7) + (4 × 7) = 70 + 28 = 98."},
+ {q:"Hasil dari 50 × 8 adalah ...", o:["40","350","400","450"], a:2, e:"50 × 8 = 400."},
+ {q:"23 × 12 = ...", o:["266","276","286","256"], a:1, e:"23 × 12 = 23 × (10 + 2) = 230 + 46 = 276."},
+ {q:"Hasil dari 31 × 5 adalah ...", o:["150","155","160","165"], a:1, e:"31 × 5 = (30 × 5) + (1 × 5) = 150 + 5 = 155."},
+ {q:"16 × 8 = ...", o:["118","128","138","148"], a:1, e:"16 × 8 = 128."},
+ {q:"Ibu membeli 6 keranjang apel. Setiap keranjang berisi 15 buah apel. Jumlah seluruh apel adalah ... buah.", o:["80","85","90","95"], a:2, e:"6 × 15 = 90 buah apel."},
+ {q:"Hasil dari 25 × 14 adalah ...", o:["320","340","350","360"], a:2, e:"25 × 14 = 25 × (10 + 4) = 250 + 100 = 350."},
+ {q:"45 × 10 = ...", o:["450","405","4.500","540"], a:0, e:"45 × 10 = 450."},
+ {q:"Hasil dari 63 × 3 adalah ...", o:["186","189","192","179"], a:1, e:"63 × 3 = (60 × 3) + (3 × 3) = 180 + 9 = 189."},
+ {q:"20 × 30 = ...", o:["500","600","700","6.000"], a:1, e:"20 × 30 = (2 × 3) × 100 = 600."},
+ {q:"Seorang pedagang memiliki 12 ikat rambutan. Jika setiap ikat berisi 20 buah rambutan, banyak rambutan seluruhnya adalah ... buah.", o:["220","230","240","250"], a:2, e:"12 × 20 = 240 buah rambutan."},
+ {q:"Hasil dari 34 × 11 adalah ...", o:["364","374","384","394"], a:1, e:"34 × 11 = 34 × (10 + 1) = 340 + 34 = 374."}
+]
+};
+
+/* ===== GEOMETRI PAPAN (koordinat 0-indexed [baris, kolom]) ===== */
+const TRACK = [[6,0],[6,1],[6,2],[6,3],[6,4],[6,5],[5,6],[4,6],[3,6],[2,6],[1,6],[0,6],[0,7],[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[6,9],[6,10],[6,11],[6,12],[6,13],[6,14],[7,14],[8,14],[8,13],[8,12],[8,11],[8,10],[8,9],[9,8],[10,8],[11,8],[12,8],[13,8],[14,8],[14,7],[14,6],[13,6],[12,6],[11,6],[10,6],[9,6],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0],[7,0]];
+const START = [1,14,27,40];           /* indeks petak start tiap pemain */
+const GATE  = [51,12,25,38];          /* petak gerbang masuk jalur rumah */
+const HOME = [
+  [[7,1],[7,2],[7,3],[7,4],[7,5]],
+  [[1,7],[2,7],[3,7],[4,7],[5,7]],
+  [[7,13],[7,12],[7,11],[7,10],[7,9]],
+  [[13,7],[12,7],[11,7],[10,7],[9,7]]
+];
+const ORIGIN = [[0,0],[0,9],[9,9],[9,0]];            /* pojok kiri-atas tiap base */
+const BASE_SLOTS = [[1.5,1.5],[1.5,3.5],[3,2.5],[4.5,1.5],[4.5,3.5]]; /* posisi 5 slot pion dalam base */
+const OFFS = [[0,0],[-.22,-.2],[.22,-.2],[-.22,.22],[.22,.22],[0,-.34],[0,.4]];
+const FINISH_STEP = 57;               /* 1=petak start ... 51=gerbang, 52-56=jalur rumah, 57=tengah */
+/* ===== UTIL ===== */
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+function shuffle(arr){ for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=arr[i]; arr[i]=arr[j]; arr[j]=t; } return arr; }
+function rnd6(){ return 1+Math.floor(Math.random()*6); }
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+function esc(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* ===== DECK SOAL (anti berulang sampai habis) ===== */
+const decks = {}, deckPos = {};
+Object.keys(QB).forEach(k=>{ decks[k] = shuffle(QB[k].slice()); deckPos[k]=0; });
+function drawQ(cat){
+  if(deckPos[cat] >= decks[cat].length){ decks[cat] = shuffle(QB[cat].slice()); deckPos[cat]=0; }
+  return decks[cat][deckPos[cat]++];
+}
+
+/* ===== STATE ===== */
+const state = {
+  count:0, active:[], names:[], double:false, senggol:true,
+  turn:0, phase:'menu', roll:0, extraOk:false,
+  pawns:[], activePawn:null, curQ:null, optOrder:[], answered:false, answeredOk:false,
+  stats:[], over:false, muted:false
+};
+
+function showScreen(id){
+  $$('.screen').forEach(s=>s.classList.remove('active'));
+  $('#'+id).classList.add('active');
+  if(id==='screen-game') setCellSize();
+}
+
+/* ===== UKURAN SEL (untuk skala pion) ===== */
+function setCellSize(){
+  const wrap = document.querySelector('.board-wrap');
+  if(!wrap) return;
+  const r = wrap.getBoundingClientRect();
+  if(r.width>0) wrap.style.setProperty('--cell',(r.width/15)+'px');
+}
+window.addEventListener('resize', setCellSize);
+
+/* ===== BANGUN PAPAN ===== */
+function buildBoard(){
+  const b = $('#board'); b.innerHTML='';
+  const baseDefs = [['red',0,'1 / 1 / 7 / 7'],['green',1,'1 / 10 / 7 / 16'],['yellow',2,'10 / 10 / 16 / 16'],['blue',3,'10 / 1 / 16 / 7']];
+  baseDefs.forEach(([key,pi,area])=>{
+    const d=document.createElement('div');
+    d.className='base b-'+key; d.style.gridArea=area; d.dataset.pi=pi;
+    const inner=document.createElement('div'); inner.className='base-inner'; d.appendChild(inner);
+    BASE_SLOTS.forEach(s=>{
+      const slot=document.createElement('div'); slot.className='base-slot';
+      slot.style.left=(((s[1]-ORIGIN[pi][1])/6)*100)+'%';
+      slot.style.top =(((s[0]-ORIGIN[pi][0])/6)*100)+'%';
+      d.appendChild(slot);
+    });
+    const nm=document.createElement('div'); nm.className='base-name'; d.appendChild(nm);
+    b.appendChild(d);
+  });
+  TRACK.forEach(([r,c],i)=>{
+    const d=document.createElement('div'); d.className='cell';
+    d.style.gridArea=(r+1)+' / '+(c+1);
+    for(let p=0;p<4;p++){
+      if(START[p]===i) d.classList.add('start-'+PLAYERS[p].key);
+      if(GATE[p]===i)  d.classList.add('gate-'+PLAYERS[p].key);
+    }
+    b.appendChild(d);
+  });
+  HOME.forEach((cells,p)=>{
+    cells.forEach(([r,c])=>{
+      const d=document.createElement('div'); d.className='cell home-'+PLAYERS[p].key;
+      d.style.gridArea=(r+1)+' / '+(c+1);
+      b.appendChild(d);
+    });
+  });
+  const c=document.createElement('div'); c.className='center-area';
+  c.innerHTML='<div class="tri tri-red"></div><div class="tri tri-green"></div><div class="tri tri-yellow"></div><div class="tri tri-blue"></div>';
+  b.appendChild(c);
+}
+
+/* ===== KOORDINAT PION ===== */
+function coordOf(p){
+  if(p.steps===0){
+    const s=BASE_SLOTS[p.slot];
+    return {x:ORIGIN[p.pi][1]+s[1], y:ORIGIN[p.pi][0]+s[0]};
+  }
+  if(p.steps>=FINISH_STEP) return {x:7.5, y:7.5};
+  if(p.steps<=51){
+    const i=(START[p.pi]+p.steps-1)%52;
+    return {x:TRACK[i][1]+.5, y:TRACK[i][0]+.5};
+  }
+  const h=HOME[p.pi][p.steps-52];
+  return {x:h[1]+.5, y:h[0]+.5};
+}
+
+/* ===== RENDER SEMUA PION (dengan tumpukan) ===== */
+function renderPawns(movingIdx){
+  const items = state.pawns.map((p,i)=>({p,i,c:coordOf(p)}));
+  const groups = {};
+  items.forEach(o=>{
+    const k=o.c.x.toFixed(2)+','+o.c.y.toFixed(2);
+    (groups[k]=groups[k]||[]).push(o);
+  });
+  Object.values(groups).forEach(g=>{
+    g.forEach((o,j)=>{ o.off = OFFS[Math.min(j,OFFS.length-1)]; });
+  });
+  items.forEach(o=>{
+    const off=o.off||[0,0];
+    o.p.el.style.left = (((o.c.x+off[0])/15)*100)+'%';
+    o.p.el.style.top  = (((o.c.y+off[1])/15)*100)+'%';
+    o.p.el.style.zIndex = (movingIdx===o.i) ? 60 : (o.p.steps>=FINISH_STEP ? 20 : 10);
+  });
+}
+
+/* ===== BIKIN PION ===== */
+function createPawns(){
+  const layer=$('#pawn-layer'); layer.innerHTML='';
+  state.pawns=[];
+  state.active.forEach((abs,seq)=>{
+    for(let s=0;s<5;s++){
+      const el=document.createElement('div');
+      el.className='pawn pc-'+PLAYERS[abs].key;
+      el.innerHTML='<span class="pawn-num">'+(s+1)+'</span><span class="pawn-ico">'+CATS[s+1].icon+'</span>';
+      el.title='Pion '+(s+1)+' • '+CATS[s+1].name;
+      const pawn={pi:abs, seq:seq, slot:s, steps:0, el:el, idx:state.pawns.length};
+      el.addEventListener('click',()=>onPawnClick(pawn));
+      layer.appendChild(el);
+      state.pawns.push(pawn);
+    }
+  });
+  renderPawns();
+}
+
+function markSelectable(){
+  const cur = state.active[state.turn];
+  state.pawns.forEach(p=>{
+    p.el.classList.toggle('selectable', state.phase==='select' && p.pi===cur);
+  });
+}
+
+/* ===== PANEL PEMAIN & GILIRAN ===== */
+function countCenterBySeq(seq){
+  return state.pawns.filter(p=>p.seq===seq && p.steps>=FINISH_STEP).length;
+}
+function pawnDotClass(steps){
+  if(steps===0) return '';
+  if(steps>=FINISH_STEP) return 'center';
+  if(steps>=52) return 'home';
+  return 'track';
+}
+function renderPanel(){
+  let html='<div class="card-title">📊 Papan Skor</div>';
+  state.active.forEach((abs,seq)=>{
+    const pl=PLAYERS[abs], st=state.stats[seq]||{ok:0,no:0};
+    const dots=state.pawns.filter(p=>p.seq===seq).map(p=>{
+      const cls=pawnDotClass(p.steps);
+      return '<span class="pdot '+cls+'" style="--pc:'+pl.color+';--pcd:'+pl.dark+'" title="Pion '+(p.slot+1)+' • '+CATS[p.slot+1].name+'"></span>';
+    }).join('');
+    html+='<div class="prow '+(seq===state.turn && !state.over ? 'current':'')+'" style="--pc:'+pl.color+'">'
+      +'<span class="pchip" style="background:'+pl.color+'">'+pl.label[0]+'</span>'
+      +'<div><div class="pname">'+esc(state.names[seq])+'</div><div class="pdots">'+dots+'</div></div>'
+      +'<div class="pmeta">'+countCenterBySeq(seq)+'/5 ⭐<br>✅'+st.ok+' ❌'+st.no+'</div>'
+      +'</div>';
+  });
+  $('#players-panel').innerHTML=html;
+}
+function updateTurnUI(){
+  const abs=state.active[state.turn], pl=PLAYERS[abs];
+  $('#turn-name').innerHTML='<span class="pchip" style="background:'+pl.color+'">'+pl.label[0]+'</span><span>'+esc(state.names[state.turn])+'</span>';
+  $$('.base').forEach(b=>{
+    const bp=+b.dataset.pi;
+    b.classList.toggle('active-glow', bp===abs && !state.over);
+    b.classList.toggle('dimmed', state.active.indexOf(bp)<0);
+    b.querySelector('.base-name').textContent = state.active.indexOf(bp)>=0 ? state.names[state.active.indexOf(bp)] : '—';
+  });
+  renderPanel();
+}
+function status(html){ $('#status').innerHTML=html; }
+
+/* ===== LAYAR MENU & NAMA ===== */
+function wireMenu(){
+  $$('#count-btns .count-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      $$('#count-btns .count-btn').forEach(x=>x.classList.remove('sel'));
+      btn.classList.add('sel');
+      state.count=+btn.dataset.n;
+      state.active = state.count===2 ? [0,2] : state.count===3 ? [0,1,2] : [0,1,2,3];
+      $('#btn-next-names').disabled=false;
+    });
+  });
+  $('#btn-next-names').addEventListener('click',()=>{
+    if(!state.count) return;
+    let rows='';
+    state.active.forEach((abs,seq)=>{
+      const pl=PLAYERS[abs];
+      rows+='<div class="name-row"><span class="pchip" style="background:'+pl.color+'">'+pl.label[0]+'</span>'
+        +'<input id="name-'+seq+'" maxlength="18" placeholder="Pemain '+(seq+1)+' ('+pl.label+')" autocomplete="off"></div>';
+    });
+    $('#name-rows').innerHTML=rows;
+    showScreen('screen-names');
+  });
+  $('#btn-back-menu').addEventListener('click',()=>showScreen('screen-menu'));
+  $('#btn-start').addEventListener('click',startGame);
+}
+/* ===== MULAI PERMAINAN ===== */
+function startGame(){
+  state.names = state.active.map((abs,seq)=>{
+    const v=(document.getElementById('name-'+seq)||{}).value||'';
+    const t=v.trim();
+    return t ? t.slice(0,18) : ('Pemain '+(seq+1));
+  });
+  state.double = document.getElementById('opt-double').checked;
+  state.senggol = document.getElementById('opt-senggol').checked;
+  state.turn=0; state.phase='idle'; state.roll=0; state.extraOk=false; state.over=false;
+  state.stats = state.active.map(()=>({ok:0,no:0}));
+  createPawns();
+  $('#dice-2').classList.toggle('hidden', !state.double);
+  setFace($('#dice-1'),1); setFace($('#dice-2'),1);
+  updateTurnUI(); markSelectable();
+  status('<b>'+esc(state.names[0])+'</b>, lempar dadumu! 🎲');
+  showScreen('screen-game');
+}
+
+/* ===== DADU ===== */
+function setFace(el,n){
+  if(!el) return;
+  const map={1:[4],2:[2,6],3:[2,4,6],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
+  const pips=el.children;
+  for(let i=0;i<9;i++) pips[i].style.visibility = map[n].indexOf(i)>=0 ? 'visible':'hidden';
+}
+async function doRoll(){
+  if(state.phase!=='idle' || state.over) return;
+  ensureAudio();
+  state.phase='rolling';
+  $('#btn-roll').disabled=true;
+  markSelectable();
+  const d1=$('#dice-1'), d2=$('#dice-2');
+  const n1=rnd6(), n2=state.double?rnd6():0;
+  d1.classList.add('rolling'); if(state.double) d2.classList.remove('hidden'), d2.classList.add('rolling');
+  const flick=setInterval(()=>{ setFace(d1,rnd6()); if(state.double) setFace(d2,rnd6()); },90);
+  sDice();
+  await sleep(820);
+  clearInterval(flick);
+  d1.classList.remove('rolling'); d2.classList.remove('rolling');
+  setFace(d1,n1); if(state.double) setFace(d2,n2);
+  state.roll = n1+n2;
+  state.extraOk = !state.double && n1===6;
+  state.phase='select';
+  status('🎲 Dadu: <b>'+state.roll+'</b> — klik pion yang ingin dimajukan. Ingat: setiap pion punya jenis soal berbeda!');
+  markSelectable();
+}
+
+/* ===== MODAL SOAL ===== */
+function onPawnClick(pawn){
+  if(state.phase!=='select' || state.over) return;
+  if(pawn.pi!==state.active[state.turn]) return;
+  openQuestion(pawn);
+}
+function openQuestion(pawn){
+  state.phase='question'; markSelectable();
+  state.activePawn=pawn; state.answered=false; state.answeredOk=false;
+  const cat=pawn.slot+1, q=drawQ(cat);
+  state.curQ=q;
+  const pl=PLAYERS[pawn.pi];
+  $('#q-player').innerHTML='<span class="pchip mini" style="background:'+pl.color+'">'+pl.label[0]+'</span>'+esc(state.names[pawn.seq]);
+  $('#q-cat').textContent=CATS[cat].icon+' '+CATS[cat].name+' • Pion '+cat;
+  $('#q-dice').textContent='🎲 Dadu: '+state.roll;
+  $('#q-text').textContent=q.q;
+  const opts=$('#q-opts'); opts.innerHTML='';
+  state.optOrder=shuffle([0,1,2,3]);
+  state.optOrder.forEach((oi,slot)=>{
+    const b=document.createElement('button');
+    b.className='q-opt';
+    b.innerHTML='<span class="letter">'+LETTERS[slot]+'</span><span>'+esc(q.o[oi])+'</span>';
+    b.addEventListener('click',()=>pickOpt(slot));
+    opts.appendChild(b);
+  });
+  $('#q-fb').className='q-fb hidden'; $('#q-fb').innerHTML='';
+  $('#q-next').classList.add('hidden');
+  $('#modal-q').classList.remove('hidden');
+}
+function pickOpt(slot){
+  if(state.answered) return;
+  state.answered=true;
+  const q=state.curQ, pawn=state.activePawn, pl=PLAYERS[pawn.pi];
+  const chosen=state.optOrder[slot];
+  const ok = chosen===q.a;
+  state.answeredOk=ok;
+  const correctSlot=state.optOrder.indexOf(q.a);
+  $$('#q-opts .q-opt').forEach((b,i)=>{
+    b.disabled=true;
+    if(i===correctSlot) b.classList.add('correct');
+    else if(i===slot) b.classList.add('wrong');
+    else b.classList.add('faded');
+  });
+  state.stats[pawn.seq][ok?'ok':'no']++;
+  let fb;
+  if(ok){
+    fb='✅ <b>Benar! Hebat, '+esc(state.names[pawn.seq])+'!</b> '
+      +(pawn.steps===0 ? 'Pion keluar dari rumah menuju petak start. 🚀' : 'Pion maju '+state.roll+' langkah. 🚀')
+      +'<br>💡 '+esc(q.e);
+    sOk();
+  }else{
+    fb='❌ <b>Belum tepat.</b> Jawaban benar: <b>'+LETTERS[correctSlot]+'. '+esc(q.o[q.a])+'</b>'
+      +'<br>Pion tidak jadi maju — giliran berpindah ke pemain lain.<br>💡 '+esc(q.e);
+    sNo();
+  }
+  const fbEl=$('#q-fb'); fbEl.className='q-fb '+(ok?'ok':'bad'); fbEl.innerHTML=fb;
+  const nxt=$('#q-next');
+  nxt.textContent = ok ? (pawn.steps===0?'Keluar & Maju! ➜':'Maju '+state.roll+' Langkah! ➜') : 'Giliran Berikutnya ➜';
+  nxt.classList.remove('hidden');
+  renderPanel();
+}
+function onQuestionContinue(){
+  $('#modal-q').classList.add('hidden');
+  if(state.answeredOk) moveActivePawn();
+  else endTurn(false);
+}
+
+/* ===== GERAK PION ===== */
+async function moveActivePawn(){
+  state.phase='moving';
+  const p=state.activePawn;
+  const from=p.steps;
+  if(from===0){
+    p.steps=1;
+    p.el.classList.add('hop'); renderPawns(p.idx); sStep();
+    await sleep(430); p.el.classList.remove('hop');
+    status('🚀 Pion '+(p.slot+1)+' keluar dari rumah ke petak start!');
+    await sleep(380);
+  }else{
+    const to=Math.min(from+state.roll,FINISH_STEP);
+    for(let s=from+1;s<=to;s++){
+      p.steps=s; renderPawns(p.idx); sStep();
+      await sleep(195);
+    }
+  }
+  if(p.steps>=FINISH_STEP){
+    const done=countCenterBySeq(p.seq);
+    if(done===5){ gameOver(); return; }
+    status('🎉 Pion '+(p.slot+1)+' ('+CATS[p.slot+1].name+') sampai di tengah! ('+done+'/5)');
+    sCenter(); await sleep(950);
+  }else if(state.senggol && p.steps<=51){
+    /* SENGGOL PION: pion lawan yang sudah lebih dulu di petak ini dikirim pulang (petak start ★ aman) */
+    const landed=(START[p.pi]+p.steps-1)%52;
+    if(START.indexOf(landed)<0){
+      const hit=state.pawns.filter(o=>o.pi!==p.pi && o.steps>=1 && o.steps<=51 && (START[o.pi]+o.steps-1)%52===landed);
+      if(hit.length){
+        sBump();
+        hit.forEach(o=>{ o.el.classList.add('bumped'); o.steps=0; setTimeout(()=>o.el.classList.remove('bumped'),750); });
+        renderPawns(p.idx); renderPanel();
+        const who=[...new Set(hit.map(o=>esc(state.names[o.seq])))].join(' & ');
+        status('<b>💥 SENGGOL! Pion '+who+' tersenggol dan kembali ke rumah!</b>');
+        await sleep(800);
+      }
+    }
+  }
+  renderPanel();
+  endTurn(state.extraOk);
+}
+function endTurn(extra){
+  $('#btn-roll').disabled=false;
+  state.phase='idle';
+  if(extra && !state.over){
+    updateTurnUI(); markSelectable();
+    status('🌟 Jawaban benar + dadu 6 = <b>GILIRAN EKSTRA!</b> Lempar lagi!');
+  }else{
+    state.turn=(state.turn+1)%state.active.length;
+    updateTurnUI(); markSelectable();
+    status('<b>'+esc(state.names[state.turn])+'</b>, lempar dadumu! 🎲');
+  }
+}
+
+/* ===== PEMENANG ===== */
+function gameOver(){
+  state.over=true; state.phase='over';
+  markSelectable();
+  $('#btn-roll').disabled=true;
+  const wSeq=state.turn, wAbs=state.active[wSeq], wp=PLAYERS[wAbs];
+  let rows='';
+  state.active.forEach((abs,seq)=>{
+    const st=state.stats[seq];
+    rows+='<tr class="'+(seq===wSeq?'winner-row':'')+'">'
+      +'<td style="text-align:left"><span class="pchip mini" style="background:'+PLAYERS[abs].color+'">'+PLAYERS[abs].label[0]+'</span> '+esc(state.names[seq])+(seq===wSeq?' 🏆':'')+'</td>'
+      +'<td>✅ '+st.ok+'</td><td>❌ '+st.no+'</td></tr>';
+  });
+  $('#win-fill').innerHTML=
+    '<div class="win-trophy">🏆</div>'
+    +'<div class="win-title">🎉 SELAMAT, '+esc(state.names[wSeq]).toUpperCase()+'!</div>'
+    +'<div class="win-sub">Pemenang Ludo Bilangan Cacah! Kelima pion <b>'+esc(state.names[wSeq])+'</b> telah berhasil mencapai tengah papan. Luar biasa! 👏</div>'
+    +'<table class="win-table"><thead><tr><th style="text-align:left">Pemain</th><th>Benar</th><th>Salah</th></tr></thead><tbody>'+rows+'</tbody></table>';
+  $('#modal-win').classList.remove('hidden');
+  renderPanel();
+  confetti(130);
+  sWin();
+}
+
+/* ===== KONFETI ===== */
+function confetti(n){
+  const colors=['#ef4444','#22c55e','#f59e0b','#3b82f6','#a855f7','#ec4899','#14b8a6'];
+  for(let i=0;i<n;i++){
+    const d=document.createElement('div');
+    d.className='confetti';
+    d.style.left=(Math.random()*100)+'vw';
+    d.style.background=colors[i%colors.length];
+    d.style.animationDuration=(2.4+Math.random()*2.4)+'s';
+    d.style.animationDelay=(Math.random()*.9)+'s';
+    if(Math.random()<.4) d.style.borderRadius='50%';
+    document.body.appendChild(d);
+    setTimeout(()=>d.remove(),6500);
+  }
+}
+
+/* ===== SUARA (WebAudio) ===== */
+let audioCtx=null;
+function ensureAudio(){
+  if(!audioCtx){
+    try{ audioCtx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){}
+  }
+  if(audioCtx && audioCtx.state==='suspended') audioCtx.resume();
+}
+function tone(freq,dur,type,vol,delay){
+  if(state.muted) return;
+  const c=audioCtx; if(!c) return;
+  try{
+    const o=c.createOscillator(), g=c.createGain();
+    o.type=type||'sine'; o.frequency.value=freq;
+    o.connect(g); g.connect(c.destination);
+    const t=c.currentTime+(delay||0);
+    g.gain.setValueAtTime(vol||.12,t);
+    g.gain.exponentialRampToValueAtTime(.001,t+dur);
+    o.start(t); o.stop(t+dur+.05);
+  }catch(e){}
+}
+function sDice(){ for(let i=0;i<6;i++) tone(280+Math.random()*420,.045,'square',.05,i*.1); }
+function sStep(){ tone(560,.05,'triangle',.09); }
+function sOk(){ tone(660,.12,'sine',.14); tone(880,.2,'sine',.14,.12); }
+function sNo(){ tone(196,.22,'sawtooth',.09); tone(147,.3,'sawtooth',.09,.16); }
+function sBump(){ tone(300,.09,'square',.13); tone(170,.16,'square',.11,.09); tone(110,.28,'sawtooth',.10,.18); }
+function sCenter(){ [523,659,784].forEach((f,i)=>tone(f,.13,'sine',.13,i*.1)); }
+function sWin(){ [523,659,784,1047,784,1047].forEach((f,i)=>tone(f,.2,'sine',.15,i*.14)); }
+
+/* ===== ATURAN MAIN ===== */
+const RULES_HTML =
+ '<h3>🎯 Tujuan Permainan</h3>'
+ +'<p>Jadilah pemain <b>pertama</b> yang berhasil membawa <b>kelima pionnya</b> mencapai <b>tengah papan</b>!</p>'
+ +'<h3>📋 Langkah Bermain</h3>'
+ +'<ol>'
+ +'<li>Pada giliranmu, tekan tombol <b>🎲 Lempar Dadu</b>.</li>'
+ +'<li><b>Klik salah satu pionmu</b> yang ingin dimajukan. Setiap pion memiliki <b>jenis soal yang berbeda</b>:</li>'
+ +'</ol>'
+ +'<div class="mini-legend">'
+ +'<div>🔢 <b>Pion 1:</b> Nilai Tempat, Nilai Angka, Dekomposisi, Nama & Lambang Bilangan</div>'
+ +'<div>⚖️ <b>Pion 2:</b> Mengurutkan dan Membandingkan Bilangan</div>'
+ +'<div>➕ <b>Pion 3:</b> Penjumlahan Bilangan Cacah Ribuan</div>'
+ +'<div>➖ <b>Pion 4:</b> Pengurangan Bilangan Cacah Ribuan</div>'
+ +'<div>✖️ <b>Pion 5:</b> Perkalian Bilangan Cacah</div>'
+ +'</div>'
+ +'<ol start="3">'
+ +'<li><b>Jawab soal</b> sesuai jenis pion yang dipilih:'
+ +'<ul><li>✅ <b>Benar</b> → pion maju sebanyak angka dadu. Pion yang masih di rumah akan keluar ke petak start.</li>'
+ +'<li>❌ <b>Salah</b> → pion <b>tidak jadi maju</b> dan giliran berpindah ke pemain lain.</li></ul></li>'
+ +'<li>⭐ Mode 1 dadu: dapat <b>angka 6</b> dan menjawab benar = <b>giliran ekstra</b>.</li>'
+ +'<li>🏠 Ikuti jalur searah jarum jam, lalu belok masuk ke <b>jalur warnamu</b> menuju tengah papan. Jika angka dadu melebihi sisa langkah, pion tetap berhenti di tengah.</li>'
+ +'<li>💥 <b>Senggol Pion</b> (dapat diatur saat mengisi nama): jika <b>aktif</b>, pion yang mendarat di petak yang sama dengan pion lawan akan <b>menyenggol</b> pion lawan yang datang lebih dulu — pion itu <b>kembali ke rumah</b>. Tidak berlaku di petak start ★. Jika <b>nonaktif</b>, pion boleh berbagi petak dengan damai.</li>'
+ +'<li>🏆 Pemain pertama dengan <b>5 pion di tengah papan</b> adalah pemenangnya!</li>'
+ +'</ol>'
+ +'<h3>⚡ Mode Dadu Ganda (opsional)</h3>'
+ +'<p>Aktifkan di layar pengisian nama: setiap giliran melempar <b>2 dadu</b> dan pion maju sesuai <b>jumlah</b> keduanya. Cocok agar permainan selesai lebih cepat.</p>';
+
+/* ===== INISIALISASI ===== */
+function init(){
+  buildBoard();
+  $('#rules-menu').innerHTML=RULES_HTML;
+  $('#rules-modal').innerHTML=RULES_HTML;
+  wireMenu();
+  $('#btn-roll').addEventListener('click',doRoll);
+  $('#q-next').addEventListener('click',onQuestionContinue);
+  $('#btn-rules').addEventListener('click',()=>$('#modal-rules').classList.remove('hidden'));
+  $('#btn-close-rules').addEventListener('click',()=>$('#modal-rules').classList.add('hidden'));
+  $('#btn-sound').addEventListener('click',function(){
+    state.muted=!state.muted;
+    this.textContent=state.muted?'🔇':'🔊';
+  });
+  $('#btn-restart').addEventListener('click',()=>$('#modal-restart').classList.remove('hidden'));
+  $('#btn-restart-no').addEventListener('click',()=>$('#modal-restart').classList.add('hidden'));
+  $('#btn-restart-yes').addEventListener('click',()=>location.reload());
+  $('#btn-again').addEventListener('click',()=>location.reload());
+  setFace($('#dice-1'),6); setFace($('#dice-2'),6);
+  if('ResizeObserver' in window){
+    new ResizeObserver(setCellSize).observe(document.querySelector('.board-wrap'));
+  }
+  setCellSize();
+}
+init();
+</script>
+</body>
+</html>
